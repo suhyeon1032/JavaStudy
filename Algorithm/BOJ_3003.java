@@ -5,16 +5,16 @@ import java.util.Scanner;
 public class BOJ_3003 {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		int[] arr = new int[6]; // ÀÔ·Â¹Ş´Â ÇÇ½º ¹è¿­
-		int[] piece = new int[] {1,1,2,2,2,8}; // ºñ±³ÇÒ ¿Ã¹Ù¸¥ °³¼ö
+		int[] arr = new int[6]; // ì…ë ¥ë°›ëŠ” í”¼ìŠ¤ ë°°ì—´
+		int[] piece = new int[] {1,1,2,2,2,8}; // ë¹„êµí•  ì˜¬ë°”ë¥¸ ê°œìˆ˜
 		for (int i = 0; i < 6; i++) {
 			arr[i] = sc.nextInt();
 		}
 		sc.close();
 		
 		for (int i = 0; i < 6; i++) {
-			arr[i] = piece[i] - arr[i]; // arr¿¡ ¿Ã¹Ù¸¥ °³¼ö°¡ µé¾î°£ piece¿Í ºñ±³È­¿© ÀúÀåÇÑ´Ù
-			System.out.println(arr[i]); // Ãâ·ÂÇÑ´Ù
+			arr[i] = piece[i] - arr[i]; // arrì— ì˜¬ë°”ë¥¸ ê°œìˆ˜ê°€ ë“¤ì–´ê°„ pieceì™€ ë¹„êµí•˜ì—¬ ì €ì¥í•œë‹¤
+			System.out.println(arr[i]); // ì¶œë ¥í•œë‹¤
 		}
 	}
 }
