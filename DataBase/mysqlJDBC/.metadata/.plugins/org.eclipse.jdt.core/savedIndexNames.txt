@@ -1,0 +1,1 @@
+INDEX VERSION 1.131+D:\multicampus\DataBase\mysqlJDBC\.metadata\.plugins\org.eclipse.jdt.core
