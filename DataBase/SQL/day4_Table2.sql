@@ -2,7 +2,7 @@ delete from emp;
 rollback;
 select * from emp;
 select * from DEPT;
-DROP TABLE DEPT;
+DROP TABLE EMP;
 
 insert into dept value(20,'인사부','경기도');
 insert into dept value(50,'총무부','서울');
