@@ -18,6 +18,7 @@ public class Solution01 {
 			int r = dan*i;
 			System.out.printf("%2d * %2d = %3d\n", dan, i, r);
 		}
+		sc.close();
 		
 		
 	

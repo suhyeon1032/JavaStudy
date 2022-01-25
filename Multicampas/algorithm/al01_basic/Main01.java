@@ -36,6 +36,7 @@ public class Main01 {
 			}
 			
 		}
+		sc.close();
 		// Ãâ·Â
 		for(int i=1;i<=n;i++) {// 1,2,3,4,5,6
 			System.out.println("#"+i+" "+r[i-1]);

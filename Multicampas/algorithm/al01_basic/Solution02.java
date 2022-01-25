@@ -23,8 +23,10 @@ public class Solution02 {
 		Scanner sc = new Scanner(System.in);
 		int dan = sc.nextInt();
 		gugudan(dan);
+		sc.close();
 		
 	}
+	
 
 }
 
