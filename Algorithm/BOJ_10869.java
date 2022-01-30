@@ -9,10 +9,10 @@ public class BOJ_10869 {
 		int B = sc.nextInt();
 		sc.close();
 		
-		System.out.println(A+B); // ´õÇÏ±â
-		System.out.println(A-B); // »©±â
-		System.out.println(A*B); // °öÇÏ±â
-		System.out.println(A/B); // ¸ò
-		System.out.println(A%B); // ³ª¸ÓÁö
+		System.out.println(A+B); // ë”í•˜ê¸°
+		System.out.println(A-B); // ë¹¼ê¸°
+		System.out.println(A*B); // ê³±í•˜ê¸°
+		System.out.println(A/B); // ëª«
+		System.out.println(A%B); // ë‚˜ë¨¸ì§€
 	}
 }

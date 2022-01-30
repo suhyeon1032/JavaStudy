@@ -1,16 +1,11 @@
 package week2;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class BOJ_2577 {
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-//		int A = sc.nextInt();
-//		int B = sc.nextInt();
-//		int C = sc.nextInt();
-//		int sum = A * B * C;
 		
 		int arr[] = new int[10];
 		

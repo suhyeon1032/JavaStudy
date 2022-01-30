@@ -7,7 +7,7 @@ public class BOJ_15964 {
 		Scanner sc = new Scanner(System.in);
 		long A = sc.nextInt();
 		long B = sc.nextInt();
-		// intÇüº¸´Ù Å« °ª Ãâ·ÂÀ» À§ÇØ longÇüÀ» »ç¿ë
+		// intí˜•ë³´ë‹¤ í° ê°’ ì¶œë ¥ì„ ìœ„í•´ longí˜•ì„ ì‚¬ìš©
 		sc.close();
 		
 		long sum = (A+B)*(A-B);

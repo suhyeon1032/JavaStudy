@@ -2,7 +2,7 @@ package week2;
 
 import java.util.Scanner;
 
-public class BOJ_10871 {
+public class BOJ_10871 { 
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
@@ -18,7 +18,6 @@ public class BOJ_10871 {
 		for (int i = 0; i < N; i++) {
 			if (A[i] < X) {
 				System.out.println(A[i] + " ");
-				
 			}
 		}
 		sc.close();

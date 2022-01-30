@@ -2,7 +2,7 @@ package week3;
 
 import java.util.Scanner;
 
-public class BOJ_14487 {
+public class BOJ_14487 { // 욱제는 효도쟁이야!!
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);

@@ -6,18 +6,18 @@ import java.math.BigInteger;
 public class BOJ_1271 {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		BigInteger n = sc.nextBigInteger(); // ÀÔ·ÂÁ¶°ÇÀÇ 10ÀÇ 1000Á¦°öÀ» ´Ş¼ºÇÏ±â À§ÇØ BigInteger »ç¿ë
-		BigInteger m = sc.nextBigInteger(); // int°¡ ¾Æ´Ñ ¹®ÀÚ¿­ Çü´ë·Î ÀÌ·ç¾îÁ® ÀÖ¾î ¼ıÀÚÀÇ ¹üÀ§°¡ ¹«ÇÑÀÌ´Ù.
+		BigInteger n = sc.nextBigInteger(); // ì…ë ¥ì¡°ê±´ì˜ 10ì˜ 1000ì œê³±ì„ ë‹¬ì„±í•˜ê¸° ìœ„í•´ BigInteger ì‚¬ìš©
+		BigInteger m = sc.nextBigInteger(); // intê°€ ì•„ë‹Œ ë¬¸ìì—´ í˜•ëŒ€ë¡œ ì´ë£¨ì–´ì ¸ ìˆì–´ ìˆ«ìì˜ ë²”ìœ„ê°€ ë¬´í•œì´ë‹¤.
 		sc.close();
 		
-		System.out.println(n.divide(m)); // ³ª´©±â °ª
-		System.out.println(n.remainder(m)); // ³ª¸ÓÁö °ª
+		System.out.println(n.divide(m)); // ë‚˜ëˆ„ê¸° ê°’
+		System.out.println(n.remainder(m)); // ë‚˜ë¨¸ì§€ ê°’
 		
-//		BigInteger ¿¬»ê
-//		´õÇÏ±â : add()
-//		»©   ±â : subtract()
-//		°öÇÏ±â : multiply()
-//		³ª´©±â : divide()
-//		³ª¸ÓÁö : remainder()
+//		BigInteger ì—°ì‚°
+//		ë”í•˜ê¸° : add()
+//		ë¹¼   ê¸° : subtract()
+//		ê³±í•˜ê¸° : multiply()
+//		ë‚˜ëˆ„ê¸° : divide()
+//		ë‚˜ë¨¸ì§€ : remainder()
 	}
 }

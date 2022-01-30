@@ -5,12 +5,12 @@ import java.util.Scanner;
 public class BOJ_17496 {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		int N = sc.nextInt(); // ¿©¸§ ÀÏ ¼ö
-		int T = sc.nextInt(); // ½ºÅ¸ÈÄ¸£Ã÷ ÀÚ¶ó´Âµ¥ °É¸®´Â ÀÏ ¼ö
-		int C = sc.nextInt(); // ½ºÅ¸Èå¸£Ã÷ ½ÉÀ» Ä­ ¼ö
-		int P = sc.nextInt(); // ½ºÅ¸ÈÄ¸£Ã÷ °³´ç °¡°İ
+		int N = sc.nextInt(); // ì—¬ë¦„ ì¼ ìˆ˜
+		int T = sc.nextInt(); // ìŠ¤íƒ€í›„ë¥´ì¸  ìë¼ëŠ”ë° ê±¸ë¦¬ëŠ” ì¼ ìˆ˜
+		int C = sc.nextInt(); // ìŠ¤íƒ€íë¥´ì¸  ì‹¬ì„ ì¹¸ ìˆ˜
+		int P = sc.nextInt(); // ìŠ¤íƒ€í›„ë¥´ì¸  ê°œë‹¹ ê°€ê²©
 		
 		System.out.println((N-1) / T * C * P);
-		// N-1 : ½É°í +1ÀÏ ºÎÅÍ ¼öÈ® °¡´ÉÇÏ±â ¶§¹®¿¡ -1 ÇØÁØ´Ù.
+		// N-1 : ì‹¬ê³  +1ì¼ ë¶€í„° ìˆ˜í™• ê°€ëŠ¥í•˜ê¸° ë•Œë¬¸ì— -1 í•´ì¤€ë‹¤.
 	}
 }

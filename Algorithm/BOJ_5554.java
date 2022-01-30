@@ -5,15 +5,15 @@ import java.util.Scanner;
 public class BOJ_5554 {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		int A = sc.nextInt(); // Áı¿¡¼­ ÇĞ±³±îÁöÀÇ ÀÌµ¿ ½Ã°£
-		int B = sc.nextInt(); // ÇĞ±³¿¡¼­ PC¹æ±îÁöÀÇ ÀÌµ¿ ½Ã°£
-		int C = sc.nextInt(); // PC¹æ¿¡¼­ ÇĞ¿ø±îÁöÀÇ ÀÌµ¿ ½Ã°£
-		int D = sc.nextInt(); // ÇĞ¿ø¿¡¼­ Áı±îÁöÀÇ ÀÌµ¿ ½Ã°£
+		int A = sc.nextInt(); // ì§‘ì—ì„œ í•™êµê¹Œì§€ì˜ ì´ë™ ì‹œê°„
+		int B = sc.nextInt(); // í•™êµì—ì„œ PCë°©ê¹Œì§€ì˜ ì´ë™ ì‹œê°„
+		int C = sc.nextInt(); // PCë°©ì—ì„œ í•™ì›ê¹Œì§€ì˜ ì´ë™ ì‹œê°„
+		int D = sc.nextInt(); // í•™ì›ì—ì„œ ì§‘ê¹Œì§€ì˜ ì´ë™ ì‹œê°„
 		sc.close();
 		
 		int sum = A+B+C+D;
-		System.out.println(sum/60); // ÃÊ¿¡¼­ 60À» ³ª´² ³ª¿Â ºĞ
-		System.out.println(sum%60); // ÃÊ¿¡¼­ 60À» ³ª´©°í ³ª¸ÓÁö ÃÊ
+		System.out.println(sum/60); // ì´ˆì—ì„œ 60ì„ ë‚˜ëˆ  ë‚˜ì˜¨ ë¶„
+		System.out.println(sum%60); // ì´ˆì—ì„œ 60ì„ ë‚˜ëˆ„ê³  ë‚˜ë¨¸ì§€ ì´ˆ
 		
 	}
 }

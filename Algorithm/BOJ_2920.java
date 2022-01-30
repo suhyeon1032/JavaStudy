@@ -27,7 +27,7 @@ public class BOJ_2920 {
 		} else {
 			System.out.println("mixed");
 		}
-		// µÎ ¹è¿­À» ºñ±³ÇÏ±â À§ÇØ Arrays.equals »ç¿ë
+		// ë‘ ë°°ì—´ì„ ë¹„êµí•˜ê¸° ìœ„í•´ Arrays.equals ì‚¬ìš©
 	}
 
 }

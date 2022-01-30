@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Scanner;
 
-public class BOJ_9237 { // ÀÌÀå´Ô ÃÊ´ë 
+public class BOJ_9237 { // ì´ì¥ë‹˜ ì´ˆëŒ€ 
 	
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
@@ -17,8 +17,8 @@ public class BOJ_9237 { // ÀÌÀå´Ô ÃÊ´ë
 		}
 		sc.close();
 		
-		Arrays.sort(tree,Collections.reverseOrder()); // Collections.reverseOrder() sort³»¸²Â÷¼ø
-		// int´Â primitive typeÀÌ¾î¼­ °´Ã¼°¡ ¾Æ´Ï±â ¶§¹®¿¡ Integer·Î »ç¿ëÇÑ´Ù.
+		Arrays.sort(tree,Collections.reverseOrder()); // Collections.reverseOrder() sortë‚´ë¦¼ì°¨ìˆœ
+		// intëŠ” primitive typeì´ì–´ì„œ ê°ì²´ê°€ ì•„ë‹ˆê¸° ë•Œë¬¸ì— Integerë¡œ ì‚¬ìš©í•œë‹¤.
 		
 		for (int i = 0; i < N; i++) {
 			if (sum < i + tree[i]) {
