@@ -46,7 +46,9 @@ public class BOJ_1388 {
             }
 
         }
-		System.out.println(count);
+		String count2 = Integer.toString(count);
+		bw.write(count2);
+		bw.close();
 		
 		
 
