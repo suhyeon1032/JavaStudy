@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>외부 스타일 적용하기</h1>
+<ul>
+	<li><a href="#">다음</a></li>
+	<li><a href="#">네이트</a></li>
+	<li><a href="#">구글</a></li>
+	<li><a href="#">오라클</a></li>
+</ul>
+</body>
+</html>

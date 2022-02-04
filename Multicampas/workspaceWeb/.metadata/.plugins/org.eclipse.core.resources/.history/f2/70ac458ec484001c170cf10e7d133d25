@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>목록 태그(ul(순서가 없는 목록 태그), ol(순서가 있는 목록 태그), li))</h1>
+<pre>
+	type 속성 : disk(채워진 원), circle(안이 비워진 원), square(체워진 사각형)
+</pre>
+<ul type="square">
+	<li>자바</li>
+	<li>html</li>
+	<li>javascript</li>
+</ul>
+<pre>
+	type 속성 : 1, a, A, i, I, 가
+</pre>
+<ol type="I">
+	<li>자바</li>
+	<li>html</li>
+	<li>javascript</li>
+</ol>
+</body>
+</html>

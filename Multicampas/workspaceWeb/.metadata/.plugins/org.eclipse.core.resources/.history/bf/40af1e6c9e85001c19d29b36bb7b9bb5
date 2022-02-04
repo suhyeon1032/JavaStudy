@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div style="background-color:#dd6">1</div>
+<div style="background-color:rgb(200,230,240)">2</div>
+<div style="background-color:orange">3</div>
+<div style="background-color:#6dd">4</div>
+</body>
+</html>

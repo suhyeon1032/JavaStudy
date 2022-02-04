@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>이미지 태그</h1>
+<pre>
+	-- html 태그가 적용되고, 
+	
+	space와                     enter가 적용가능한 구역이다.
+</pre>
+<img src="스피융"/>
+</body>
+</html>

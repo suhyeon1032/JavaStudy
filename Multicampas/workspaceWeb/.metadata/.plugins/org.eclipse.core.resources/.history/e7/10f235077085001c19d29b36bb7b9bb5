@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>입력양식만들기</h1>
+<pre>
+	클라이언트측 정보 서버에서 가져갈 수 있도록 환경을 설정한다.
+	
+	name : 변수, value:값
+	maxlength : 입력할 수 있는 문자의 최대 갯수
+	readonlu : 읽기전용
+	disabled : 비활성화
+	placeholder : 안내글
+	reuired : 입력안내글
+	
+</pre>
+<a href="board.jsp?username=홍길동&num=250&userid=hong">서버로 정보 보내기</a>
+<hr/>
+<!-- action : 폼이 submit발생하면 실행될 파일 명 -->
+<form action="aaaa.jsp">
+	아이디 : <input type="text" name="userid" placeholder="아이디를 입력하세요" maxlength="10"
+	size="5" required/> <br/>
+	
+	이름 : <input type="text" name="username" value="홍길동" disabled/> <br/>
+	비밀번호 : <input type="password" name="userpwd"/><br/>
+	파일첨부 : <input type="file" name="filename"/><br/>
+	체크박스 : <input type="checkbox" name="hobby" value="농구"/>농구
+			<input type="checkbox" name="hobby" value="축구" checked/>축구
+			<input type="checkbox" name="hobby" value="배구"/>배구<br>
+	라디오버튼 : <input type="radio" name="email" value="yes" checked/>동의
+			<input type="radio" name="email" value="no"/>비동의<br>
+	여러줄의 문자 입력 : 
+	<textarea name="memo" cols="50" rows="5">글을 입력하세요.</textarea>
+	리스트 박스 : 
+		<select>
+			<option>자바</option>
+			<option>자바스크립트</option>
+			<option>html</option>
+			<option>css</option>
+			<option>jsp</option>
+		</select>
+	
+	<hr/>
+	<!-- 전송버튼 : button, submit, image, button태그 -->
+	<input type="button" value="등록">
+	<input type="submit" value="등록">
+</form>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>링크걸기</h1>
+	문자에 링크걸기 : 
+	<a href="https://www.nate.com">네이트</a>
+	<a href="../index.html">홈</a> <!-- 상대주소 -->
+	<a href = "/webApp/index.html">인덱스페이지</a> <!-- 절대주소 -->
+	<hr/>
+	이미지에 링크걸기
+	<img src="../img/스피융.jpg">
+</body>
+</html>

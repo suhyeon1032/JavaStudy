@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<style>
+	ul, li, body{
+      margin:0; padding:0px;
+   }
+   /* '' : #menu의 후손 li
+      > : #menu의 자손 li
+   */
+   #menu{
+      background-color:yellow;
+      overflow:auto;            /*컨텐츠만큼 공간을 확보한다.*/
+      list-style-type:none;
+   }
+   #menu>li{
+      background-color:pink;
+      float:left;
+      
+      width:25%;
+      height:50px;
+      
+      text-align:center;         /*left, center, right*/
+      line-height:50px;
+   }
+   /*
+	가상클래스
+	link:링크, hover:마우스오버, visited:방문했을때, active:누른상태일때
+	
+	text-decoration -> underline밑줄, overline윗줄, line-through
+   */
+   #menu a:link{
+		text-decoration: none; color:gray;
+   }
+	#menu a:visited {
+		text-decoration: none; color:gray;
+	}
+	#menu a:hover {
+	text-decoration: underline; color: red; font-weight: bold;
+}
+
+</style>
+</head>
+
+<body>
+<ul id="menu">
+   <li><a href="#">TV</a></li>
+   <li><a href="#">여행/맛집</a></li>
+   <li><a href="#">푸드</a></li>
+   <li><a href="#">만화/웹툰</a></li>
+</ul>
+
+<img src="../img/최고심실.jpg"/>
+
+</body>
+</html>

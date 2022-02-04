@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>이미지 태그</h1>
+기본 글자 크기
+<pre>
+	-- html 태그가 적용되고, 
+	
+	space와                     enter가 적용가능한 구역이다.
+	기본 글자 크기보다는 작다.
+	
+	src 속성 : 이미지 경로와 파일명을 표시
+	width속성 : 폭을 설정(px, % 사용가능 px는 생략가능)
+</pre>
+<img src="/webApp/img/스피융.jpg" width="100" heigth="100"/> <!-- 비율만큼 높이가 줄어듬 높이 줄이고 싶으면 따로 지정 heigth="100" -->
+</body>
+</html>

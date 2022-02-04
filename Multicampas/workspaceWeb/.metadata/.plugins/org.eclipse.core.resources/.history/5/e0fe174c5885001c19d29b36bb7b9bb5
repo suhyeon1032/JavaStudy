@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>동영상 파일 재생하기</h1>
+<video>
+	<source src="../audio_movie/김더빈.mp4" type="video/mp4">
+</video>
+</body>
+</html>
