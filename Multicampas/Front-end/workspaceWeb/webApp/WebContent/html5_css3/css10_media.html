@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<meta name="viewport" content="width=device-width, initial-sale=1">
+<style>
+	body, ul, li{margin: 0; padding:0; list-style-type: none;}
+	img{width: 50%; height: 500px;}
+	body{
+		background-color: #ddd;
+	}
+	li {
+		background-color: #fff;
+		boder:1px solid gray;
+		margin:5px;
+	}
+	
+	/* 반응형 스타일 적용하기 */
+	/* 320px ~ 600px */
+	/* 		all, screen, print, tv, projection.... */
+	@media all and (min-width:320px) and (max-width:600px){
+		li{background: yellow;}
+		img{width:100%;}
+	}
+	/* 601px ~ 800px */
+	@media all and (min-width:601px) and (max-width:900px) {
+		li{background:#000; color:#f00;}
+		img{width:30%;}
+	}
+	/* 901~ */
+	@media all and (min-width:901px) {
+		li{background: pink; color:green; font-weight: bold;}
+		img{width: 20%;}
+	}
+</style>
+</head>
+<body>
+<ul>
+	<li>먼저 우지를 냄비의 한면에 넓게바른다. 그 위에 얇게 썬 쇠고기 그리고 고기 위에 설탕을 뿌린다.</li>
+	<li>고기에 단맛이 배어들면 간장과 술을 곁들인다. 관동 지방에서는 미리 만들어 둔 장국에 건더기를 끓이지만 내가 로망을 느낀느 건 관서풍이다.</li>
+	<li>건더기 재료는 파, 구운 두부, 얇게 썬 곤약, 표고버석, 팽이버섯 얇게 썬 곤약은 칼슘이 고기를 딱딱하게 하므로 떨어뜨려 놓는다.</li>
+	<li>고기 60도, 파 70도, 두부 90도, 곤약 60도, 표고버섯 50도, 팽이버섯 30도가 바람직하다.</li>
+	<li>이 단계에서 물이나 술을 더하는 사람도 있지만 나는 쑥갓을 넣은 뒤 뚜껑을 덮고 3분 자연스럽게 채소들이 냄비 안에서 가득 차길 기다린다.</li>
+	<li>난 이 3분을 ‘신의 시간’ 이라 부른다.</li>
+	<li>이 시점에서 계란이다. 젖는건 9바퀴 반 흰자가 사르르 녹는 감촉을 잃지 않도록 아슬아슬 할때 멈춘다.</li>
+	<li>이제 완성을 기다릴뿐. 단, 스키야키에는 명확한 법칙은 존재하지 않는다. </li>
+	<li>관동풍, 관서풍의 차이뿐만 아니라 재료의 종류, 배치, 순서까지... 가정의 개수만큼 스키야키의 조리법이 존재한다.</li>
+	<li>이건 어디까지나 내가 생각하는 최고의 방법, 나에게 있어서 이상적인 스키야키다.</li>
+</ul>
+<img src="../img/03.jpg"><img src="../img/04.jpg">
+</body>
+</html>

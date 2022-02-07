@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	div{
+		width: 300px; height: 300px; border:1px solid gray;
+	}
+	/* visibility : hidden(숨김), visible(보여주기) */
+	div:first-child {
+		background: yellow;
+		visibility: hidden;
+	}
+	/* display : block(), none() */
+	div:nth-child(2) {
+		background: pink;
+		display : none;
+	}
+	div:last-child {
+		background: orange;
+}
+}
+
+</style>
+</head>
+<body>
+<div></div>
+<div></div>
+<div></div>
+</body>
+</html>

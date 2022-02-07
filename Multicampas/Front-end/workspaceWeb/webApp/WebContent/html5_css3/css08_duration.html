@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<style>
+	/*
+		overflow : scroll(스크롤 상하,좌우 가능), auto(스크롤 상하만), hidden(짤림)
+	*/
+	div{
+		width:500px; height:500px; border:1px solid gray;
+		overflow:hidden;
+		/* 확 없어지는게 아닌 스르륵 없어지는 걸 duration이라고 함
+		지정한 시간(초단위) 동안 변화가 일어난다. */
+		transition-duration:2s;
+	}
+	div>img{width:100%;}
+	/*높이는 %로 할 수가 없음 그럼 초과한 걸 어떻게 처리해야할까? 위로가서 overflow 보자*/
+
+	input[type=checkbox]:checked + div{
+		height: 0px;
+		/* 선택자는 체크박스고 적용은 div에 적용된다. */ 
+		opacity: 0%;
+	}
+   
+</style>
+</head>
+<body>
+
+<input type="checkbox"/>클릭
+
+<div>
+   <img src="../img/1.JPG">
+   <img src="../img/2.JPG">
+</div>
+
+</body>
+</html>
