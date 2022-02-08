@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	/*동위선택자
+		:기준이 되는 선택자와 같은 위치에 있는 태그를 선택한다.
+		
+		+ : 선택자의 다음객체를 선택한다.
+		~ : 선택자의 다음에 있는 모든 객체.
+	*/
+	h1+h2{
+		background: pink;
+	} 
+	h1~h2{
+		color: blue;
+	} 
+	/*상태선택자*/
+	/*focus : 커서가 컴퍼넌트를 선택하면*/
+	input:focus{
+		color:orange;font-size: 1.5em; 
+	} 
+	
+	/*disabled : 비활성화된 컴퍼넌트에 적용한다.*/
+	input:disabled{
+		border:2px solid red;
+	}
+	
+	/*checked : 컴퍼넌트가 checked일 때 적용*/
+	input:checked{
+		width:50px; height:50px;
+	}
+	
+	/*enabled : 컴퍼넌트가 활성화일때*/
+</style>
+<script async src='/cdn-cgi/bm/cv/669835187/api.js'></script></head>
+<body>
+<form>
+	이름 <input type="text" name="username" id="username" value="gildong hong" readonly/><br/>
+	아이디 <input type="text" name="userid" id="userid" value="gildong" disabled/><br/>
+	관심 : <input type="checkbox" name="interest"> 축구
+		  <input type="checkbox" name="interest"> 농구
+		  <input type="checkbox" name="interest"> 배구
+		  <input type="checkbox" name="interest"> 야구 <br/>
+	취미 : <input type="radio" name="hobby"/> 영화감상
+		  <input type="radio" name="hobby"/> 영화감상
+		  <input type="radio" name="hobby"/> 영화감상
+		  <input type="radio" name="hobby"/> 영화감상
+</form>
+<h1>동위선택자 테스트 1111111</h1>
+<h2>동위선택자 테스트 2222222</h2>
+<h2>동위선택자 테스트 3333333</h2>
+<h2>동위선택자 테스트 4444444</h2>
+<h2>동위선택자 테스트 5555555</h2>
+<h2>동위선택자 테스트 6666666</h2>
+<h3>~~~~~~~~~~~~~~~~~~~~~~~~~</h3>
+<h1>동위선택자 테스트 AAAAAAA</h1>
+<h2>동위선택자 테스트 BBBBBBB</h2>
+<h2>동위선택자 테스트 CCCCCCC</h2>
+<h2>동위선택자 테스트 DDDDDDD</h2>
+<h2>동위선택자 테스트 EEEEEEE</h2>
+<h2>동위선택자 테스트 FFFFFFF</h2>
+<h3>~~~~~~~~~~~~~~~~~~~~~~~~~</h3>
+<script type="text/javascript">(function(){window['__CF$cv$params']={r:'6da357be9c83a22b',m:'6qK4pKJ3pIiu9s233WiCXFYT1.hx84Vn_mf60O7anLw-1644307420-0-AcUYlf15OplSI9YFV4VVEJb83hPR12KEEviDh2gKlIMDdxeWMTF1f8JMN1OSRCT3ow8uOjHAxLPa1iDQVeDQTwLiUWBQaz/HK2TbgGbaISUbGLjQPYllMQW6p2mTgwzfeFWdNUrb+wnFyaPmZYX5OspfV5G4errN2RDET9Ow32sPyqMu8Lyf2fYvnb7fb4OxoS7NdxKqPbhZM2Oeb7fnta0=',s:[0x9d286a995b,0x1f8bab9e4e],}})();</script></body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	/*구조선택자
+		2n : 짝수번쨰 객체, 2n+1 : 홀수번째 객체, 3n : 3의 배수인 객체...
+		:nth-child()
+	*/
+	#lst>li:nth-child(2n){
+		background: pink;
+	}
+	#lst>li:first-child{
+		color:brown;
+	} 
+	#lst>li:last-child{
+		color:purple; font-size:1.2em;
+	}
+	body{margin:30px}
+	/*그림자 설정*/
+	#lst>li{
+		font-size: 1.2em; margin-bottom: 30px; border: 1px solid #bbb;
+	} 
+	/*박스 또는 글자에 그림자표지*/
+	#lst>li{
+		/*			오른쪽	아래쪽	투명		색상	*/
+		box-shadow: 10px	-5px		5px		gray;
+	}
+	#lst>li{
+		text-shadow: 5px 5px 5px green;
+	}	
+</style>
+<style>
+	/*구조선택자
+		:first-of-type() : 처음객체
+		:last-of-type() : 마지막객체
+		:nth-of-type() : 2n 짝수번쨰, 2n+1 홀수번째...
+	*/
+	#lst2>li:nth-of-type(2n){background: yellow;}
+	#lst2>li:nth-of-type(2n+1){background: orange;}	
+	#lst2>li:first-of-type{font-size:2em;}
+	#lst2>li:last-of-type{color:green;}		
+</style>
+<style>
+	/*텍스트 스타일*/
+	/*
+		::first-letter -> 문단 첫번째 문자에 스타일 적용
+		::first-line -> 첫번째 줄에 적용하는 스타일
+		::selection -> 선택한 문자의 스타일
+	*/
+	#txt::first-letter{
+		font-size: 2em; background: pink; font-weight: bold; color: red;
+	}
+	#txt::first-line{
+		text-decoration: underline;
+	}
+	#txt{
+		/* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#b62bd8+20,20d5e5+50,b62bd8+80&0.8+15,1+19,1+81,0.8+85 */
+	background: -moz-linear-gradient(top,  rgba(182,43,216,0.8) 15%, rgba(182,43,216,1) 19%, rgba(182,43,216,1) 20%, rgba(32,213,229,1) 50%, rgba(182,43,216,1) 80%, rgba(182,43,216,1) 81%, rgba(182,43,216,0.8) 85%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top,  rgba(182,43,216,0.8) 15%,rgba(182,43,216,1) 19%,rgba(182,43,216,1) 20%,rgba(32,213,229,1) 50%,rgba(182,43,216,1) 80%,rgba(182,43,216,1) 81%,rgba(182,43,216,0.8) 85%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom,  rgba(182,43,216,0.8) 15%,rgba(182,43,216,1) 19%,rgba(182,43,216,1) 20%,rgba(32,213,229,1) 50%,rgba(182,43,216,1) 80%,rgba(182,43,216,1) 81%,rgba(182,43,216,0.8) 85%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ccb62bd8', endColorstr='#ccb62bd8',GradientType=0 ); /* IE6-9 */
+		
+	}
+</style>
+<script async src='/cdn-cgi/bm/cv/669835187/api.js'></script></head>
+<!-- 
+	html속성
+	oncontextmenu : 마우스 오른쪽 키 사용 제어.
+	
+	onselectstart : 선택시작 불가능	
+	
+	ondragstart  : 드래그 시작 불가능
+ -->
+<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
+<ul id="lst">
+	<li>트레비스스캇</li>
+	<li>프라그먼트</li>
+	<li>오프화이트</li>
+	<li>피스마이너스원</li>
+	<li>아마마니에르</li>
+	<li>사카이</li>
+	<li>보데가</li>
+	<li>언더커버</li>
+	<li>컨셉츠</li>
+	<li>꼼데가르송</li>
+</ul>
+<ul id="lst2">
+	<li>트레비스스캇</li>
+	<li>프라그먼트</li>
+	<li>오프화이트</li>
+	<li>피스마이너스원</li>
+	<li>아마마니에르</li>
+	<li>사카이</li>
+	<li>보데가</li>
+	<li>언더커버</li>
+	<li>컨셉츠</li>
+	<li>꼼데가르송</li>
+</ul>
+<div id="txt">
+트래비스 스캇의 공연은 난폭하기로 유명해 이미 과거 공연 중 부상자가 발생한 적이 있다. 이번 페스티벌의 최연소 사망자의 나이는 10살로 애초에 그를 입장시킨 점과 공연을 즉시 중단하지 않은 점에 대해 큰 비난을 받고 있다. 피해자 가족들은 8800억원의 소송을 진행 중이다.
+이에 대해 ‘나이키’ 측은 “피해자들을 애도하며 컬래버레이션 에어맥스 1(Air Max 1) 모델의 출시를 잠정 연기할 것”이라고 공식 발표했다. 트래비스 스캇과 ‘나이키’는 2017년부터 협업 컬렉션을 출시하고 있다.
+</div>
+<script type="text/javascript">(function(){window['__CF$cv$params']={r:'6da357c799c5a22b',m:'s3VsO1N1MW4eBXC7k11AszYDXgdWBHJs5f8wodIthbk-1644307421-0-AdsBc/O7XB8IftcDth5ZbEcu6JthAVR1cdRZvPf/s7fbRNOOfV1Kr44zd/TDmvhHBVlFUa8ONFaUto93IFpN0ZjoIQf4W229o22WIz6T1a9QhKGj411/9qD5CY2VDaTR1zHbgnYf75tFnpp5deSj1g09De0P+1jUUBvksyBmss6oxYzxC4BCEv2fvbN4qMbQRcP7IlRjyRphjfskyksvu0A=',s:[0xa8f65dc841,0xa6833dd10b],}})();</script></body>
+</html>
