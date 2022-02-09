@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+	var cnt=0;
+	function clockStart() {
+		// 현재 시간을 구하여  h1에 셋팅
+		var now = new Date();
+		
+		var h = now.getHours();
+		var m = now.getMinutes();
+		var s = now.getSeconds();
+		
+		document.getElementById("timeView").innerHTML = h + ':' + m + ":" +s ;
+	}
+	
+	cnt++;
+    if(cnt>=10){
+       //clearInterval() : interval 스톱시키기
+       clearInterval(timer);
+    }
+
+	// setInterval(호출할 함수, 시간(밀리초) : 일정한 시간 간격으로 함수를 재호출해주는 함수)
+	
+</script>
+</head>
+<body onload="timer = setInterval('clockStart()',1000)">
+
+<h1 id="timeView">현재시간</h1>
+</body>
+</html>

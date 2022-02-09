@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+	function scrollTest() {
+		//현재 스크롤 바의 위치를 구한다.
+		var sX = window.scrollX;
+		var sY = window.scrollY;
+		console.log(sX, sY);
+	}
+	function scrollAutoMove() {
+		//				x, y
+		window.scrollBy(0,10);
+	}
+	var x=0; y=0;
+	function backMove() {
+		document.body.style.backgroundPosition = x+ "px " + y + "px";
+		x += 5;
+		y += 5;
+	}
+</script>
+<style>
+	body{background: url(../img/05.jpg)}
+</style>
+</head>
+<!-- <body onload="scrollTest(); setInterval('scrollAutoMove()',500);"> -->
+
+<body onload = "setInterval('backMove()',500)">
+<script>
+	for(var i=1; i<=10; i++){
+		if(i<10)
+			document.write('<img src="../img/0'+i+'.jpg"/>');
+		else
+			document.write('<img src="../img/'+i+'.jpg"/>');
+	}
+	
+</script>
+</body>
+</html>

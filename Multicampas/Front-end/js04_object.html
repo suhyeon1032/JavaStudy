@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+	function htmlCtr(){
+		//							 html태그의 속성
+		//document.getElementById("i").src="../img/02.jpg";	
+		//document.getElementById("i").style.border = "3px solid red";
+		//document.getElementById("i").title = "이미지에 마우스 오버 중~";
+		
+		var obj = document.getElementById("i");
+		obj.src="../img/03.jpg";
+		obj.style.border="5px solid blue";
+		obj.title = "image 풍선 도움말";
+		console.log(obj.src);
+	}
+	
+	function imgChange(){
+		document.querySelector("#i").src="../img/01.jpg"; 
+	}
+</script>
+</head>
+<body>
+<img src="../img/01.jpg" id="i" onmouseover="htmlCtr()" onmouseout="imgChange()"/>
+</body>
+</html>

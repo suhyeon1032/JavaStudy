@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+   function setDate(){
+      //   01. 현재 날짜를 구하기
+      var now = new Date();
+      
+      var y = now.getFullYear();
+      var m = now.getMonth();      //   0부터 구해짐 나중에 +1
+      var d = now.getDate();
+      
+      //   1일에 대한 요일 getDay()
+      var w = new Date(y,m,1).getDay();
+      
+      //   마지막 구하기 (이번달을 기준으로 다음 달 0일을 날짜 객체로 만든다.)
+      var lastDay = new Date(y, m+1,0).getDate();
+      
+      //   년월 셋팅
+      document.querySelector("#dateTitle").innerHTML = y+"년 "+ (m+1) +"월";
+      
+      //   요일
+      var weekName = ['일','월','화','수','목','금','토'];
+   
+      var dateTag = "";
+      for(var i=0; i<weekName.length; i++){
+         dateTag += "<li>"+weekName[i]+"</li>";
+      }
+      
+      for(var i=0; i<w; i++){
+         dateTag += "<li>&nbsp;</li>";
+      }
+      
+      //   날짜를 1부터 마지막 날까지 li 태그로 생성
+      for(var i=1; i<=lastDay; i++){
+         //   오늘이냐 아니냐 
+         if(d==i){   //   오늘이면
+            dateTag += "<li class = 'txtRed'>"+ i + "</li>";
+         }else{
+            dateTag += "<li>" + i + "</li>";   
+         }
+      }
+//      console.log(dateTag);
+      document.getElementById("dateView").innerHTML = dateTag;      
+   }
+</script>
+
+<style>
+   ul, li{
+      margin:0; padding:0; list-style-type:none;
+   }
+   #cal{
+      width:300px;
+      border:1px solid #ddd;
+      margin:0 auto;
+   }
+   #cal>h2{text-align:right; margin:10px;}
+   #cal>img{
+      width:100%; height:200px;
+   }
+   #cal>ul>li{ 
+      float:left; width:14.2%; text-align:center;
+   }
+   .txtRed{
+      color:red;
+   }
+</style>
+
+</head>
+<body onload="setDate()">
+
+<div id="cal">
+   <h2 id="dateTitle">2002년 1월</h2>
+   <img src="../img/03.jpg"/>
+   <ul id="dateView"></ul>
+</div>
+
+</body>
+</html>
