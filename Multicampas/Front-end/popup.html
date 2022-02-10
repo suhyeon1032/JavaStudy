@@ -3,14 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 <style>
-	body{
-		background-image:url(../img/03.jpg);
-		background-size: 100% 400px;
-	}
+   body{
+      background-image:url(../img/5.jpg);
+      background-size:100% 400px;
+   }
 </style>
+
+<script>
+   function setPopCookie(){
+      //   체크박스가 체크상태일 때쿠키를 저장한다.
+      if(document.getElementById("cookieChk").checked){   //체크일 땐 true, 아니면 false
+         //   변수 = 값; (쿠키가 한 창에 한개만 있는게 아님)
+         //   path = /; expires = 날짜;(소멸시점)
+         var now = new Date();
+         now.setDate(now.getDate()+7); //일주일이니까 +7, 한달이면 month해서 +1
+         var cookieData = "popup=yes; path=/; expires="+now+";";
+         document.cookie = cookieData;
+         document.cookie = "notice=okay; path=/; expires="+now+";";
+      }
+      self.close(); //window.close() 둘중하나하기해서 팝업창닫아주기
+   }
+</script>
+
 </head>
 <body>
+
+<input type="checkbox" name="cookieChk" id="cookieChk"/>일주일동안 안보이기
+<input type="button" value="Close" onclick="setPopCookie()"/>
 
 </body>
 </html>
