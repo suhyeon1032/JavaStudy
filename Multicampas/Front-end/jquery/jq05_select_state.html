@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript">
+	$(function () {
+		// 상태 선택자
+		
+		// 속성값이 text인 객체를 선택하기
+		$(":text").css("width","300px").css("height","40px");
+		
+		//checked속성에 대한 선택자 - checked속성이 설정되어 있을때 해제한다.
+		// $(":checked").attr("checked", false);
+		$(":checked").prop("checked", false);
+		
+		$(":selected").attr("selected", false);
+		
+		// ----------------------------
+		// 컨텐츠 선택자
+		// contains() : 특정문자를 포함한 경우 선택한다.
+		$("P:contains('요리로')").css("background-color","pink");
+		
+		// has() : 특정태그를 포함한 경우 선택한다.
+		$("p:has('b')").css('border','2px solid red');
+		
+		// not() : 특정선택자를 제외한 나머지를 선택한다.
+		$("p:not(:first)")
+		
+		// closest() : 조상선택자
+		$("i").closest("body").css("border","3px dotted green");
+		
+		// filter
+		$("p").filter('.c1').css("color","#fff").css("background","#000");
+		
+		// contents() : 특정선택자의 하위가 다른 태그가 포함된 경우 하위 태그를 선택한다.
+		$("p").contents().css("color","red");
+		
+	});
+</script>
+</head>
+<body>
+<div>
+	<p>참〰️치 👈요리로👈 참〰️치🐟 👉조리로👉 참〰️치🐟 이건 맛👅의 대🎋참🕺🏻치❗️ <b>참〰️치⁉️ </b>상추🥬쌈밥🍚으로 참〰️치⁉️ 샐러드🥗로 참〰️치⁉️ 이건 맛👅의 대🎋참💃🏻치❗️ 참🙆🏻‍♂️치 볶음밥🍲으로 참🙆🏻‍♂️치🐟 샌드위치🥪로 참🙆🏻‍♂️치🐟 이건 맛👅의 대🎋참✊🏻치‼️ 참🤷🏻‍♀️치〰️ 미역국🍵으로 참🤷🏻‍♀️치〰️ 까나페• • • 야야야🤦🏻‍♂️ 언제(when)까지 이노래(song)를 부를셈🎤이야🤔 참치🐟레시피📃 🖖조😮억개〰️🥰🎶 이건맛😋의 대🇰🇷참🇰🇷치🇰🇷</p>
+	<p class="c1">지만 먹구.. 😒 지만 입인가.. 🍔🍧🍖🍭 지만 먹구.. 😒 지만 입인가.. 🍰🍡🍫🍩 지만 먹구.. 😒 지만 입인가..지만 먹구.. 😒 지만 입인가.. 🍔🍧🍖🍭 지만 먹구.. 😒 지만 입인가.. 🍰🍡🍫🍩</p>
+	<p class="c1">참〰️치 👈요리로👈 참〰️치🐟 👉조리로👉 참〰️치🐟 이건 맛👅의 <i>대🎋참🕺🏻치❗️</i> 참〰️치⁉️ 상추🥬쌈밥🍚으로 참〰️치⁉️ 샐러드🥗로 참〰️치⁉️ 이건 맛👅의 대🎋참💃🏻치❗️ 참🙆🏻‍♂️치 볶음밥🍲으로 참🙆🏻‍♂️치🐟 샌드위치🥪로 참🙆🏻‍♂️치🐟 이건 맛👅의 대🎋참✊🏻치‼️ 참🤷🏻‍♀️치〰️ 미역국🍵으로 참🤷🏻‍♀️치〰️ 까나페• • • 야야야🤦🏻‍♂️ 언제(when)까지 이노래(song)를 부를셈🎤이야🤔 참치🐟레시피📃 🖖조😮억개〰️🥰🎶 이건맛😋의 대🇰🇷참🇰🇷치🇰🇷</p>
+</div>
+<div>
+	<form action="">
+		<label>이름</label>
+		<input type="text" name="username" id="username"/><br/>
+		<label>연락처</label>
+		<input type="text" name="tel" id="tel"/><br/>
+		<label>사용자 동의 여부</label>
+		<input type="radio" name="accept" value="yes" checked>동의
+		<input type="radio" name="accept" value="no">비동의<br/>
+		<label>자주가는 사이트</label>
+		<select name="site" id="site">
+			<option value="not">==직접선택==</option>
+			<option value="daum" selected>daum.net</option>
+			<option value="nate">nate.com</option>
+			<option value="naver">naver.com</option>
+		</select>
+	</form>
+</div>
+</body>
+</html>

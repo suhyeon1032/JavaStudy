@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		/* 인접선택자 */
+		// children() : 자손선택자
+		$("div").children(".one").css("background-color","pink");
+		// next() : 선택자의 다음 객체를 선택한다.
+		$("#first").next().css("color", "red");
+		// prev() : 선택자의 이전 객체를 선택한다.
+		$("img").prev().css("border","2px solid green");
+		// parent() : 선택자의 부모객체를 선택한다.
+		$("img").parent().css("background-color","#ddd");
+		// siblings() : 선택자의 형제객체를 선택한다.
+		$("#first").siblings().css("color","blue");
+		
+		$("div").next().attr("title","인접선택자 테스트중...")
+	});
+</script>
+</head>
+<body>
+<div>
+	<h1 id="first">인접 선택자</h1>
+	<h1 class="one">children선택자</h1>
+	<h2 class="one">next</h2>
+	<h4>prev선택자</h4>
+	<h4>parent선택자</h4>
+	<h3>sibling선택자</h3>
+	<h2>자손, 후손선택자</h2>
+</div>
+<img alt="" src="../img/09.jpg">
+</body>
+</html>
