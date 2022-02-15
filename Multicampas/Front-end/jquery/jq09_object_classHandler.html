@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<style>
+   div{border:1px solid red; margin:5px;}
+</style>
+<script>
+   $(function(){
+      //   객체감싸기
+      //   wrap() : 선택자를 특정 태그로 각각 감싼다
+      $(".c1").wrap("<h1/>");
+   
+      //   wrapAll() : 선택자를 특정 태그로 한 번에 감싼다.
+      $(".c2").wrapAll("<div/>");
+      
+      //   wrapInner() : 선택자의 하위를 특정 태그로 감싼다.
+      $(".c2").wrapInner("<b/>");
+      
+      //   unwrap() : 선택자의 부모 객체를 삭제
+      $(".c1").unwrap();
+      
+      //   each() : 반복문 여러개의 객체를 순차적으로 처리한다.
+      //         idx=0,1,2,3,..   li,li,li,...
+      $("#list>li").each(function(idx, obj){
+         $(obj).html("<b>each() 함수를 이용한 반복처리("+idx+")</b>");
+      });
+      
+      //   map(): 배열을 이용한 반복문처리함수
+      var hobbyList = ["달리기","걷기","마라톤","경보","400허들","높이뛰기","멀리뛰기","원반던지기"];
+      
+      $("body").prepend("<select name='hobby'></select>");
+      
+      //   배열명.map(function(변수, 변수){실행문});
+      //   data=달리기, 걷기, 마라톤,... / idx=0,1,2,...
+      hobbyList.map(function(data, idx){
+         //   =, *= : 특정문자가 포함된 경우 선택
+         //   ^= : 특정문자로 시작하면 선택
+         //   $= : 특정문자로 끝나면 선택
+         $("select[name=hobby]").append("<option value = '"+data+"'>"+data+"("+idx+")</option>");
+      });p
+   });
+</script>
+
+</head>
+<body>
+
+<div class="c1">객체조작메소드111</div>
+<div class="c1">객체조작메소드222</div>
+<div class="c2">객체조작메소드333</div>
+<div class="c2">객체조작메소드444</div>
+
+<ul id="list">
+   <li>객체 조작 메서드 AAA</li>
+   <li>객체 조작 메서드 BBB</li>
+   <li>객체 조작 메서드 CCC</li>
+   <li>객체 조작 메서드 DDD</li>
+   <li>객체 조작 메서드 EEE</li>
+   <li>객체 조작 메서드 FFF</li>
+   <li>객체 조작 메서드 GGG</li>
+   <li>객체 조작 메서드 HHH</li>
+</ul>
+
+</body>
+</html>

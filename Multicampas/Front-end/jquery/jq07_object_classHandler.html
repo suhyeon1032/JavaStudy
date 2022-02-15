@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<style>
+	.c1{border:5px solid red; width:200px; height:100px;}
+	.c2{border:5px dotted blue; width:200px; height:100px;}
+	.c3{border:5px dashed green; width:200px; height:100px;}
+	.c4{border:5px groove orange; width:200px; height:100px;}
+</style>
+<script type="text/javascript">
+	/* $(function(){
+		
+	}) */
+	$(()=>{
+		// jquery에서 스타일시트 클래스를 추가하거나 삭제할 수 있다.
+		$("img").addClass("c1");
+		$("img").addClass("c2");
+		
+		// 짝수번째만 c3을 실행
+		$("img:even").addClass("c3");
+		
+		$("img:odd").removeClass("c2");
+		
+		// toggleClass : 클래스가 있으면 지우고 업으면 추가한다.
+		$("img").toggleClass("c3");
+		
+		// hasClass() : 클래스가 있는지 확인해주는 함수
+		var r = $("img:first").hasClass("c2");
+		$("#result").val(r);
+		
+		// $("#result").val(); // 선택자의 value속성값을 얻어오기
+		//document.getElementById("result") =$("#result")
+		//$("#result").val("홍길동"); //선택자의 value속성값을 매개변수의 값으로 바꾼다.
+	});
+
+</script>
+</head>
+<body>
+<div>
+	<img alt="" src="../img/06.jpg">
+	<img alt="" src="../img/07.jpg">
+	<img alt="" src="../img/08.jpg">
+	<img alt="" src="../img/09.jpg">
+</div>
+<div>
+	<input type="text" id="result"/>
+</div>
+</body>
+</html>

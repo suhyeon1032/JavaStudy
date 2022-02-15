@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<style type="text/css">
+	div:nth-of-type(1){
+		border:1px solid red;
+	}
+	div:nth-of-type(2){
+		width: 300px;   height: 400px;  background-color: lightblue;    border: 1px solid gray;
+	}
+	div:nth-of-type(3){
+		position: absolute; background-color: pink; top: 100px; margin: 50px; padding: 20px; right: 100px;
+    }
+
+	
+</style>
+<script type="text/javascript">
+	$(()=>{
+		$("div").last().append("<h1>수치함수</h1>")
+		// 폭 : width()과 높이:height()를 구하는 함수
+		var w = $("div").eq(1).width();
+		var h = $("div:eq(1)").height();
+		$("div:eq(1)").append("<h3>width="+w+", height="+h+"</h3>");
+	
+		// innerWidth(), innerHeigth() -> padding을 포함한 폭과 높이
+		// outerWidth(), outerHeigth() -> border,padding을 포함한 폭과 높이
+		
+		var d = $("div:eq(2)");
+		var iW = d.innerWidth();
+		var iH = d.innerHeight();
+		var oW = d.innerWidth();
+		var oH = d.innerHeight();
+		
+		$("div:eq(1)").append("<h3>innerWidth="+iW+", innerHeight="+iH+"</h3>");
+		$("div:eq(1)").append("<h3>outerWidth="+oW+", outerHeight="+oH+"</h3>");
+		
+		// position() : left와 top좌표를 구한다. margin을 포한한 좌표
+		var left = d.position().left;
+		var top = d.position().top;
+		$("div:eq(1)").append("<h3>left="+ left +", top="+top+"</h3>");
+		
+		// offset() : left와  top좌표를 구한다. margin, border, padding을 제외하고 좌표를 구한다.
+		var lft = d.offset().left;
+		var tp = d.offset().top;
+		$("div:eq(1)").append("<h3>offset.left="+lft+", offset.top="+tp+"</h3>");
+		
+		// scroll바의 위치를 이동하거나 위치를 구할 때
+		// $(document).ready(function(){});
+		$(window).scrollTop(200);
+		$(window).scrollLeft(200);
+	});
+</script>
+</head>
+<body>
+<div>수치 조작 메소드</div>
+<div><h1>1234567</h1></div>
+<div></div>
+<img alt="" src="../img/01.jpg">
+<img alt="" src="../img/02.jpg">
+</body>
+</html>

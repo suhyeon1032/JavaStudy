@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript">
+	$(function () {
+		$("body").css("margin","0px");
+		//pink
+		$("body").append("<div id='pink'</div>");
+		$("#pink").css("height","40px").css("background-color","#EF899A");
+		
+		//blue
+		$("body").append("<div id='blue'></div>");
+		$('#blue').css("height","30px").css("background-color","#5AB1CA");
+		
+		//image추가
+		$("body").append("<img src='img/title_layer.gif'/>");
+		$("body").append("<img src='img/glass1.gif'/>");
+		$("body").append("<img src='img/glass2.gif'/>");
+		$("body").append("<img src='img/glass3.gif'/>");
+		
+		$("img").css("position","absolute");
+		
+		$("img:first").css("top","0px");
+		$("img:eq(1)").css("top","60px").css("left","300px");
+		$("img").eq(2).css("top","80px").css("left","450px");
+		$("img").last().css("top","110px").css("left","350px");
+	});
+</script>
+</head>
+<body>
+
+</body>
+</html>

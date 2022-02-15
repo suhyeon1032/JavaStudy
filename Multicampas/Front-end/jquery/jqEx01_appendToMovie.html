@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+	<style>
+	#imgView {
+			width: 1000px;
+			height: 162px;
+			overflow: hidden;
+			margin: 0 auto;
+			border: 1px solid gray;
+	}
+
+		#imgList {
+			width: 1160px;
+			height: 164px;
+		}
+	</style>
+
+	<script>
+		$(function () {
+			//   포스트이미지  목록 만들기
+			var tag = "";
+			for (var i = 1; i <= 20; i++) {
+				tag += "<a href='#'><img src='../javascript/postMove/m";
+				if (i < 10) {
+					tag += "0" + i;
+				} else {
+					tag += i;
+				}
+				tag += ".png'/></a>";
+			}
+			console.log(tag);
+			$("#imgList").html(tag);
+        
+		//일정시간 간격으로 한번씩 호출하라.
+		setInterval("", 500);
+		});
+
+		function movieMove(){
+			//   내용         선택자
+			//$("#imgList>a").first().appendTo("#imgList");
+			//$("#imgList>a").last().prependTo("#imgList");
+			$("#imgList>a").first().insertAfter("#imhList>a:eq(3)");
+		}
+
+	</script>
+</head>
+
+<body>
+
+	<div id="imgView">
+		<div id="imgList"></div>
+	</div>
+
+</body>
+
+</html>
