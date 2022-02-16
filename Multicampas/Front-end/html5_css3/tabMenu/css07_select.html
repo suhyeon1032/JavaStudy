@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<!-- 
+	html속성
+	1. oncontextmenu : 마우스 오른쪽 키 사용 제어
+	2. onselectstart: 선택 시작 불가능(드래그 불가)
+	3. ondragstart:드래그 시작 불가능
+	4. ondragend:
+ -->
+<html oncontextmenu="return false" onselectstart = "return false" 
+	  ondragstart="return false" ondragend="return false">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	/*구조선택자
+		:nth-child()
+		           ① 2n : 짝수
+		           ② 2n+1 : 홀수번째들 선택해
+		           ③ 3n : 3의 배수번째들 선택해
+	*/
+	#lst>li:nth-child(3n){
+		background: pink;
+	}
+	#lst>li:first-child{
+		background: orange;
+	}
+	#lst>li:last-child{
+		color: red;
+		font-size:1.2em;
+		}
+	#body{margin:0px;}
+	/*그림자 만들기*/
+	#lst>li{
+		font-size:1.2em;
+		margin-bottom:30px;
+		border:1px solid #bbb;
+	}
+	/*박스 또는 글자에 그림자 표시*/
+	#lst>li{
+		/*box-shadow:오른쪽, 아래쪽, 투명, 색상;*/
+		box-shadow:10px 5px 5px yellow;
+	}
+	#lst>li{
+		/*text-shadow:오른쪽, 아래쪽, 투명, 색상;*/
+		text-shadow: -10px -5px 5px green;
+	}
+</style>
+</head>
+<body>
+<ul id="lst">
+	<li>맨드라미</li>
+	<li>장미</li>
+	<li>동백꽃</li>
+	<li>코스모스</li>
+	<li>민들레</li>
+	<li>해바라기</li>
+	<li>하야신스</li>
+	<li>카네이션</li>
+	<li>펜지</li>
+</ul>
+<style>
+	/*구조선택자
+		:first-of-type :처음 객체
+		:last-of-type:마지막 객체
+		:nth-of-type():괄호 안 번째 객체
+		            ① 2n : 짝수
+		            ② 2n+1 : 홀수번째들 선택해
+		            ③ 3n : 3의 배수번째들 선택해
+	*/
+	#lst2>li:nth-of-type(2n){
+		background:yellow;}
+	#lst2>li:nth-of-type(2n+1){
+		background:orange;
+	}
+	#lst2>li:first-of-type{
+		font-size:2em;}
+	#lst2>li:last-of-type{
+		color:green;}
+</style>
+<ul id="lst2">
+	<li>맨드라미</li>
+	<li>장미</li>
+	<li>동백꽃</li>
+	<li>코스모스</li>
+	<li>민들레</li>
+	<li>해바라기</li>
+	<li>하야신스</li>
+	<li>카네이션</li>
+	<li>펜지</li>
+</ul>
+<style>
+	/*텍스트 스타일*/
+	/*
+		::first-letter ->문단의 첫번째 문자에 스타일 적용
+		::first-line - >문단의 첫번째 줄에 스타일 적용(첫번째 줄 : 줄넘어감 기준)
+	*/
+		#txt::first-letter{
+			font-size:2em; background:pink; font-weight:bold; color:red}
+		#txt::first-line{
+			text-decoration:underline;
+		}
+		#txt::selection{
+			color:red;background:#000;
+		}
+		#txt{
+			/* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#bfd255+0,35208e+1,34e5df+100,8eb92a+100,8eb92a+100,8eb92a+100,72aa00+100,9ecb2d+100 */
+			background: #bfd255; /* Old browsers */
+			background: -moz-linear-gradient(top,  #bfd255 0%, #35208e 1%, #34e5df 100%, #8eb92a 100%, #8eb92a 100%, #8eb92a 100%, #72aa00 100%, #9ecb2d 100%); /* FF3.6-15 */
+			background: -webkit-linear-gradient(top,  #bfd255 0%,#35208e 1%,#34e5df 100%,#8eb92a 100%,#8eb92a 100%,#8eb92a 100%,#72aa00 100%,#9ecb2d 100%); /* Chrome10-25,Safari5.1-6 */
+			background: linear-gradient(to bottom,  #bfd255 0%,#35208e 1%,#34e5df 100%,#8eb92a 100%,#8eb92a 100%,#8eb92a 100%,#72aa00 100%,#9ecb2d 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bfd255', endColorstr='#9ecb2d',GradientType=0 ); /* IE6-9 */	
+		}
+</style>
+<div id="txt">
+쌀국수가 맛이가 없었다. 그래서 점심에 그냥 잘 생각이다. 아니다 점심에 목욕을 해야한다. 따듯한 물에 씻고 푹 자고 일어나면 점심시간이 지나서 수업에 또 지각하는건 아닐까? 아니야 그래도 쌀국수가 맛이가 없었으니까 꼭 오늘은 잘 쉬어야지.
+</div>
+</body>
+</html>
