@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>게시판 목록에서 제목 ... 만들기 </title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<style>
+    ul, li{margin: 0; 
+        padding: 0; 
+        list-style-type: none;}
+
+    #container{
+        width: 1000px;
+        margin: 0 auto;
+    }
+    #boardList>li{
+        float: left; 
+        height: 40px; 
+        border-bottom: 1px solid #ccc;
+        width: 10%;
+    }
+    /*제목*/
+    #boardList>li:nth-child(6n+3){width: 50%;}
+
+    /*블럭의 범위를 넘는 내용 줄임표시(...) 로 설정하는 스타일*/
+    .wordCut{
+        white-space: nowrap;/*줄바꿈 하지 않게 설정하는 것*/
+        overflow: hidden;/*범위를 벗어나면 숨김*/
+        text-overflow: ellipsis;/*문자가 범위를 넘으면 ...을 표시*/
+    }
+</style>
+<script>
+    $(function(){
+        $("#allChk").change(function(){
+            //allChk의 체크상태를 나머지 모든 input에 설정한다.
+            $("#boardList input[type=checkbox]").prop('checked', this.checked);
+        });
+    });
+</script>
+<script async src='/cdn-cgi/bm/cv/669835187/api.js'></script></head>
+<body>
+<div id ="container">
+    <h1>게시판 목록</h1>
+    <ul id ="boardList">
+        <li><input type="checkbox" name="chk" id="allChk">전체선택</li>
+        <li>번호</li>
+        <li>제목</li>
+        <li>작성자</li>
+        <li>조회수</li>
+        <li>등록일</li>
+
+        <li><input type="checkbox" name="chk" id=""></li>
+        <li>100</li>
+        <li class="wordCut">제목 졸라길다 졸래길어 슈슛슈ㅠㅅ슈슉규규 이렇게 길줄 몰랐다 홀리 크랩~~~~~~~~~~</li>
+        <li>goguma</li>
+        <li>0</li>
+        <li>02-16 12:10</li>
+
+        <li><input type="checkbox" name="chk" id=""></li>
+        <li>100</li>
+        <li class="wordCut">제목</li>
+        <li>goguma</li>
+        <li>0</li>
+        <li>02-16 12:10</li>
+
+        <li><input type="checkbox" name="chk" id=""></li>
+        <li>100</li>
+        <li class="wordCut">제목</li>
+        <li>goguma</li>
+        <li>0</li>
+        <li>02-16 12:10</li>
+    </ul>
+</div>
+<script type="text/javascript">(function(){window['__CF$cv$params']={r:'6de482d6baca3532',m:'_T6GHck.KmrAOvUYcU27NF8ESoJVcyK3RVirRmNMeEI-1644990759-0-Ac7HbxGe9++3Upip5+d5Z9yMerlElUHFNqX8mgHQ0t8dl/Sa9wbt6xaeI7xllKEl1FkNR5cb9+OBGw9DvlScTAXUoFkQ98Z2EAE+hXpB0EInDoiyXFOv7jg2HBWRXgi7//mqDvYYIzkW4ZgXwGjUKPQZKCNcdHKnmo8/vGNkoYEQ3fpd9vfPowiBFiH+CRCSFWbQ4BUmSvQylhMDENGRLSw=',s:[0x9dbc82b945,0x789f368908],}})();</script></body>
+</html>

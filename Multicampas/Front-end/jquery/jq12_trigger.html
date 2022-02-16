@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<style>
+    img{width: 100px; height: 150px;}
+</style>
+<script>
+    $(function(){
+        //이미지에서 클릭이벤트 발생시 처리할 부분
+        var n = 1;
+        $("img").first().on('click',function(){
+            $("body").append("<img src='../img/" + n++ + ".jpg'>");
+            if(n>=9)n=1;
+        });
+
+        //첫번째 이미지를 자동 이벤트 발생시키기
+        setInterval(function(){
+            //trigger() 이벤트를 발생시키는 함수
+            $("img:first").trigger('click');
+        },1000);
+    });
+</script>
+<script async src='/cdn-cgi/bm/cv/669835187/api.js'></script></head>
+<body>
+<img src="../img/1.jpg" alt="">
+<script type="text/javascript">(function(){window['__CF$cv$params']={r:'6de482d209563532',m:'Ga_ZR9aOhwn8Fi0zYhZmtQBPXX9u6u_lykw4DHvodJI-1644990758-0-AcfC0TxDOi1hCIBV23Ic8rZ7GWtx8txgDJlnt3QMXmw64IWabudwK0YMAm37rjqJPJ8evWXzAHAk6VehJdPejWecPwmumKnozV1eXCAdG2WNHvGnt2Y4IGEHVUD8WsgU07MS+o/4DEj2NKgWFqlQVJrKfWli/8CsCVNkvpakKbDOP/gV2xoeeL7QyKboktjU80E59o4R13yuz5I2B76jwBM=',s:[0x1ac5008d0b,0xa09d58a5d9],}})();</script></body>
+</html>

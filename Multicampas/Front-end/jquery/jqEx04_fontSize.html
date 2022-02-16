@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		// console.log(	$("div:last").css("font-size")	);
+		// 버튼의 이벤트 처리
+		$("button").on('click', function(){
+			// 버튼의 index를 구하여 0 : 점점작게, 1 : 기본크기(16px), 2 : 점점크게
+			var idx = $("button").index(this);
+			var size = parseFloat($("div:last").css("font-size")); // 현재 글자 크기	16px -> parseFloat()사용하면 px 사라짐
+			if(idx == 0){
+				size--; // size -= 0.5;
+			} else if(idx==1){ // 기본크기
+				size = 16;
+			} else if(idx==2){ // 점점크게
+				size++;
+			}
+			$("div").last().css("font-size",size+"px");
+		});
+	});
+</script>
+</head>
+<body>
+<div>
+	<button>-</button>
+	<button>0</button>
+	<button>+</button>
+</div>
+<div style="font-size:2cm"> <!-- 기본 크기 16px -->
+서울=뉴스1) 황두현 기자 = 지난해 '게임 대장주' 지위를 누렸던 엔씨소프트가 연일 추락하고 있다. 실적은 1년만에 반토막 났고, 주가도 연일 최저치를 경신하고 있다. 증권가는 반등 가능성을 낮게보며 목표가를 잇달아 낮췄다.
+16일 오전 9시43분 기준 엔씨소프트는 전날보다 2만8000원(5.46%) 낮은 48만5000원에 거래되고 있다. 장초반 7% 넘게 하락하기도 했다. 52주 신저가 49만7000원보다 낮은 수준이다.
+기대치에 못 미친 연간 실적과 불투명한 성장 전망이 주가를 붙들고 있다. 구체적으로는 기존 게임 부진과 일회성 비용 증가, 신작 출시 지연 등이다.
+엔씨소프트는 전날(15일) 지난해 4분기 실적을 발표했다. 매출은 전분기대비 52.1% 증가한 7572억원을 기록했지만 컨센서스보다 8.1% 낮았다. 영업이익은 13.7% 늘어난 1095억원을 달성했지만 컨센스의 54%를 하회했다.
+신작 리니지W의 흥행에도 불구하고 기존 게임 리니지M과 리니지2M의 매출 감소 폭이 예상치보다 컸다. 지난해 11월 출시된 리니지W의 일평균 매출은 62억원으로 시장 예상치보다 높았으나, 리니지M의 전분기 16억원에서 9억6000만원까지 감소했다. 출시 이래 가장 큰 매출 하락폭이다.
+</div>
+</body>
+</html>

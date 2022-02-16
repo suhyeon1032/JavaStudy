@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<style type="text/css">
+	#review{width:300px; height: 50px;}
+</style>
+<script type="text/javascript">
+	$(function(){
+		$("#review").on('keyup', function(){
+			var txtCnt = 100 - $("#review").val().length;
+			$("#cnt").text(txtCnt);
+		});
+	});
+</script>
+</head>
+<body>
+<div>
+	남은 문자 수  : <span id="cnt">100</span>
+</div>
+<textarea name="review" id="review" maxlength="100"></textarea>
+</body>
+</html>

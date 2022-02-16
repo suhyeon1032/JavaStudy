@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<style>
+	.c1{background-color: pink; color:red;}
+	.c2{background-color: green; color:#fff;}
+</style>
+<script type="text/javascript">
+	$(function () {
+		// hover : 마우스오바, 마우스아웃을 가진다.
+		let cnt=0;
+		$("h1").hover(function(){
+			$(this).addClass("c1");
+			cnt++;
+			$(this).html(	$(this).text()+"=>"+cnt	);	
+			var idx = $("h1").index(this);
+			console.log('h1->',idx);
+			
+			// 이벤트 10번이상 발생하면 이벤트 종료하기
+			if(cnt>=10){
+				$(this).off();
+			}
+			
+		}, function(){ // out시
+			$(this).removeClass("c1");
+		});
+		
+		// 이벤트가 1번만 발생하도록 설정
+		$("h2").one('click', function(){
+			$(this).addClass("c2");
+			console.log(	$("h2").index(this)	);
+		});
+	});
+</script>
+</head>
+<body>
+<h1>hover 이벤트 처리 테스트중...</h1>
+<h1>hover 이벤트 처리 테스트중...</h1>
+<h1>hover 이벤트 처리 테스트중...</h1>
+<h1>hover 이벤트 처리 테스트중...</h1>
+<h1>hover 이벤트 처리 테스트중...</h1>
+<h1>hover 이벤트 처리 테스트중...</h1>
+<h2>one event Test...</h2>
+<h2>one event Test...</h2>
+<h2>one event Test...</h2>
+<h2>one event Test...</h2>
+</body>
+</html>

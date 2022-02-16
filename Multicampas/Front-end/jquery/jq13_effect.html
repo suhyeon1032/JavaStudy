@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>js13 effect</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $(function(){
+        // hide() 숨기기
+        // show() 보여주기
+        // toggle() 숨기기 보여주기
+        $("#hide").click(function(){
+            // 사라지는 시간 : "slow", "fast", "normal", 밀리초
+            $("#i").hide("slow");
+        });
+
+        $('#show').click(function(){
+            $("#i").show("slow"); 
+        });
+
+        $('#toggle').click(function(){
+            $("#i").toggle("slow");
+        });
+
+        // fadeIn(): 점점 진하게
+        // fadeOut(): 점점 흐리게
+        // fadeToggle(): 점점 흐리게 진하게 반복
+        $("#fadeOut").click(function(){
+            // 사라지는 시간 : "slow", "fast", "normal", 밀리초
+            $("#i").fadeOut("slow");
+        });
+
+        $('#fadeIn').click(function(){
+            $("#i").fadeIn("slow"); 
+        });
+
+        $('#fadeToggle').click(function(){
+            $("#i").fadeToggle("slow");
+        });
+
+        // slideUp(): 슬라이드 위로 줄어듬
+        // slideDown(): 아래로 줄어듬
+        // slideToggle(): 위아래 줄어듬 반복
+        $("#slideUp").click(function(){
+            // 사라지는 시간 : "slow", "fast", "normal", 밀리초
+            $("#i").slideUp("slow");
+        });
+
+        $('#slideDown').click(function(){
+            $("#i").slideDown("slow"); 
+        });
+
+        $('#slideToggle').click(function(){
+            $("#i").slideToggle("slow");
+        });
+    });
+</script>
+<script async src='/cdn-cgi/bm/cv/669835187/api.js'></script></head>
+<body>
+<div>
+    <button id="hide">숨기기(hidden)</button>
+    <button id="show">보여주기(show)</button>
+    <button id="toggle">toggle(hidden, show)</button>
+
+    <button id="fadeIn">보여주기(fadeIn)</button>
+    <button id="fadeOut">숨기기(fadeOut)</button>
+    <button id="fadeToggle">toggle(fadeToggle)</button>
+
+    <button id="slideUp">숨기기(slideUp)</button>
+    <button id="slideDown">보여주기(slideDown)</button>
+    <button id="slideToggle">toggle(slideToggle)</button>
+    <hr>
+    <img src="../img/6.jpg" alt="" id="i"><br>
+    <img src="../img/7.jpg" alt="">
+</div>
+<script type="text/javascript">(function(){window['__CF$cv$params']={r:'6de482ccbe353532',m:'yN6O0TeiWhnPhgEYC2xVogTCdOXaSnd8DBJtzsPEJjc-1644990757-0-AfW0AparGn04zReCr5O3tzEywwsmqXZWPrbtVCwGhnV0uoUJziPgBLEefuXpdQVYb4usgGV8qJfWm8/xZTfJ4JdNr/0d5iftS/SL1D0cIhgnDRIVG5QszKTMX+uEsX1smgqyWu4UDkdQQSFMbQOvJD50t2FJVxXGzs85nSKPZU2ro0OOIZSXBcdVM5HcgCJIhGh6ArunWbhbHvwLHzupmX0=',s:[0xd82051a9c8,0xc699ad6dc8],}})();</script></body>
+</html>
