@@ -1,4 +1,4 @@
-package array;
+package week6;
 
 import java.io.*;
 import java.util.*;
@@ -6,19 +6,25 @@ import java.util.*;
 public class BOJ_20186 {
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-		String s = br.readLine();
-		StringTokenizer st = new StringTokenizer(s);
 		
-		int N = Integer.parseInt(s);
-		int M = Integer.parseInt(st.nextToken());
+		Scanner sc = new Scanner(System.in);
+		int N = sc.nextInt();
+		int K = sc.nextInt();
+		int sum = 0;
+		Integer arr[] = new Integer[N];
 		
-		String []arr = new String[N];
+		for(int i = 0; i < N; i++) {
+			arr[i] = sc.nextInt();
+		}sc.close();
 		
-        for (int i = 0; i < N; i++) {
-            arr[i] = br.readLine().toString();
-        }
+		Arrays.sort(arr,Collections.reverseOrder());
+		
+		for(int i = 0; i < K; i++) {
+			sum += arr[i];
+		}
+		
+		System.out.println(sum - (K*(K-1))/2 );
 	}
+	
 
 }

@@ -1,4 +1,4 @@
-package array;
+package week6;
 
 import java.io.*;
 import java.util.*;
@@ -7,22 +7,21 @@ public class BOJ_18310 {
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-	    int homeNum = Integer.parseInt(br.readLine());
-	    int []distance = new int[homeNum];
-	    int []homes = new int[homeNum];
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		
+	    int N = Integer.parseInt(br.readLine());
+	    int []homes = new int[N];
 	    int i=0;
 
 	    StringTokenizer st = new StringTokenizer(br.readLine());
 
-	    while (st.hasMoreTokens()){
-	        homes[i]=Integer.parseInt(st.nextToken());
-	        i++;
-	    }
+	    for ( i = 0; i < N; i++) {
+	    	homes[i] = Integer.parseInt(st.nextToken());
+        }
 
 	    Arrays.sort(homes);
 
-	    BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-	    bw.write(Integer.toString(homes[homeNum/2-1]));
+	    bw.write(Integer.toString(homes[N/2-1]));
 	    bw.flush();
 	    bw.close();
 
