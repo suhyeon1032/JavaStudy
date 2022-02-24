@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>login Form Prac</title>
+<style>
+	#main{
+		width: 350px;
+		padding: 20px;
+		margin: 50px auto;
+		border: 1px solid #ddd;
+		overflow: auto;
+		text-align: center;
+	}
+	#main>div{
+		float: left;
+		width: 50%;
+	}
+	#main>div>input {
+	width: 80%;
+	}
+
+</style>
+<script>
+	function emailSplit() {
+		var email = document.getElementById("email").value; // ggg@nate.com
+		var id = document.getElementById("id");
+		var domain = document.getElementById("domain");
+		
+		/* @두개인 경우 확인 */
+		var atMarkStart = email.indexOf("@");
+		var atMarkEnd = email.lastIndexOf("@");
+		
+		var point = email.indexOf(".");
+
+		
+		/* @이가 없으면 이메일 잘못 입력을 띄워라 */
+		if(email.indexOf("@")==-1 || atMarkStart!= atMarkEnd || point<atMarkStart || Math.abs(atMarkStart-point)<2) {
+			alert("이메일을 잘못 입력하셨습니다.");
+			return;
+		}
+		
+		var emailCut = email.split("@");
+		id.value = emailCut[0];
+		domain.value = emailCut[1];
+		
+		/* 클릭하면 내용 지워지게 하기 */
+		document.getElementById("email").value = "";
+	}
+</script>
+
+</head>
+<body>
+<div id=logo>
+	<img src="../img/logo.png">
+</div>
+<div id = main>
+	이메일
+	<input type="text" name="email" id="email"/>
+	<input type="button" value="클릭" onclick="emailSplit()"/>
+	<hr/>
+	<div>
+		아이디<br/>
+		<input type="text" name="id" id="id"/>
+	</div>   
+	<div>
+		도메인<br/>
+		<input type="text" name="domain" id="domain">
+	</div>
+</div>
+</body>
+</html>
