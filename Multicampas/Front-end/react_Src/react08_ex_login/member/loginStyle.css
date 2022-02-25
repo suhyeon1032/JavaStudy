@@ -1,0 +1,12 @@
+.loginFormCenter {
+    width: 400px;
+    margin: 100px auto;
+}
+
+.txtCenter{
+    text-align:center;
+}
+
+.form-group{
+    margin:20px 0
+}
