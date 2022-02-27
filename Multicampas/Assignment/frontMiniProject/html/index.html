@@ -3,39 +3,53 @@
 <head>
 <meta charset="UTF-8">
 <title>AllTing</title>
-<style>
-	#main{
-		width: 90%;
-		background: #ddd;
-		display: flex;
-		margin: 0 auto;
-	}
-	#head{
-		width: 90%;
-		padding: 5px;
-		margin: 5px;
-		overflow: auto;
-		text-align: center;
-	}
-	#head>div{
-		float: left;
-		width: 50%;
-	}
-	#head>div>img {
-	width: 100%;
-	}
-</style>
+<link rel="icon" href="../img/favicon.ico" type="image/x-icon" sizes="16x16">
+<link rel="stylesheet" href="common.css" type="text/css" > 
+<link https://fonts.google.com/specimen/Cardo#standard-styles>
+
 </head>
 <body>
-<div id=main>
-	<div id = head>
-		<div>
-			<img src="../img/logo.png">
-		</div>
-		<div>
-			<button>login</button>
-		</div>
+	<div class="container">
+		<header>
+			<h2><a href="index.html" ><img src="../img/logo.png" width="120px"></a></h2>
+			<nav>
+				<ul>
+					<li><a href="Map.html" class="menu">Map</a></li>
+					<li><a href="login.html" class="menu">LogIn</a></li>
+					<li><a href="singIn.html" class="menu">SingIn</a></li>
+				</ul>
+			</nav>
+		</header>
+	</div>
+	
+
+<div class="contents"> 
+	<div class="slider" >
+		<iframe src="../html/slider.html" scrolling="no" frameborder="0" align="middle"></iframe>
+	</div>	
+	
+	<div class="shop" >
+	<div class="newshop">
+		NEW
+		<a href="#"><img src="../img/mainEx02.jpg"  class="image"></a>
+	</div>
+	<div class="newshop">
+		HOT
+		<a href="#"><img src="../img/mainEx03.jpg"  class="image" ></a>
+	</div>
+	<div class="newshop">
+		NEW
+		<a href="#"><img src="../img/mainEx04.jpg"  class="image" ></a>
+	</div>
 	</div>
 </div>
+
+
+
+<div class="footer">
+	<address>© 2022 frontMiniProject</address>
+</div>
+
+
 </body>
 </html>

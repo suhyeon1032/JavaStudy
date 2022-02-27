@@ -2,71 +2,68 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>login Form Prac</title>
+<title>LogIn</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<link rel="icon" href="../img/favicon.ico" type="image/x-icon" sizes="16x16">
+<link rel="stylesheet" href="common.css" type="text/css" > 
+<link rel="stylesheet" href="login.css"> 
+
 <style>
-	#main{
-		width: 350px;
-		padding: 20px;
-		margin: 50px auto;
-		border: 1px solid #ddd;
-		overflow: auto;
-		text-align: center;
-	}
-	#main>div{
-		float: left;
-		width: 50%;
-	}
-	#main>div>input {
-	width: 80%;
-	}
+	
 
 </style>
 <script>
-	function emailSplit() {
-		var email = document.getElementById("email").value; // ggg@nate.com
-		var id = document.getElementById("id");
-		var domain = document.getElementById("domain");
-		
-		/* @두개인 경우 확인 */
-		var atMarkStart = email.indexOf("@");
-		var atMarkEnd = email.lastIndexOf("@");
-		
-		var point = email.indexOf(".");
-
-		
-		/* @이가 없으면 이메일 잘못 입력을 띄워라 */
-		if(email.indexOf("@")==-1 || atMarkStart!= atMarkEnd || point<atMarkStart || Math.abs(atMarkStart-point)<2) {
-			alert("이메일을 잘못 입력하셨습니다.");
-			return;
+	$(function(){
+		$("#frm").submit(function(){
+			return formCheck();
+		});
+	});
+	function formCheck() {
+		var userid = document.getElementById("userid");
+      
+		if(userid.value==""){
+			alert("아이디를 입력하세요");
+			userid.focus();
+			return false;
 		}
+		if(document.querySelector("#userpw").value==""){
+			alert("비밀번호를 입력하세요.");
+			document.querySelector("#userpw").focus();
+			return false;
+		}
+		document.getElementById("Frm").submit();
 		
-		var emailCut = email.split("@");
-		id.value = emailCut[0];
-		domain.value = emailCut[1];
-		
-		/* 클릭하면 내용 지워지게 하기 */
-		document.getElementById("email").value = "";
+	return true;
 	}
 </script>
 
 </head>
 <body>
-<div id=logo>
-	<img src="../img/logo.png">
-</div>
-<div id = main>
-	이메일
-	<input type="text" name="email" id="email"/>
-	<input type="button" value="클릭" onclick="emailSplit()"/>
-	<hr/>
-	<div>
-		아이디<br/>
-		<input type="text" name="id" id="id"/>
-	</div>   
-	<div>
-		도메인<br/>
-		<input type="text" name="domain" id="domain">
+	<div class="container">
+		<header>
+			<h2><a href="index.html" ><img src="../img/logo.png" width="120px"></a></h2>
+			<nav>
+				<ul>
+					<li><a href="Map.html" class="menu">Map</a></li>
+					<li><a href="login.html" class="menu">LogIn</a></li>
+					<li><a href="singIn.html" class="menu">SingIn</a></li>
+				</ul>
+			</nav>
+		</header>
 	</div>
-</div>
+<div class="loginform">
+        <h1>login</h1>
+        <form method="post" action="index.html" id="frm">
+            <input type="text" name="userid" id="userid" placeholder="ID">
+            <input type="password" name="userpw" id="userpw" placeholder="Password">
+            
+            <input type="submit" value="LOGIN">
+        </form>
+        <div class="forgot">
+            <a href="singIn.html">회원가입</a>
+            <a href="#">비밀번호 찾기</a>
+        </div>
+    </div>
 </body>
 </html>

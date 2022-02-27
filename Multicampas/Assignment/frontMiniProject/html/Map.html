@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="icon" href="../img/favicon.ico" type="image/x-icon" sizes="16x16">
+<link rel="stylesheet" href="common.css" type="text/css" > 
+<link https://fonts.google.com/specimen/Cardo#standard-styles>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPgIN5Syyjc1Trf4yDdSfh58Jac_6PfLw&callback=initMap"></script>
+
+<style>
+   #gmap {
+      width : 100%;
+      height : 700px;
+      border : 1px solid gray;
+   }
+   #mapSearch{
+      position: relative;
+      border:1px solid gray;
+      z-index:100;
+      /* left:400px; */
+      border-radius:5px;
+      align-content: center;
+      margin: 0 auto;
+      width: 500px;
+      height: 40px;
+   }
+   #address{
+   font-size: 14px;
+   width: 250px;
+   padding:10px;
+   outline: none;
+   float: left;
+   border: none;
+   }
+   #geoSearch{
+   width: 50px;
+   height: 100%;
+   background: #1b5ac2;
+   outline: none;
+   float: right;
+   color: #ffffff;
+   border: none;
+   }
+</style>
+<script>
+   function geocodeAddress(){
+      var address = document.getElementById('address');
+      if(address.value==''){
+         alert("검색어를 입력하세요");
+         address.value="";
+         address.focus();
+         return false;
+      }
+      setMapPosition(address.value,"http://www.eclipse.org","5.jpg");
+   }
+</script>
+</head>
+<body>
+	<div class="container">
+		<header>
+			<h2><a href="index.html" ><img src="../img/logo.png" width="120px"></a></h2>
+			<div id = "mapSearch">
+			   <input type="text" id="address" size="20"/>
+			   <input type="button" value="검색" id="geoSearch" onclick="geocodeAddress()"/>
+			</div>
+			<nav>
+				<ul>
+					<li><a href="Map.html" class="menu">Map</a></li>
+					<li><a href="login.html" class="menu">LogIn</a></li>
+					<li><a href="singIn.html" class="menu">SingIn</a></li>
+				</ul>
+			</nav>
+		</header>
+	</div>
+	
+<div id="gmap"></div>
+<script>
+   var latitude;
+   var longitude;
+   
+   var addr;
+   var homePage;
+   var popImg;
+   
+   function mapReset(){
+      latitude = 37.5729503;
+      longitude = 126.97935778;
+      
+      addr = ['떡볶이','곱창','삼겹살','파스타'];
+      homePage = ['https://www.nate.com','https://naver.com','https://naver.com','https://naver.com'];
+      /* popImg = ['1.jpg','2.jpg','3.jpg','4.jpg']; */
+   }
+   
+   var map;
+   function initMap(){
+      mapReset();
+      
+      var mapProperties = {
+         center : new google.maps.LatLng(latitude, longitude),
+         zoom :12,
+         mapTypeId : google.maps.MapTypeId.ROADMAP
+      }
+      
+      map = new google.maps.Map(document.getElementById("gmap"), mapProperties);
+      
+
+      geoCoder = new google.maps.Geocoder();
+      
+      for(var i=0; i<addr.length; i++){
+
+         setMapPosition(addr[i], homePage[i],/*  popImg[i] */)
+      }
+   }
+
+   function setMapPosition(addr2, home2, pop2){
+
+      geoCoder.geocode({'address':addr2}, function(results,    status){
+         if(status=='OK'){
+            console.log(results);
+
+            map.setCenter(results[0].geometry.location);
+            
+            var marker = new google.maps.Marker({
+               map : map,
+               icon : 'gmap_pin.png',
+               title : results[0].formatted_address, 
+               position : results[0].geometry.location  
+            });
+            
+            var la = results[0]['geometry']['location']['lat'](); 
+            var lo = results[0]['geometry']['location']['lng'](); 
+            
+            var popMsg = "위도 : "+ la;
+            popMsg += "<br/>경도 : "+ lo;
+            popMsg += "<br/>주소 : "+ results[0].formatted_address;
+            popMsg += "<br/><a href='"+ home2 + "'><img src='../../img/"+ pop2 +"' width='100' height='50'/></a>";
+            
+            var info = new google.maps.InfoWindow({content:popMsg});
+            
+           
+            google.maps.event.addListener(marker, 'click',function(){
+               info.open(map, marker);
+            });
+            
+         }else{
+            console.log("존재하지 않는 주소입니다.");
+         }
+         
+      });
+   }
+   
+</script>
+</body>
+</html>

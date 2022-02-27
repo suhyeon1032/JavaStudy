@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>SingIn</title>
+<link rel="icon" href="../img/favicon.ico" type="image/x-icon" sizes="16x16">
+<link rel="stylesheet" href="common.css" type="text/css" > 
+<link rel="stylesheet" href="singin.css"> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
+</head>
+<body>
+	<div class="container">
+		<header>
+			<h2><a href="index.html" ><img src="../img/logo.png" width="120px"></a></h2>
+			<nav>
+				<ul>
+					<li><a href="Map.html" class="menu">Map</a></li>
+					<li><a href="login.html" class="menu">LogIn</a></li>
+					<li><a href="singIn.html" class="menu">SingIn</a></li>
+				</ul>
+			</nav>
+		</header>
+	</div>
+<div class="register">
+        <h3>회원가입</h3>
+        <form method="post" action="index.html" id="frm">
+            <div class="flex">
+                <ul class="container">
+                    <li class="item center">이름</li>
+                    <li class="item">
+                        <input type="text" name="username" id="username" placeholder="이름을 입력하세요." autofocus required>
+                    </li>
+                </ul>
+                <ul class="container">
+                    <li class="item center">아이디</li>
+                    <li class="item">
+                        <input type="text" name="userid" id="userid" placeholder="아이디를 입력하세요." required>
+                    </li>
+                </ul>
+                <ul class="container">
+                    <li class="item center">비밀번호</li>
+                    <li class="item">
+                        <input type="password" name="userpw" id="userpw" placeholder="비밀번호를 입력하세요." required>
+                    </li>
+                </ul>
+                <ul class="container">
+                    <li class="item center">비밀번호 확인</li>
+                    <li class="item">
+                        <input type="password" name="userpw2" id="userpw2" placeholder="비밀번호를 입력하세요." required>
+                    </li>
+                </ul>
+                <ul class="container">
+                    <li class="item center"> 전화번호</li>
+                    <li class="item">
+                        <input type="text" name="usernum" id="usernum" placeholder="휴대전화번호">
+                    </li>
+                </ul>
+                <ul class="container">
+                    <li class="item center">
+                        
+                    </li>
+                    <li class="item">
+                        <button type="submit" class="submit">가입하기</button>
+                    </li>
+                </ul>
+            </div>
+        </form>
+    </div>
+    
+<script type="text/javascript">
+	$(function(){
+		$("#frm").submit(function(){
+			return formCheck();
+		});
+	});
+	function formCheck(){
+		//username
+		var reg = /^[가-힣]{2,7}$/;
+		var username = document.getElementById("username");
+		if (!reg.test($("#username").val())) {
+			alert("이름을 잘못입력하셨습니다.");
+			$("#username").focus();
+			return false;
+		}
+		
+		//userid
+		reg = /^[a-zA-Z]{1}[a-zA-Z0-9_]{7,11}$/;	// \w : 영어 대소문자, 숫자
+		var userid = document.getElementById("userid");
+		
+		if (userid.value=="") {
+			alert("아이디를 입력하세요");
+			userid.focus();
+			return false;
+		}
+		
+		if (!reg.test(userid.value)) { // 정규표현식에 맞으면 true, 안맞으면 false
+			alert("아이디를 잘못 입력 하셨습니다.\n 아이디는 8-12글자이며 첫문자는 영어로 시작해야합니다.");
+			userid.focus();
+			return false;
+		}
+		//userpw
+		reg = /^[A-Z]{1}[a-zA-Z0-9_]{7,11}$/;
+		var userpw = document.getElementById("userpw");
+		
+		if (userpw.value=="") {
+			alert("비밀번호를 입력하세요");
+			$("#userpw").focus();
+			return false;
+		}
+		
+		if(!reg.test($("#userpw").val())){
+			alert("비밀번호를 잘못입력하셨습니다. \n 비밀번호는 8-12글자이며 첫문자는 대문자로 시작해야합니다.");
+			$("#userpw").focus();
+			return false;
+		}
+		//userpw2
+		if ($("#userpw").val() != $("#userpw2").val()){
+			alert("비밀번호를 확인하시기 바랍니다.")
+			$("#userpw2").focus();
+			return false;
+		}
+		
+		//usernum
+		reg = /[0-9]{11}/
+		if(!reg.test($("#usernum").val())){
+			alert("잘못된 전화번호 입니다.");
+			$("#usernum").focus();
+			return false;
+		}
+		document.getElementById("Frm").submit();
+		return true;
+	}
+</script>
+</body>
+
+</html>

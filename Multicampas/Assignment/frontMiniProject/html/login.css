@@ -1,0 +1,112 @@
+@charset "UTF-8";
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+ul,
+li {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+.loginform input {
+  display: block;
+}
+.loginform {
+  display: flex;
+  flex-direction: column;
+  width: 550px;
+  margin: 200px auto 0;
+  padding: 20px 30px 30px;
+  background: #BBDEFB;
+  color: white;
+  font-size: 14px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7), -1px -1px 5px rgba(0, 0, 0, 0.7);
+  border-radius: 5px;
+}
+.loginform h1 {
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+.loginform form input {
+  width: 100%;
+  height: 50px;
+  padding: 10px;
+  outline: none;
+  border: none;
+}
+.loginform form input[type="password"] {
+  margin: 15px 0;
+}
+.loginform form input::placeholder {
+  color: #8785A2;
+}
+.loginform form input[type="submit"] {
+  position: relative;
+  background: #0091EA;
+  font-weight: bold;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  /* border: 2px solid #2962FF; */
+  border-radius: 10px;
+  transition: 0.3s;
+  width: 40%;
+  margin:0 auto;
+  margin-bottom: 5px;
+  
+}
+.loginform form input[type="submit"]:hover {
+  background: #8785A2;
+  color: #FFE2E2;
+}
+.loginform form label {
+  display: flex;
+  margin-bottom: 15px;
+}
+.loginform form label .idsave {
+  display: block;
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+  background: white;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.loginform form label .text {
+  cursor: pointer;
+}
+.loginform form label .idsave-checked {
+  display: none;
+  text-align: center;
+  font-size: 15px;
+  color: #2b2e4a;
+}
+.loginform form #checkbox:checked ~ label .idsave-checked {
+  display: block;
+}
+.loginform .hidden {
+  display: none;
+}
+.loginform .forgot {
+  display: block;
+  justify-content: space-between;
+  text-transform: capitalize;
+  font-size: 16px;
+  
+  text-align: center;
+}
+
+.loginform .forgot a:hover {
+  text-decoration-line: underline;
+}
+.loginform .forgot a:before {
+  content: "| "; 
+  color: white;
+}
+.loginform .forgot a:first-child:before {
+  content: none;
+}
