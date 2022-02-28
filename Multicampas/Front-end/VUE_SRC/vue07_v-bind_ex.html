@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+
+        div{width:300px; height: 300px; margin:0 auto;}
+        .canada {
+            background-color: brown;
+            color: white;
+            border: 1px solid gray;
+            border-radius: 5%;
+        }
+        .newZealand {
+            background-color: blue;
+            color: white;
+            border: 1px solid gray;
+            border-radius: 15%;
+        }
+        .spain {
+            background-color: orangered;
+            color: white;
+            border: 1px solid gray;
+            border-radius: 25%;
+        }
+        .turkey {
+            background-color: darkblue;
+            color: white;
+            border: 1px solid gray;
+            border-radius: 35%;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" :class="className" @click="countryChange">
+        <h2>제목:{{title}} </h2>
+        <img v-bind:src="imgName" :width="imgWidth" :height="imgHeight">
+    </div>
+<script>
+    new Vue({
+       el:"#app",
+        data: {
+            title: "캐나다",
+            imgName: "img/4.jpg",
+
+            imgWidth: "100%",
+            imgHeight: "200",
+
+            className: "canada",
+
+        },
+        methods:{
+            countryChange(){
+                if(this.className=='canada'){
+                    //title
+                    this.title = "뉴질랜드";
+
+                    //className
+                    this.className = "newZealand";
+
+                    //imgName
+                    this.imgName = 'img/5.jpg';
+
+                }
+            }
+        },
+
+    });
+</script>
+</body>
+
+</html>
