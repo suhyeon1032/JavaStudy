@@ -1,0 +1,11 @@
+@charset "UTF-8";
+header{
+		height:100px; background-color:pink;
+	}
+	section{
+		width:70%; background-color:lightblue;
+		margin:0 auto;
+	}
+	footer{
+		height:50px; background-color:#ddd;
+	}
