@@ -11,7 +11,8 @@ public class MemberVO {
 	private String tel3;
 	
 	private String email;
-	private String writedate;
+	private String wirtedate;
+	
 	public String getUserid() {
 		return userid;
 	}
@@ -31,12 +32,12 @@ public class MemberVO {
 		this.username = username;
 	}
 	public String getTel() {
-		// tel1, tel2, tel3를 한나의 데이터로 get할때 만들어준다.
-		tel = tel1+"-"+tel2+"-"+tel3;
+		// tel1, tel2, tel3 를 하나의 데이터로 get할 때 만들어 준다.
+		tel = tel1 + "-" + tel2 + "-" + tel3;
 		return tel;
 	}
 	public void setTel(String tel) {
-		// DB전화번호를 02-2356-9856 setter를 하면 -f로 문자열을 나누어 준다.
+		// DB 전화번호를 02-2356-9856 setter를 하면 -로 문자열을 나누어준다.
 		String telSp[] = tel.split("-");
 		tel1 = telSp[0];
 		tel2 = telSp[1];
@@ -67,11 +68,11 @@ public class MemberVO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getWritedate() {
-		return writedate;
+	public String getWirtedate() {
+		return wirtedate;
 	}
-	public void setWritedate(String writedate) {
-		this.writedate = writedate;
+	public void setWirtedate(String wirtedate) {
+		this.wirtedate = wirtedate;
 	}
 	
 	

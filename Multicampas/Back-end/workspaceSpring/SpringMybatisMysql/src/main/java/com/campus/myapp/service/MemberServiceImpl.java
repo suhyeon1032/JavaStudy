@@ -10,24 +10,32 @@ import com.campus.myapp.vo.MemberVO;
 @Service
 public class MemberServiceImpl implements MemberService {
 
-   @Inject      //dao를 객체 생성한다. == @AutoWired
-   MemberDAO dao;
-   
-   @Override
-   public int memberInsert(MemberVO vo) {
-      return dao.memberInsert(vo);
-   }
+	@Inject		//dao를 객체 생성한다
+	MemberDAO dao;
+	
+	@Override
+	public int memberInsert(MemberVO vo) {
+		return dao.memberInsert(vo);
+	}
 
-   @Override
-   public MemberVO loginCheck(MemberVO vo) {
-      // TODO Auto-generated method stub
-      return dao.loginCheck(vo);
-   }
+	@Override
+	public MemberVO loginCheck(MemberVO vo) {
+		return dao.loginCheck(vo);
+	}
 
-   @Override
-   public MemberVO memberSelect(String userid) {
-      // TODO Auto-generated method stub
-      return dao.memberSelect(userid);
-   }
+	@Override
+	public MemberVO memberSelect(String userid) {
+		return dao.memberSelect(userid);
+	}
+
+	@Override
+	public int memberUpdate(MemberVO vo) {
+		return dao.memberUpdate(vo);
+	}
+
+	@Override
+	public int idCheck(String userid) {
+		return dao.idCheck(userid);
+	}
 
 }

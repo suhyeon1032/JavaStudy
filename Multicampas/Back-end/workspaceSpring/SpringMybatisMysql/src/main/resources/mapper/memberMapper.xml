@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.campus.myapp.dao.MemberDAO">
 	<insert id="memberInsert">
 		INSERT INTO member(username, userid, userpwd, tel, email)
-		VALUES(#{username},#{userid},#{userpwd},#{tel},#{email})
+		VALUES(#{username},#{userid},#{userpwd},#{tel},#{email});
 	</insert>
-	<select id="loginCheck"
-		resultType="com.campus.myapp.vo.MemberVO">
+	<select id="loginCheck" resultType="com.campus.myapp.vo.MemberVO">
 		select userid, username from member
 		where userid=#{userid} and userpwd=#{userpwd}
 	</select>
-	<select id="memberSelect"
-		resultType="com.campus.myapp.vo.MemberVO">
+	<select id="memberSelect" resultType="com.campus.myapp.vo.MemberVO">
 		select userid, username, tel, email from member
 		where userid=#{param1}
 	</select>
@@ -21,4 +19,7 @@
 		update member set username=#{username}, tel=#{tel}, email=#{email}
 		where userid=#{userid} and userpwd=#{userpwd}
 	</update>
+	<select id="idCheck" resultType="int">
+		select count(userid) cnt from member where userid=#{param1}
+	</select>
 </mapper>

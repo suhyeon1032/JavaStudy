@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <style>
     #log{width:400px; margin:0px auto;}
@@ -34,19 +33,19 @@
 </script>
 
 <div class="container">
-   <div id=log>
-       <h1>로그인</h1>
-       <hr/>
-                                                     <!-- submit 이벤트 발생 -->
-       <form method="post" action="/myapp/member/loginOk" id="logfrm" onsubmit="return logFormCheck()">
-       <ul>
-           <li>아이디</li>
-           <li>: <input type="text" name="userid" id="userid"/></li>
-           <li>비밀번호</li>
-           <li>: <input type="password" name="userpwd" id="userpwd"/></li>
-           <li><input type="submit" value="login"/>
-               <input type="reset" value="cancel"/></li>
-       </ul>
-       </form>
-   </div>
+	<div id=log>
+	    <h1>로그인</h1>
+	    <hr/>
+	                                                  <!-- submit 이벤트 발생 -->
+	    <form method="post" action="/myapp/member/loginOk" id="logfrm" onsubmit="return logFormCheck()">
+	    <ul>
+	        <li>아이디</li>
+	        <li>: <input type="text" name="userid" id="userid"/></li>
+	        <li>비밀번호</li>
+	        <li>: <input type="password" name="userpwd" id="userpwd"/></li>
+	        <li><input type="submit" value="login"/>
+	            <input type="reset" value="cancel"/></li>
+	    </ul>
+	    </form>
+	</div>
 </div>
