@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <style>
 	#mFrm li{
 		float: left; height:40px; line-height:40px; width:20%;
@@ -14,32 +15,33 @@
 	}
 </style>	
 <script src="/myapp/js/member.js" type="text/javascript"></script>
-<script>
+<script type="text/javascript">
 	$(function(){
-		//아이디 중복검사.
+		//아이디 중복검사
 		$("#userid").keyup(function(){
 			var userid = $("#userid").val();
-			if(userid!= '' && userid.length>=6){
+			if(userid!=''&& userid.length>=6){
 				var url = "/myapp/member/memberIdCheck";
 				$.ajax({
 					url : url,
-					data : "userid="+userid,
-					type : "POST",
-					success:function(result){
-						if(result>0){//사용불가(아이디 중복)
-							$("#chk").html("아이디가 중복입니다.")
+					data : "userid=" + userid,
+					type: "POST",
+					success : function(result){
+						if(result>0){//사용불가능
+							$("#chk").html("시도 불가.");
 							$("#idchk").val("N");
-							$("#chk").css("color", "red")
+							$("#chk").css("color","red")
 						}else{//사용가능
-							$("#chk").html("사용 가능합니다.")
+							$("#chk").html("가능.");
 							$("#idchk").val("Y");
-							$("#chk").css("color", "blue")
+							$("#chk").css("color","blue")
 						}
 					}
 				});
-			}else{//사용불가(아이디 길이 제한)
-				$("#chk").html("아이디는 6글자 이상이여야합니다.")
+			}else{//사용불가
+				$("#chk").html("시도 불가.");	
 				$("#idchk").val("N");
+				$("#chk").css("color","red")
 			}
 		});
 	});
@@ -52,10 +54,8 @@
 		<li>아이디</li>
 		<li>
 			<input type='text' name='userid' id='userid' placeholder='아이디 입력'/>
-			<input type='button' value='아이디 중복 확인'/>
-			<span id='chk'></span>
-			<input type="hidden" id="idchk" value='N'/>
-			
+			<input type='button' value='아이디 중복 확인'><span id='chk'></span>
+			<input type="text" id='idchk' value="N" style="visibility:hidden">
 		</li>
 		<li>비밀번호</li>
 		<li><input type="password" name="userpwd" id="userpwd" placeholder="비밀번호 입력"></li>

@@ -4,26 +4,40 @@
 	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
 	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
-	
-	<!-- Root Context: defines shared resources visible to all other web components -->
-	<!-- Mysql 데이터 베이스 정보 설정 Data a = new Data(1, 'aa', bb) 
-		namespaces 탭에서 mybatis-spring을 체크한다.
-	-->
 
-	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
-        <property name="url" value="jdbc:mysql://127.0.0.1:3306/campusdb"></property>
-        <property name="username" value="root"></property>
-        <property name="password" value="root1234"></property>
-    </bean>
-    
-    <!-- mybatis에서 사용할 xml파일의 위치를 이용하여 SqlSessionFactory객체를 생성 -->
-	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="dataSource"></property>
-        <!-- mybatis 용 config 파일을 로드하도록 설정 -->
-        <property name="configLocation" value="classpath:/mybatis-config.xml"></property>
-        <property name="mapperLocations" value="classpath:/mapper/*Mapper.xml"></property>
-    </bean>
-    
-    <mybatis-spring:scan base-package="com.campus.myapp.dao"/>
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<!-- Mysql 데이터베이스 정보 설정 Data a = new Data(1, 'aa', bb) namespaces탭에서 mybatis-spring을 
+		체크 한다. -->
+	<!-- 데이터소스 객체생성 -->
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName"
+			value="com.mysql.cj.jdbc.Driver"></property>
+		<property name="url" value="jdbc:mysql://127.0.0.1/campusDB"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="root1234"></property>
+	</bean>
+	<!-- 디펜던시 인젝션 (DI) : 특정 객체에 필요한 객체를 외부에서 결정해서 연결시키는 것 -->
+	<!-- mybatis에서 사용할 xml파일의 위치를 이용하여 SqlSessionFactory객체를 생성 = dataSource객체를 
+		DI한다. -->
+	<bean id="SqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- ref : 객체, value : 문자열 -->
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="configLocation"
+			value="classpath:mybatis-config.xml"></property>
+		<property name="mapperLocations"
+			value="classpath:/mapper/*Mapper.xml"></property>
+	</bean>
+
+	<!-- 파일업로드 처리를 하기위한 MultipartResolver객체를 생성해주면 DispacherServlet이 참조하여 파일업로드를 
+		수행한다. -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="-1"></property>
+		<property name="defaultEncoding" value="UTF-8"></property>
+	</bean>
+
+	<mybatis-spring:scan
+		base-package="com.campus.myapp.dao" />
 </beans>

@@ -32,12 +32,12 @@ public class MemberVO {
 		this.username = username;
 	}
 	public String getTel() {
-		// tel1, tel2, tel3 ¸¦ ÇÏ³ªÀÇ µ¥ÀÌÅÍ·Î getÇÒ ¶§ ¸¸µé¾î ÁØ´Ù.
+		// tel1, tel2, tel3 ë¥¼ í•˜ë‚˜ì˜ ë°ì´í„°ë¡œ getí•  ë•Œ ë§Œë“¤ì–´ ì¤€ë‹¤.
 		tel = tel1 + "-" + tel2 + "-" + tel3;
 		return tel;
 	}
 	public void setTel(String tel) {
-		// DB ÀüÈ­¹øÈ£¸¦ 02-2356-9856 setter¸¦ ÇÏ¸é -·Î ¹®ÀÚ¿­À» ³ª´©¾îÁØ´Ù.
+		// DB ì „í™”ë²ˆí˜¸ë¥¼ 02-2356-9856 setterë¥¼ í•˜ë©´ -ë¡œ ë¬¸ìì—´ì„ ë‚˜ëˆ„ì–´ì¤€ë‹¤.
 		String telSp[] = tel.split("-");
 		tel1 = telSp[0];
 		tel2 = telSp[1];

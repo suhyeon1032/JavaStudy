@@ -10,7 +10,7 @@ import com.campus.myapp.vo.MemberVO;
 @Service
 public class MemberServiceImpl implements MemberService {
 
-	@Inject		//dao¸¦ °´Ã¼ »ı¼ºÇÑ´Ù
+	@Inject		//daoë¥¼ ê°ì²´ ìƒì„±í•œë‹¤. == @AutoWired
 	MemberDAO dao;
 	
 	@Override
