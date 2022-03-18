@@ -1,16 +1,20 @@
 package com.campus.myapp.vo;
 
 public class PagingVO {
-	// í˜ì´ì§•
-	private int onePageRecord = 5;	// í•œ í˜ì´ì§€ë‹¹ ì¶œë ¥ í•  ë ˆì½”ë“œ ìˆ˜
-	private int pageNum=1;			// í˜„ì¬ í˜ì´ì§€
-	private int totalRecord;		// ì´ ë ˆì½”ë“œ ìˆ˜
-	private int totalPage;			// ì´ í˜ì´ì§€ ìˆ˜
-	private int offsetIndex = 0;
-	private int onePageCount =5;	// í•œ ë²ˆì— í‘œì‹œí•  í˜ì´ì§€ ìˆ˜
+	//1. ÆäÀÌÂ¡
+	//    1) ÇÑ ÆäÀÌÁö´ç Ãâ·ÂÇÒ ·¹ÄÚµå ¼ö
+	private int onePageRecord = 5;
+	//    2) ÇöÀç ÆäÀÌÁö
+	private int pageNum = 1;
+	//    3) ÃÑ ·¹ÄÚµå ¼ö : DB¿¡¼­ ¹Ş¾Æ¿Í¾ß ÇÔ
+	private int totalRecord;
+	//    4) ÃÑ ÆäÀÌÁö ¼ö
+	private int totalPage;
+	private int offsetIndex;
+	private int onePageCount = 5;
 	private int startPage = 1;
-	
-	// ê²€ìƒ‰
+
+	//2. °Ë»ö
 	private String searchKey;
 	private String searchWord;
 	
@@ -26,10 +30,10 @@ public class PagingVO {
 	}
 	public void setPageNum(int pageNum) {
 		this.pageNum = pageNum;
-		// offset ìœ„ì¹˜ ê³„ì‚°
-		offsetIndex = (pageNum-1)*onePageRecord;
-		// í˜ì´ì§€ ë²ˆí˜¸ì˜ ì‹œì‘ê°’
-		startPage = ((pageNum-1)/onePageCount*onePageCount)+1;
+		//offsetÀ§Ä¡ °è»ê
+		offsetIndex =(pageNum-1)*onePageRecord;
+		//ÆäÀÌÁö ¹øÈ£ÀÇ ½ÃÀÛ°ª
+		startPage = (pageNum-1)/onePageCount*onePageCount+1;
 	}
 	public int getTotalRecord() {
 		return totalRecord;
@@ -37,11 +41,11 @@ public class PagingVO {
 	public void setTotalRecord(int totalRecord) {
 		this.totalRecord = totalRecord;
 		
-		// ì´ í˜ì´ì§€ ìˆ˜
-		if(totalRecord%onePageRecord==0) {	// ë‚˜ë¨¸ì§€ ë ˆì½”ë“œê°€ ì—†ëŠ” ê²½ìš°
+		//ÃÑ ÆäÀÌÁö¼ö
+		if(totalRecord%onePageRecord==0) {//ÃÑ °Ô½Ã±Û ¼ö°¡, ÇÑ ÆäÀÌÁö´ç °Ô½ÃÇÒ ±Û ¼ö·Î ³ª´² ¶³¾îÁö´Â °æ¿ì
 			totalPage = totalRecord/onePageRecord;
-		}else {								// ë‚˜ë¨¸ì§€ ë ˆì½”ë“œê°€ ìˆëŠ” ê²½ìš° (1~4ê°œ)
-			totalPage = totalRecord/onePageRecord+1;
+		}else {//³ª´²¶³¾îÁöÁö ¾Ê¾Æ, ³ª¸ÓÁö °Ô½Ã±ÛÀÌ ÀÖ´Â °æ¿ì
+			totalPage = totalRecord/onePageRecord +1;
 		}
 	}
 	public int getTotalPage() {
@@ -80,6 +84,6 @@ public class PagingVO {
 	public void setSearchWord(String searchWord) {
 		this.searchWord = searchWord;
 	}
-	
+
 	
 }

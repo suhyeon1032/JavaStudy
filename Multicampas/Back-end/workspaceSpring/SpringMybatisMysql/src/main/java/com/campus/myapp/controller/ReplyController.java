@@ -19,32 +19,28 @@ public class ReplyController {
 	@Inject
 	ReplyService service;
 	
-	// ëŒ“ê¸€ë“±ë¡
+	//1. ´ñ±Û µî·Ï
 	@RequestMapping(value="/reply/writeOk", method=RequestMethod.POST)
 	public int writeOk(ReplyVO vo, HttpSession session) {
+		//1) DBÀÇ replyBoard¿¡ ÀúÀåÇÒ userid¸¦ sessionÀÇ logId°ªÀ¸·Î ÁöÁ¤(ÇöÀç ·Î±×ÀÎµÈ ¾ÆÀÌµğ)
 		vo.setUserid((String)session.getAttribute("logId"));
-		
+		//2) ÇØ´ç ¾ÆÀÌµğ·Î, ´ñ±Û µî·Ï(sql)
 		return service.replyWrite(vo);
 	}
-	
-	// ëŒ“ê¸€ëª©ë¡
+	//2. ´ñ±Û ¸ñ·Ï
 	@RequestMapping("/reply/list")
 	public List<ReplyVO> list(int no) {
 		return service.replyList(no);
 	}
-	
-	// ëŒ“ê¸€ìˆ˜ì •
+	//3. ´ñ±Û ¼öÁ¤
 	@PostMapping("/reply/editOk")
 	public int editOk(ReplyVO vo, HttpSession session) {
 		vo.setUserid((String)session.getAttribute("logId"));
 		return service.replyEdit(vo);
 	}
-	
-	// ëŒ“ê¸€ì‚­ì œ
+	//4. ´ñ±Û »èÁ¦
 	@GetMapping("/reply/del")
 	public int delOk(int replyno, HttpSession session) {
 		return service.replyDel(replyno, (String)session.getAttribute("logId"));
 	}
-	
-	
 }

@@ -1,7 +1,9 @@
 package com.campus.myapp.controller;
 
+import java.awt.print.Printable;
 import java.io.File;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +14,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpSessionRequiredException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,166 +35,297 @@ public class DataController {
 		ModelAndView mav = new ModelAndView();
 
 		mav.addObject("lst", service.dataSelectAll());
-		
+
 		mav.setViewName("data/dataList");
 		return mav;
 	}
 
-	// ÀÚ·á½Ç ±Û¾²±â Æû
+	// ìë£Œì‹¤ ê¸€ì“°ê¸° í¼
 	@GetMapping("/data/write")
 	public ModelAndView dataWrite() {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("data/dataWrite");
-
 		return mav;
 	}
 
 	@PostMapping("/data/writeOk")
-	public ResponseEntity<String> dataWirteOk(DataVO vo, HttpServletRequest request) {
-		// vo : subject, content´Â request°¡ µÊ.
-		vo.setUserid((String) request.getSession().getAttribute("logId")); // ±Û¾´ÀÌ
+	public ResponseEntity<String> dataWriteOk(DataVO vo, HttpServletRequest request) {
+		// vo: subject, contentëŠ” requestê°€ ë¨
+		vo.setUserid((String) request.getSession().getAttribute("logId"));// ê¸€ì“´ì´
 
-		// ÆÄÀÏ ¾÷·Îµå¿¡ °ü·ÃµÈ multipartRequest°´Ã¼¸¦ ±¸ÇØ¾ßÇÔ
 		ResponseEntity<String> entity = null;
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(new MediaType("text", "html", Charset.forName("UTF-8")));
 
-		String path = request.getSession().getServletContext().getRealPath("/upload"); // ÆÄÀÏ¾÷·Îµå¸¦ À§ÇÑ ¾÷·Îµå À§Ä¡ÀÇ Àı´ëÁÖ¼Ò
-		System.out.println("path -> " + path);
+		// íŒŒì¼ ì—…ë¡œë“œë¥¼ ìœ„í•œ ì—…ë¡œë“œ ìœ„ì¹˜ ì ˆëŒ€ì£¼ì†Œ êµ¬í•˜ê¸°
+		String path = request.getSession().getServletContext().getRealPath("/upload");
+		System.out.println("path->" + path);
+
 		try {
-			// ÆÄÀÏ ¾÷·Îµå¸¦ Ã³¸®ÇÏ±â À§ÇØ¼­ request °´Ã¼¿¡¼­ multipart°´Ã¼¸¦ ±¸ÇÏ¿©¾ß ÇÑ´Ù.
+			// íŒŒì¼ ì—…ë¡œë“œë¥¼ ì²˜ë¦¬í•˜ê¸° ìœ„í•´ì„œ requestì—ì„œ multipartê°ì²´ë¥¼ êµ¬í•˜ì—¬ì•¼ í•œë‹¤
 			MultipartHttpServletRequest mr = (MultipartHttpServletRequest) request;
-
-			// mr¿¡ ÆÄÀÏÀÇ ¼ö¸¸Å­ MultipartFile°´Ã¼°¡Á¸ÀçÇÑ´Ù
+			// mrì— ì¡´ì¬í•˜ëŠ”ê²ƒ : íŒŒì¼ì˜ ìˆ˜ ë§Œí¼ multipartFileê°ì²´ê°€ ì¡´ì¬
 			List<MultipartFile> files = mr.getFiles("filename");
-			System.out.println("¾÷·Îµå ÆÄÀÏ ¼ö -> " + files.size());
+			System.out.println("ì—…ë¡œë“œ íŒŒì¼ ìˆ˜ = " + files.size());
 
-			if (files != null) { // if 111
-				int cnt = 1; // 4¹ø¿¡¼­ ¾÷·Îµå ¼ø¼­¿¡ µû¶ó filename1, filename2 ÆÄÀÏ¸íÀ» ´ëÀÔÇÏ±â À§ÇÑ º¯¼ö
-				// Ã·ºÎÆÄÀÏ¼ö ¸¸Å­ ¹İº¹ÇÏ¿© ¾÷·ÎµåÇÑ´Ù.
-				for (int i = 0; i < files.size(); i++) { // for 222
-					// 1. MultipartFile°´Ã¼ ¾ò¾î¿À±â
+			if (files != null) {// if_1
+				// ì—…ë¡œë“œ ìˆœì„œ ì •í•˜ê¸° ìœ„í•œ ë³€ìˆ˜. ì—…ë¡œë“œ ìˆœì„œì— ë”°ë¼ filename1, filename2ì— íŒŒì¼ëª…ì„ ëŒ€ì…í•˜ê¸° ìœ„í•œ ë³€ìˆ˜
+				int cnt = 1;// ì´ˆê¸°ê°’ : 1
+
+				// ì²¨ë¶€íŒŒì¼ì˜ ìˆ˜ë§Œí¼ ë°˜ë³µí•˜ì—¬ ì—…ë¡œë“œí•œë‹¤
+				for (int i = 0; i < files.size(); i++) {// for_2
+
+					// 1. MultipartFileê°ì²´ ê°€ì ¸ì˜¤ê¸°
 					MultipartFile mf = files.get(i);
 
-					// 2. ¾÷·ÎµåÇÑ ½ÇÁ¦ ÆÄÀÏ¸íÀ» ±¸ÇÏ±â
+					// 2. ì—…ë¡œë“œí•œ ì‹¤ì œ íŒŒì¼ ëª…ì„ êµ¬í•˜ê¸°
 					String orgFileName = mf.getOriginalFilename();
-					System.out.println("orgFileName -> " + orgFileName);
+					System.out.println("originalFileName->" + orgFileName);
 
-					// 3. renameÇÏ±â
-					if (orgFileName != null && !orgFileName.equals("")) { // if 333, ÆÄÀÏ¸íÀÌ Á¸ÀçÇÏ¸é
+					// 3. renameí•˜ê¸°
+					if (orgFileName != null && !orgFileName.equals("")) {// if_3
+
 						File f = new File(path, orgFileName);
 
-						// ÆÄÀÏÀÌ Á¸ÀçÇÏ´Â Áö È®ÀÎ true:ÆÄÀÏÀÌ Á¸Àç/ false:ÆÄÀÏ ¾øÀ½
-						if (f.exists()) { // if 444
-							for (int renameNum = 1;; renameNum++) { // for 555
-								// È®ÀåÀÚ¿Í ÆÄÀÏÀ» ºĞ¸®ÇÑ´Ù.
-								int point = orgFileName.lastIndexOf(".");
-								String fileName = orgFileName.substring(0, point);
-								String ext = orgFileName.substring(point + 1);
+						// .exists() : íŒŒì¼ì´ ì¡´ì¬í•˜ëŠ”ì§€ í™•ì¸. ìˆìœ¼ë©´ true, ì—†ìœ¼ë©´ false
+						if (f.exists()) {// if_4
+							for (int renameNum = 1;/* ë¬´í•œë£¨í”„ */; renameNum++) {// for_5
+								// ì´ë¯¸ í•´ë‹¹ íŒŒì¼ëª…ì˜ íŒŒì¼ì´ ì¡´ì¬í•˜ê¸° ë–„ë¬¸ì—, rename í•´ì•¼í•¨
+								// í™•ì¥ìì™€ íŒŒì¼ëª… ë¶„ë¦¬
+								int point = orgFileName.lastIndexOf(".");// orgFileNameì—ì„œ ë§ˆì§€ë§‰ .ì˜ ìœ„ì¹˜
+								String fileName = orgFileName.substring(0, point);// orgFileNameì—ì„œ 0ë¶€í„° pointì´ì „ê¹Œì§€ì˜ ê¸€ì ê°€ì ¸ì™€
+								String ext = orgFileName.substring(point + 1);// orgFileNameì—ì„œ pointì´í›„ì˜ ê¸€ì ê°€ì ¸ì™€
 
 								f = new File(path, fileName + " (" + renameNum + ")." + ext);
-								if (!f.exists()) { // if 666 , »õ·Î »ı¼ºµÈ ÆÄÀÏ °´Ã¼°¡ ¾øÀ¸¸é
+								if (!f.exists()) {// ìƒˆë¡œ ìƒì„±ëœ íŒŒì¼ ê°ì²´ê°€ ì—†ìœ¼ë©´ ì¤‘ë‹¨ ë° ìƒˆë¡œ ë§Œë“  íŒŒì¼ëª…ìœ¼ë¡œ ë³€í™˜
 									orgFileName = f.getName();
 									break;
-								} // if 666
+								}
+							} // for_5
+						} // if_4
 
-							} // for 555
-
-						} // if 444
-
-						// 4. ÆÄÀÏ ¾÷·Îµå ±¸Çö
+						// 4. íŒŒì¼ ì—…ë¡œë“œ ì§„í–‰
 						try {
-							mf.transferTo(f); // ½ÇÁ¦ ¾÷·Îµå°¡ ÀÏ¾î³ª´Â(¹ß»ıÇÏ´Â) ½ÃÁ¡
+							mf.transferTo(f);// ì‹¤ì œ ì—…ë¡œë“œ ë°œìƒ
+
 						} catch (Exception ee) {
 						}
 
-						// 5. ¾÷·ÎµåÇÑ(»õ·Î¿îÆÄÀÏ¸í) vo¿¡ ¼ÂÆÃ
+						// 5. ì—…ë¡œë“œí•œ(ìƒˆë¡œìš´ íŒŒì¼ëª…)voì— ì…‹íŒ…
 						if (cnt == 1)
 							vo.setFilename1(orgFileName);
 						if (cnt == 2)
 							vo.setFilename2(orgFileName);
 						cnt++;
-					} // if 333
 
-				} // for 222
-
-			} // if 111
+					} // if_3
+				} // for_2
+			} // if_1
 			System.out.println(vo.toString());
 
-			// DBµî·Ï
+			// DBë“±ë¡
 			service.dataInsert(vo);
-			// ·¹ÄÚµå Ãß°¡ ¼º°ø
-			String msg = "<script>alert('ÀÚ·á½Ç±Ûµî·ÏµÇ¾ú½À´Ï´Ù.');location.href='/myapp/data/dataList';</script>";
+			// ë ˆì½”ë“œ ì¶”ê°€ ì„±ê³µ
+			String msg = "<Script>alert('ìë£Œì‹¤ ê¸€ì´ ë“±ë¡ ë˜ì—ˆìŠµë‹ˆë‹¤.');location.href='/myapp/data/dataList';</script>";
+
 			entity = new ResponseEntity<String>(msg, headers, HttpStatus.OK);
-			entity = null;
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			// ·¹ÄÚµåÃß°¡ ½ÇÆĞ
-			// ÆÄÀÏÁö¿ì±â
+			// ë ˆì½”ë“œ ì¶”ê°€ ì‹¤íŒ¨
+
+			// íŒŒì¼ ì§€ìš°ê¸°
 			fileDelete(path, vo.getFilename1());
 			fileDelete(path, vo.getFilename2());
 
-			// ¸Ş¼¼Áö
-			String msg = "<script>alert('ÀÚ·á½Ç±Ûµî·Ï½ÇÆĞÇÏ¿´½À´Ï´Ù.');history.back();</script>";
-			// ÀÌÀüÆäÀÌÁö·Î º¸³»±â(ÀÚ¹Ù½ºÅ©¸³Æ®)
-			entity = new ResponseEntity<String>(msg, headers, HttpStatus.BAD_REQUEST); // 400
+			// ë©”ì„¸ì§€
+			String msg = "<script>alert('ìë£Œì‹¤ ê¸€ ë“±ë¡ ì‹¤íŒ¨í•˜ì˜€ìŠµë‹ˆë‹¤.');history.back();</script>";
+			// ì´ì „ í˜ì´ì§€ë¡œ ë³´ë‚´ê¸°
+			entity = new ResponseEntity<String>(msg, headers, HttpStatus.BAD_REQUEST);
 		}
 		return entity;
+
 	}
 
-	// ÆÄÀÏÁö¿ì±â
+	// íŒŒì¼ ì§€ìš°ê¸°
 	public void fileDelete(String p, String f) {
-		if (f != null) { // ÆÄÀÏ¸íÀÌ Á¸ÀçÇÏ¸é
+		if (f != null) {// íŒŒì¼ëª…ì´ ì¡´ì¬í•˜ë©´
 			File file = new File(p, f);
 			file.delete();
 		}
 	}
-	//±Û ³»¿ëº¸±â
+	//ìë£Œì‹¤ ê¸€ ë‚´ìš© ë³´ê¸°
 	@GetMapping("/data/view")
 	public ModelAndView view(int no) {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("dataVO", service.dataView(no));
 		mav.setViewName("data/dataView");
-		return mav;	
+		return mav;
 	}
-	//¼öÁ¤Æû
+	//ìˆ˜ì • í¼
 	@GetMapping("/data/dataEdit")
 	public ModelAndView editForm(int no) {
 		ModelAndView mav = new ModelAndView();
-		//mav.addObject("vo", service.dataView(no));
 		DataVO vo = service.dataView(no);
-		//DB¿¡ Ã·ºÎµÈ ÆÄÀÏÀÇ ¼ö¸¦ ±¸ÇÑ´Ù.
-		int fileCount = 1; //Ã¹¹øÂ° Ã·ºÎÆÄÀÏÀº ¹«Á¶°Ç ÀÖÀ½
-		if(vo.getFilename2() != null ) {//µÎ¹øÂ° Ã·ºÎÆÄÀÏ ÀÖÀ¸¸é 1Áõ°¡
+		//DBì— ì²¨ë¶€ëœ íŒŒì¼ì˜ ìˆ˜ë¥¼ êµ¬í•¨
+		int fileCount=1;//íŒŒì¼ 1ê°œëŠ” ë°˜ë“œì‹œ ìˆìŒ
+		//ë‘ë²ˆì§¸ ì²¨ë¶€íŒŒì¼ì´ ìˆìœ¼ë©´ 1 ì¦ê°€
+		if(vo.getFilename2()!=null) {
 			fileCount++;
-		}	
-		
-		mav.addObject("fileCount", fileCount);
+		}
+		mav.addObject("fileCount",fileCount);
 		mav.addObject("vo",vo);
-		mav.setViewName("data/dataEdit");
+		mav.setViewName("/data/dataEdit");
 		return mav;
 	}
-	//¼öÁ¤(DB)
+	//ìˆ˜ì •DB
 	@PostMapping("/data/editOk")
-	public ResponseEntity<String> editOk(DataVO vo, HttpSession session) {
+	public ResponseEntity<String> editOk(DataVO vo, HttpSession session, HttpServletRequest req) {
 		vo.setUserid((String)session.getAttribute("logId"));
 		String path = session.getServletContext().getRealPath("/upload");
 		
-		System.out.println(vo.toString());
-		for(int k=0; k<vo.getDelFile().length; k++) {
-			System.out.println(vo.getDelFile()[k]);
+//		System.out.println(vo.toString());
+//		if(vo.getDelFile()!=null) {
+//			for(int k=0; k<vo.getDelFile().length; k++) {
+//				System.out.println(vo.getDelFile()[k]);
+//			}
+//		}
+		
+		ResponseEntity<String> entity = null;
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-type", "text/html; charset=utf-8");
+		
+		List<String> fileList = new ArrayList<String>();//ìƒˆë¡œ DBì— ì—…ë°ì´íŠ¸í•  íŒŒì¼ëª… ì •ë¦¬í•˜ëŠ” ì»¬ë ‰ì…˜ List<íŒŒì¼ëª…> ìƒì„±
+		List<String> newUpload = new ArrayList<String>();//ìƒˆë¡œ ì—…ë¡œë“œí•œ íŒŒì¼ëª…ì„ ë³´ê´€í•  ì»¬ë ‰ì…˜ ìƒì„±
+		
+		try {
+			//1. DBì—ì„œ íŒŒì¼ëª… ê°€ì ¸ì˜¤ê¸°
+			DataVO dbFileVO = service.getFileName(vo.getNo());
+			
+			fileList.add(dbFileVO.getFilename1());//íŒŒì¼ 1ê°œëŠ” ë°˜ë“œì‹œ ìˆìœ¼ë‹ˆ ìš°ì„  ë„£ê³ , ì¡°ê±´ë¬¸ìœ¼ë¡œ 2 ë„£ê¸°
+			if(dbFileVO.getFilename2()!=null) fileList.add(dbFileVO.getFilename2());
+			
+			//2. ì‚­ì œëœ íŒŒì¼ì´ ìˆì„ ê²½ìš° Listì—ì„œ ê°™ì€ íŒŒì¼ëª…ì„ ì§€ì›€
+			if(vo.getDelFile()!=null) {//null : ì‚­ì œí•  íŒŒì¼ì´ ì—†ìŒ
+				for(String delFile : vo.getDelFile()) {
+					fileList.remove(delFile);//index ë„£ì–´ì„œë„ ê°€ëŠ¥í•˜ì§€ë§Œ ìš°ë¦° íŒŒì¼ëª…ì„ ì•„ë‹ˆ ì‚¬ìš©
+					
+				}
+			}
+			
+			//3. ìƒˆë¡œ ì—…ë¡œë“œí•˜ê¸°
+			MultipartHttpServletRequest mr = (MultipartHttpServletRequest)req;
+			//ìƒˆë¡œ ì—…ë¡œë“œí•œ multipartFile ê°ì²´ë¥¼ ì–»ì–´ì˜¤ê¸°
+			List<MultipartFile> newFileList = mr.getFiles("filename");//ì»¬ë ‰ì…˜ìœ¼ë¡œ ë¦¬í„´í•´ì¤Œ
+			if(newFileList!=null) {//ìƒˆë¡œ ì—…ë¡œë“œëœ íŒŒì¼ì´ ìˆìœ¼ë©´
+				for(int i = 0; i<newFileList.size(); i++) {//ì—…ë¡œë“œëœ íŒŒì¼ì˜ ìˆ˜ë§Œí¼ ë°˜ë³µ
+					MultipartFile newMF = newFileList.get(i);
+					String newUploadFilename = newMF.getOriginalFilename();
+					
+					if(newUploadFilename!=null && !newUploadFilename.equals("")) {
+						File f = new File(path,newUploadFilename);
+						if(f.exists()) {
+							//rename
+							for(int n = 1;;n++) {
+								int point = newUploadFilename.lastIndexOf(".");
+								String fileNameNoExt = newUploadFilename.substring(0,point);
+								String ext = newUploadFilename.substring(point+1);
+								//ìƒˆë¡œìš´ íŒŒì¼ëª… ë§Œë“¤ì–´ ì¡´ì¬ìœ ë¬´ í™•ì¸
+								String nf = fileNameNoExt+ " ("+n+")."+ext;
+								f = new File(path,nf);
+								if(!f.exists()) {
+									newUploadFilename = nf;
+									break;
+								}
+							}//for
+						}
+						//ì—…ë¡œë“œ
+						try {
+							newMF.transferTo(f);//ì‹¤ì œ ì—…ë¡œë“œ ë°œìƒ
+						}catch(Exception ee) {
+							ee.printStackTrace();
+						}
+						fileList.add(newUploadFilename);//DBì— ë“±ë¡í•  íŒŒì¼ëª…ì— ì¶”ê°€
+						newUpload.add(newUploadFilename);//ìƒˆë¡œ ì—…ë¡œë“œí•  ëª©ë¡ ì¶”ê°€
+					}
+				}//for
+			}//if
+			
+			//fileListì— ìˆëŠ” DBì— ë“±ë¡í•  íŒŒì¼ëª…ì„ vo.filename1, vo.filename2ì— ì…‹íŒ…
+			for(int k = 0; k<fileList.size();k++) {
+				if(k==0) vo.setFilename1(fileList.get(k));
+				if(k==1) vo.setFilename2(fileList.get(k));
+			}
+			
+			//DBì—…ë°ì´íŠ¸
+			service.dataUpdate(vo);
+			
+			//DBìˆ˜ì • ë¬ì„ ë•Œ
+			//1) ìˆ˜ì •í•˜ë©´ì„œ ì§€ìš¸ íŒŒì¼ ì§€ìš°ê¸°
+			if(vo.getDelFile()!=null) {
+				for(String fname : vo.getDelFile()) {
+					fileDelete(path, fname);
+			}
+
+			}
+			//2) ê¸€ë‚´ìš© ë³´ê¸°ë¡œ ì´ë™
+			String msg = "<script>alert('ìë£Œì‹¤ ê¸€ì´ ìˆ˜ì •ë˜ì—ˆìŠµë‹ˆë‹¤.\\nê¸€ë‚´ìš©ë³´ê¸°ë¡œ ì´ë™í•©ë‹ˆë‹¤.');";
+			msg+="location.href='/myapp/data/view?no="+vo.getNo()+"';</script>";
+			entity = new ResponseEntity<String>(msg,headers,HttpStatus.OK);
+			
+			
+		}catch(Exception e){
+			e.printStackTrace();
+			//ìˆ˜ì • ëª»í–ˆì„ ë•Œ
+			for(String fname:newUpload) {
+				fileDelete(path, fname);
+			}
+			String msg = "<script>";
+			msg+="alert('ìë£Œì‹¤ ê¸€ì´ ìˆ˜ì •ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.\\ìˆ˜ì • í¼ìœ¼ë¡œ ì´ë™í•©ë‹ˆë‹¤.');";
+			msg+="history.back();</script>";
+			entity = new ResponseEntity<String>(msg,headers,HttpStatus.BAD_REQUEST);
 		}
+//		//ì°ì–´ì„œ í™•ì¸í•´ë³´ê¸°
+//		for(String d : fileList) {
+//			System.out.println(d);
+//		}
+		return entity;
+	}
+	// ìë£Œì‹¤ ì‚­ì œ
+	@GetMapping("/data/dataDel")
+	public ResponseEntity<String> dataDel(int no, HttpSession session) {
+		String userid = (String)session.getAttribute("logId");
+		
+		String path = session.getServletContext().getRealPath("/upload");
 		
 		ResponseEntity<String> entity = null;
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-Type", "text/html; charset=utf-8");
+		
 		try {
+			// 1. ì‚­ì œí•  ë ˆì½”ë“œì˜ íŒŒì¼ëª… ì–»ì–´ì˜¤ê¸°
+			DataVO dbFileVO = service.getFileName(no);
 			
+			// 2. ë ˆì½”ë“œ ì‚­ì œ
+			service.dataDelete(no, userid);
+			
+			// 3. íŒŒì¼ì‚­ì œ
+			fileDelete(path, dbFileVO.getFilename1());
+			if(dbFileVO.getFilename2() != null) {
+				fileDelete(path, dbFileVO.getFilename2());
+			}
+			
+			String msg = "<script>alert('ê¸€ì´ ì‚­ì œ ë˜ì—ˆìŠµë‹ˆë‹¤!');lication.href='/myapp/data/dataList/';</script>";
+			
+			entity = new ResponseEntity<String>(msg, headers, HttpStatus.OK);
 		}catch(Exception e) {
 			e.printStackTrace();
+
+			String msg = "<script>alert('ê¸€ ì‚­ì œ ì‹¤íŒ¨');history.back();</script>";
+			entity = new ResponseEntity<String>(msg, headers, HttpStatus.BAD_REQUEST);
 		}
-		
 		return entity;
+		
+		
 	}
 }

@@ -5,14 +5,13 @@ public class MemberVO {
 	private String userpwd;
 	private String username;
 	
-	private String tel;
-	private String tel1;
+	private String tel;//DB¿¡¼­ °¡Á®¿Ã¶§´Â 1°³·Î ¿À´Ï µû·Î º¯¼ö¸¦ ¸¸µé°í
+	private String tel1;//ÀüÈ­¹øÈ£requestÇÒ ‹š´Â °¢°¢ µé¾î¿À´Ï µû·Î º¯¼ö¸¦ ¸¸µé¾îÁÖ±â
 	private String tel2;
 	private String tel3;
 	
 	private String email;
-	private String wirtedate;
-	
+	private String writedate;
 	public String getUserid() {
 		return userid;
 	}
@@ -32,12 +31,12 @@ public class MemberVO {
 		this.username = username;
 	}
 	public String getTel() {
-		// tel1, tel2, tel3 ë¥¼ í•˜ë‚˜ì˜ ë°ì´í„°ë¡œ getí•  ë•Œ ë§Œë“¤ì–´ ì¤€ë‹¤.
-		tel = tel1 + "-" + tel2 + "-" + tel3;
+		//tel1,tel2,tel3¸¦ ÇÏ³ªÀÇ µ¥ÀÌÅÍ·Î getÇÒ¶§ ¸¸µé¾îÁÖ±â
+		tel=tel1+"-"+tel2+"-"+tel3;
 		return tel;
 	}
 	public void setTel(String tel) {
-		// DB ì „í™”ë²ˆí˜¸ë¥¼ 02-2356-9856 setterë¥¼ í•˜ë©´ -ë¡œ ë¬¸ìì—´ì„ ë‚˜ëˆ„ì–´ì¤€ë‹¤.
+		//ÀüÈ­¹øÈ£¸¦ ÇÏ³ª·Î ÇÕÃÄÁ®ÀÖ´Â°ÍÀ» ÂÉ°³¼­ °¢°¢ÀÇ º¯¼ö¿¡ ¼³Á¤ÇØÁÖ±â
 		String telSp[] = tel.split("-");
 		tel1 = telSp[0];
 		tel2 = telSp[1];
@@ -68,11 +67,11 @@ public class MemberVO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getWirtedate() {
-		return wirtedate;
+	public String getWritedate() {
+		return writedate;
 	}
-	public void setWirtedate(String wirtedate) {
-		this.wirtedate = wirtedate;
+	public void setWritedate(String writedate) {
+		this.writedate = writedate;
 	}
 	
 	

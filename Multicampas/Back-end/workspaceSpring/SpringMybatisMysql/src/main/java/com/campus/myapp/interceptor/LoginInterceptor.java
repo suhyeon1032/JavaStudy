@@ -4,25 +4,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.HandlerInterceptor;
 
-public class LoginInterceptor extends HandlerInterceptorAdapter {
-	// ì»¨íŠ¸ë¡¤ëŸ¬ê°€ í˜¸ì¶œë˜ê¸° ì „ì— ì‹¤í–‰ë  ë©”ì†Œë“œ
+public class LoginInterceptor implements HandlerInterceptor {
+	//ÄÁÆ®·Ñ·¯°¡ È£ÃâµÇ±â Àü¿¡ ½ÇÇàµÉ ¸Ş¼Òµå
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception{
-		// false : ë¡œê·¸ì¸ìœ¼ë¡œ ë³´ë‚´ê¸°
-		// true : í•´ë‹¹ ì»¨íŠ¸ë¡¤ëŸ¬ë¡œ ì´ë™í•œë‹¤.
+		//false: ·Î±×ÀÎÀ¸·Î º¸³»±â
+		//ture : ÇØ´ç ÄÁÆ®·Ñ·¯(Á¢¼ÓÇÑ ÄÁÆ®·Ñ·¯)·Î ÀÌµ¿
 		
-		// requestê°ì²´ì—ì„œ sessionê°ì²´ë¥¼ ì–»ì–´ì˜¤ê¸°
+		//reuest°´Ã¼¿¡¼­ session °´Ã¼¸¦ ¾ò¾î¿À±â
 		HttpSession session = request.getSession();
 		
-		// ë¡œê·¸ì¸ ìƒíƒœë¥¼ êµ¬í•˜ê¸° null
+		//·Î±×ÀÎ »óÅÂ ±¸ÇÏ±â
 		String logStatus = (String)session.getAttribute("logStatus");
 		
-		// ë°˜ë“œì‹œ nullë„ í™•ì¸í•´ì•¼í•¨
-		if(logStatus != null && logStatus.equals("Y")) {	// ë¡œê·¸ì¸ ë˜ì—ˆì„ ë•Œ
-			return true;	// ê°€ë˜ ê¸¸ ê°€ê¸°
-		}else {	// ë¡œê·¸ì¸ ì•ˆë˜ì—ˆì„ ë•Œ
-			// ë¡œê·¸ì¸ í¼í˜ì´ì§€ë¡œ ì´ë™
+		if(logStatus!=null &&logStatus.equals("Y")) {//·Î±×ÀÎ µÇ¾úÀ» ¶§
+			return true; //°¡´ø±æ ¸¶Àú °¡¼Ò~~
+		}else {
+			//·Î±×ÀÎ È¨ÆäÀÌÁö·Î ÀÌµ¿
 			response.sendRedirect(request.getContextPath()+"/member/loginForm");
 			return false;
 		}

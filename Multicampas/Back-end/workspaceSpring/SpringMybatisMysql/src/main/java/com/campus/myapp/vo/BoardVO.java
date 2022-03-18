@@ -1,7 +1,9 @@
 package com.campus.myapp.vo;
 
-public class BoardVO {
+import org.springframework.stereotype.Controller;
 
+@Controller
+public class BoardVO {
 	private int no;
 	private String subject;
 	private String content;
@@ -9,7 +11,6 @@ public class BoardVO {
 	private int hit;
 	private String writedate;
 	private String ip;
-	
 	public int getNo() {
 		return no;
 	}
@@ -52,5 +53,6 @@ public class BoardVO {
 	public void setIp(String ip) {
 		this.ip = ip;
 	}
+	
 	
 }

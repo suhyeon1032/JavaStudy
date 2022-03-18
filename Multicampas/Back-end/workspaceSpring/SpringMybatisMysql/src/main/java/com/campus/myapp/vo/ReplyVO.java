@@ -7,7 +7,6 @@ public class ReplyVO {
 	private String coment;
 	private String writedate;
 	
-	
 	public int getReplyno() {
 		return replyno;
 	}
@@ -38,6 +37,4 @@ public class ReplyVO {
 	public void setWritedate(String writedate) {
 		this.writedate = writedate;
 	}
-	
-	
 }

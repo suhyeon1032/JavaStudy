@@ -3,9 +3,13 @@ package com.campus.myapp.controller;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.support.HttpAccessor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-//íšŒì›ê°€ì…, íšŒì›ì •ë³´ìˆ˜ì •, ë¡œê·¸ì¸, ë¡œê·¸ì•„ì›ƒ
+//È¸¿ø°¡ÀÔ, È¸¿øÁ¤º¸ ¼öÁ¤, ·Î±×ÀÎ, ·Î±×¾Æ¿ô
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,92 +22,123 @@ import com.campus.myapp.vo.MemberVO;
 @Controller
 @RequestMapping("/member/")
 public class MemberController {
-	
 	@Inject
 	MemberService service;
 	
-    //íšŒì›ê°€ì… í¼ìœ¼ë¡œ ì´ë™í•˜ëŠ” ë§µí•‘
-    @GetMapping("memberForm")
-    public String memberForm(){
-        return "member/memberForm";    //memberí´ë”ì— memberForm.jspíŒŒì¼ì„ ë·°ë¡œ ì‚¬ìš©í•œë‹¤.
-    }
-    
-    //íšŒì›ë“±ë¡
-    @PostMapping("memberOk")
+	//È¸¿ø°¡ÀÔÆûÀ¸·Î ÀÌµ¿ÇÏ´Â ¸ÅÇÎ
+	@GetMapping("memberForm")
+	public String memberForm() {
+		return "member/memberForm";//    memberÆú´õ¿¡ memberForm.jspÆÄÀÏÀ» ºä·Î »ç¿ëÇÑ´Ù
+	}
+	//È¸¿øµî·Ï
+	@PostMapping("memberOk")
     public String memeberFormOk(MemberVO vo, Model model) {
-    	//íšŒì›ë“±ë¡
-    	int cnt = service.memberInsert(vo);
-    	
-    	//í´ë¼ì´ì–¸íŠ¸ í˜ì´ì§€ë¡œ insert ê³¼ë¥¼ ë³´ë‚¸ë‹¤
-    	model.addAttribute("cnt", cnt);
-    	return "member/memberResult";
-    }
-    
-    //ë¡œê·¸ì¸í¼ìœ¼ë¡œ ì´ë™
-    @GetMapping("loginForm")
-    public String loginForm() {
-    	return "member/loginForm";
-    }
-    //ë¡œê·¸ì¸
-    @PostMapping("loginOk")
-    public ModelAndView loginOk(MemberVO vo, HttpSession session) {
-		//request userid, userpwdì™€ ì¼ì¹˜í•˜ëŠ” ë ˆì½”ë“œì˜ userid, usernameì„ ì„ íƒí•œë‹¤.
-    	MemberVO vo2 = service.loginCheck(vo);
-    	ModelAndView mav = new ModelAndView();
-    	//ë¡œê·¸ì¸ ì„±ê³µ : sessionì— ì•„ì´ë””ì™€ ì´ë¦„ì„ ì €ì¥í•œë‹¤. í™ˆìœ¼ë¡œì´ë™
-    	if(vo2 != null) {//ë¡œê·¸ì¸ ì„±ê³µ
-    		session.setAttribute("logId", vo2.getUserid());
-    		session.setAttribute("logName", vo2.getUsername());
-    		session.setAttribute("logStatus", "Y");
-    		//ì»¨íŠ¸ë¡¤ëŸ¬ì—ì„œ ë‹¤ë¥¸ ì»¨íŠ¸ë¡¤ëŸ¬ ë§¤í•‘ì£¼ì†Œë¥¼ ë°”ë¡œ í˜¸ì¶œí•œë‹¤.
-    		mav.setViewName("redirect:/");
-    	}else {//ë¡œê·¸ì¸ ì‹¤íŒ¨
-    		mav.setViewName("redirect:loginForm");
-    	}
-    	return mav;
+		//È¸¿øµî·Ï
+		int cnt = service.memberInsert(vo);
+		
+		//Å¬¶óÀÌ¾ğÆ® ÆäÀÌÁö·Î insert result¸¦ º¸³½´Ù.
+		model.addAttribute("cnt", cnt);
+		
+		return "member/memberResult";
 	}
-    
-    //ë¡œê·¸ì•„ì›ƒ
-    @GetMapping("logout")
-    public ModelAndView logout(HttpSession session) {
-    	//ì„¸ì…˜ ê°ì²´ë¥¼ ì§€ìš°ë©´ ì„¸ì…˜ì— ì €ì¥ë˜ì–´ ìˆëŠ” ë¡œê·¸ì¸ ì •ë³´ ë“± ì‚­ì œë˜ê³ 
-    	// ìƒˆë¡œìš´ ì„¸ì…˜ì„ í• ë‹¹í•œë‹¤.
-    	session.invalidate();
-    	ModelAndView mav = new ModelAndView();
-    	mav.setViewName("redirect:/");
-    	return mav;
-    }
-    
-    //íšŒì›ì •ë³´ìˆ˜ì •(í¼)
-    @GetMapping("memberEdit")
-    public ModelAndView memberEdit(HttpSession session) {
-    	String userid = (String)session.getAttribute("logId");
-    	
-    	MemberVO vo = service.memberSelect(userid);
-    	ModelAndView mav = new ModelAndView();
-    	mav.addObject("vo",vo);
-    	mav.setViewName("member/memberEdit");
-    	return mav;
-    }
-    
-    //íšŒì›ì •ë³´ìˆ˜ì •(DB)
-    @PostMapping("memberEditOk")
-    public ModelAndView memberEditOk(MemberVO vo, HttpSession session) {
-    	//session ë¡œê·¸ì¸ ì•„ì´ë””
-    	vo.setUserid((String)session.getAttribute("logId"));
-    	
-    	service.memberUpdate(vo);
-    	
-    	ModelAndView mav = new ModelAndView();
-    	mav.setViewName("redirect:memberEdit");
-    	return mav;
+	
+	//·Î±×ÀÎ ÆûÀ¸·Î ÀÌµ¿ÇÏ´Â ¸Ê
+	@GetMapping("loginForm")
+	public String loginForm() {
+		return "member/loginForm";
 	}
-    
-    //ì•„ì´ë”” ì¤‘ë³µê²€ì‚¬
-    @PostMapping("memberIdCheck")
-    @ResponseBody
-    public int idCheck(String userid) {
-    	int cnt = service.idCheck(userid);
-    	return cnt;
-    }
+	
+	//·Î±×ÀÎ ÈÄ
+	@PostMapping("loginOk")
+	public ModelAndView loginOk(MemberVO vo, HttpSession session) {
+		//request usrid, userpwd¿Í ÀÏÄ¡ÇÏ´Â ·¹ÄÚµåÀÇ userid, username¸¦ ¼±ÅÃ
+		MemberVO vo2 = service.loginCheck(vo);
+		
+		ModelAndView mav = new ModelAndView();
+		
+		//1)·Î±×ÀÎ ¼º°ø : session¿¡ ¾ÆÀÌµğ¿Í ÀÌ¸§À» ÀúÀåÇÏ°í È¨À¸·Î ÀÌµ¿
+		if(vo2!=null) {
+			session.setAttribute("logId", vo2.getUserid());
+			session.setAttribute("logName", vo2.getUsername());
+			session.setAttribute("logStatus", "Y");
+			
+			mav.setViewName("redirect:/");//redirect:ÄÁÆ®·Ñ·¯¿¡¼­ ´Ù¸¥ ÄÁÆ®·Ñ·¯ ¸ÅÇÎ ÁÖ¼Ò¸¦ ¹Ù·Î È£Ãâ("/"·Î ¸ÅÇÎµÈ °÷À¸·Î °¡¶ó
+		}else {//2)·Î±×ÀÎ ½ÇÆĞ : ·Î±×ÀÎ ÆûÀ¸·Î ÀÌµ¿
+			mav.setViewName("redirect:loginForm");
+		}
+		return mav;
+	}
+	
+	//·Î±×¾Æ¿ôÀ¸·Î ÀÌµ¿
+	@GetMapping("logout")
+	public ModelAndView logout(HttpSession session) {
+		//¼¼¼Ç °´Ã¼¸¦ Áö¿ì¸é ¼¼¼Ç¿¡ ÀúÀåµÈ ·Î±×ÀÎ Á¤º¸ µî ¸ğµç µ¥ÀÌÅÍ°¡ »èÁ¦µÇ°í
+		//»õ·Î¿î ¼¼¼ÇÀ» ÇÒ´çÇÑ´Ù.
+		session.invalidate();
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("redirect:/");
+		return mav;
+	}
+	
+	//È¸¿øÁ¤º¸ ¼öÁ¤(Æû)
+	@GetMapping("memberEdit")
+	public ModelAndView memberEdit(HttpSession session) {
+		String userid = (String)session.getAttribute("logId");
+		
+		MemberVO vo = service.memberSelect(userid);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("vo",vo);
+		
+		mav.setViewName("member/memberEdit");
+		
+		return mav;
+	}
+	//È¸¿øÁ¤º¸¼öÁ¤(DB)
+	@PostMapping("memberEditOk")
+	public ResponseEntity mamberEditOk(MemberVO vo, HttpSession session) {
+		//sessionÀÇ ·Î±×ÀÎ ¾ÆÀÌµğ È®ÀÎ
+		vo.setUserid((String) session.getAttribute("logId"));
+		
+		ResponseEntity<String> entity =null;
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("content-Type","text/html;charset=utf-8");
+		
+		try {//1. Á¤»ó±¸Çö
+			if(service.memberUpdate(vo)!=0) {//1-1 : ¼öÁ¤ ¼º°ø
+				String msg = "<script>";
+				msg+="alert('È¸¿øÁ¤º¸¸¦ ¼öÁ¤Çß¾î¿ä!');";
+				msg+="location.href='/myapp/member/memberEdit';";
+				msg+="</script>";
+				entity = new ResponseEntity<String>(msg,headers,HttpStatus.OK);//(¹®ÀÚ¿­,ÀÎÄÚµùÅ¸ÀÔ,HttpStatus.OK : 200)
+			}else {//1-2 : ¼öÁ¤ ½ÇÆĞ
+				String msg = "<script>";
+				msg+="alert('È¸¿øÁ¤º¸ ¼öÁ¤¿¡ ½ÇÆĞÇß¾î¿ä..\\n¾Æ¸¶..ºñ¹Ğ¹øÈ£ ¹®Á¦..?\\nÁË¼ÛÇÏÁö¸¸ Ã³À½ºÎÅÍ ´Ù½Ã ÀÔ·ÂÇØÁÖ½Ç·¡¿ä?');";
+				msg+="location.href='/myapp/member/memberEdit';";
+				msg+="</script>";
+				entity = new ResponseEntity<String>(msg,headers,HttpStatus.BAD_REQUEST);
+			}
+			service.memberUpdate(vo);
+			
+			
+		}catch(Exception e) {//2. ¿¹¿Ü¹ß»ı
+			e.printStackTrace();
+			//µî·Ï¾ÈµÊ..
+			String msg = "<script>";
+			msg+="alert('È¸¿øÁ¤º¸ ¼öÁ¤¿¡ ½ÇÆĞÇß¾î¿ä..\\n¹ºÁö...¸ğ¸¦..¿¹¿Ü°¡..¹ß»ıÇß¾î¿ä...¾û¾û..ÁË¼ÛÇØ¿ä..');";
+			msg+="history.back();";
+			msg+="</script>";
+			entity = new ResponseEntity<String>(msg,headers,HttpStatus.BAD_REQUEST);
+		}
+			return entity;
+	}
+	
+	//¾ÆÀÌµğ Áßº¹°Ë»ç
+	@PostMapping("memberIdCheck")
+	@ResponseBody
+	public int idCheck(String userid) {
+		int cnt = service.idCheck(userid);
+		return cnt;
+	}
 }

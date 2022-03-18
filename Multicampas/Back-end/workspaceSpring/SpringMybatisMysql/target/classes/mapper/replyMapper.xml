@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.campus.myapp.dao.ReplyDAO">
 	<insert id="replyWrite">
-		insert into replyboard(no, userid, coment)
-		values(#{no}, #{userid}, #{coment})
+		insert into replyboard(no,userid,coment) values(#{no},#{userid},#{coment})
 	</insert>
 	<select id="replyList" resultType="com.campus.myapp.vo.ReplyVO">
-		select replyno, userid, coment, writedate from replyboard 
-		where no=${param1}
-		order by replyno desc
-	</select>
+        select replyno, userid, coment, writedate from replyboard
+        where no=${param1}
+		order by replyno desc;
+    </select>
 	<update id="replyEdit">
 		update replyboard set coment=#{coment} where replyno=${replyno} and userid=#{userid}
 	</update>

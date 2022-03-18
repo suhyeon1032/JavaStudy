@@ -8,12 +8,11 @@ import org.springframework.stereotype.Service;
 import com.campus.myapp.dao.ReplyDAO;
 import com.campus.myapp.vo.ReplyVO;
 
-@Service
+@Service 
 public class ReplyServiceImpl implements ReplyService {
-
 	@Autowired
 	ReplyDAO dao;
-
+	
 	@Override
 	public int replyWrite(ReplyVO vo) {
 		return dao.replyWrite(vo);

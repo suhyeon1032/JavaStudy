@@ -3,15 +3,15 @@ package com.campus.myapp.dao;
 import com.campus.myapp.vo.MemberVO;
 
 public interface MemberDAO {
-
-	//íšŒì›ë“±ë¡
+	//È¸¿øµî·Ï
 	public int memberInsert(MemberVO vo);
-	//ë¡œê·¸ì¸
+	//·Î±×ÀÎ
 	public MemberVO loginCheck(MemberVO vo);
-	//íšŒì›ì •ë³´ìˆ˜ì •í¼
+	//È¸¿øÁ¤º¸¼öÁ¤Æû
 	public MemberVO memberSelect(String userid);
-	//íšŒì›ì •ë³´ìˆ˜ì •(DB)
+	//È¸¿øÁ¤º¸ ¼öÁ¤(DB)
 	public int memberUpdate(MemberVO vo);
-	//ì•„ì´ë”” ì¤‘ë³µê²€ì‚¬
+	//¾ÆÀÌµğ Áßº¹°Ë»ç
 	public int idCheck(String userid);
 }
+  

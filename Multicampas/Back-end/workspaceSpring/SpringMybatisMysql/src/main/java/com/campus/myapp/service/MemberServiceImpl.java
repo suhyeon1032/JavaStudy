@@ -9,25 +9,23 @@ import com.campus.myapp.vo.MemberVO;
 
 @Service
 public class MemberServiceImpl implements MemberService {
-
-	@Inject		//daoë¥¼ ê°ì²´ ìƒì„±í•œë‹¤. == @AutoWired
+	@Inject //DAO¸¦ °´Ã¼»ı¼º.(DIÀÇ ÀÏÈ¯)   @AutoWired
 	MemberDAO dao;
 	
 	@Override
 	public int memberInsert(MemberVO vo) {
 		return dao.memberInsert(vo);
 	}
-
+	
 	@Override
-	public MemberVO loginCheck(MemberVO vo) {
-		return dao.loginCheck(vo);
-	}
-
+    public MemberVO loginCheck(MemberVO vo) {
+        return dao.loginCheck(vo);
+    }
+	
 	@Override
 	public MemberVO memberSelect(String userid) {
 		return dao.memberSelect(userid);
 	}
-
 	@Override
 	public int memberUpdate(MemberVO vo) {
 		return dao.memberUpdate(vo);

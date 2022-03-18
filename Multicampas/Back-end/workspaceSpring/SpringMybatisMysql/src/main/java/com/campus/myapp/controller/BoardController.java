@@ -20,155 +20,144 @@ import com.campus.myapp.service.BoardService;
 import com.campus.myapp.vo.BoardVO;
 import com.campus.myapp.vo.PagingVO;
 
-@RestController // @Controller + @ResponseBody í•©ì¹œê²ƒ
+@RestController //Controller + ResponseBody
 @RequestMapping("/board/*")
 public class BoardController {
-	@Inject
-	BoardService service;
-
-	// ê¸€ëª©ë¡
+	@Inject 
+	BoardService service; //inject : °´Ã¼¸¦ ¸¸µé¾î ¹İÈ¯
+	//1. ±Û ¸ñ·Ï
 	@GetMapping("boardList")
 	public ModelAndView boardList(PagingVO pVO) {
 		ModelAndView mav = new ModelAndView();
-
-		// ì´ ë ˆì½”ë“œ ìˆ˜
+		
+		//ÃÑ ·¹ÄÚµå ¼ö
 		pVO.setTotalRecord(service.totalRecord(pVO));
-
-		// dbì²˜ë¦¬
-		mav.addObject("list", service.boardList(pVO));
-
-		mav.addObject("pVO", pVO);
-
-		mav.setViewName("board/boardList"); // WEB-INF/views/board/boardList.jsp
+		mav.addObject("pVO",pVO);
+		
+		//DBÃ³¸®
+		mav.addObject("list",service.boardList(pVO));
+		
+		mav.setViewName("board/boardList");//servletcontext¸¦ ÅëÇØ WEB-INF/views/board/boardList.JSP·Î º¯È¯µÊ
 		return mav;
 	}
-
-	// ê¸€ë“±ë¡ í¼
+	//2. ±Û µî·Ï Æû
 	@GetMapping("boardWrite")
-	public ModelAndView name() {
+	public ModelAndView boardWrite() {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("board/boardWrite");
 		return mav;
 	}
-
-	// ê¸€ë“±ë¡
+	//3. ±Û µî·Ï
 	@PostMapping("boardWriteOk")
-	public ResponseEntity boardWriteOk(BoardVO vo, HttpServletRequest request) {
-		vo.setIp(request.getRemoteAddr()); // ì ‘ì†ì ì•„ì´í”¼
-		// ê¸€ì“´ì´-sessionë¡œê·¸ì¸ ì•„ì´ë””ë¥¼ êµ¬í•œë‹¤.
-		vo.setUserid((String) request.getSession().getAttribute("logId"));
-
-		// DBì‘ì—…
-		ResponseEntity<String> entity = null; // ë°ì´í„°ì™€ ì²˜ë¦¬ìƒíƒœë¥¼ ê°€ì§„ë‹¤.
-
+	public ResponseEntity boardWriteOk(BoardVO vo,HttpServletRequest request) {
+		vo.setIp(request.getRemoteAddr());//Á¢¼ÓÀÚ IP
+		//±Û¾´ÀÌ-session·Î±×ÀÎ ¾ÆÀÌµğ¸¦ ±¸ÇÑ´Ù
+		vo.setUserid((String)request.getSession().getAttribute("logId"));
+		
+		ResponseEntity<String> entity =null;
 		HttpHeaders headers = new HttpHeaders();
-
-		headers.add("Content-Type", "text/html; charset=utf-8");
-//        headers.setContentType(new MediaType("text", "html", Charset.forName("utf-8")));
+		headers.add("content-Type","text/html;charset=utf-8");
+		//headers.setContentType(new MediaType("text","html",Charset.forName("UFT-8")));
 		try {
 			service.boardInsert(vo);
+			//Á¤»ó±¸Çö
 			String msg = "<script>";
-			msg += "alert('ê¸€ì´ ë“±ë¡ë˜ì—ˆìŠµë‹ˆë‹¤');";
-			msg += "location.href='/myapp/board/boardList';";
-			msg += "</script>";
-			entity = new ResponseEntity<String>(msg, headers, HttpStatus.OK);
-
-		} catch (Exception e) {
+			msg+="alert('±ÛÀÌ µî·ÏµÇ¾ú½À´Ï´Ù>_<');";
+			msg+="location.href='boardList';";
+			msg+="</script>";
+			entity = new ResponseEntity<String>(msg,headers,HttpStatus.OK);//(¹®ÀÚ¿­,ÀÎÄÚµùÅ¸ÀÔ,HttpStatus.OK : 200)
+		}catch(Exception e){
 			e.printStackTrace();
-
-			// ë“±ë¡ì•ˆë¨
+			//µî·Ï¾ÈµÊ..
 			String msg = "<script>";
-			msg += "alert('ê¸€ë“±ë¡ì´ ì‹¤íŒ¨í•˜ì˜€ìŠµë‹ˆë‹¤');";
-			msg += "history.back();";
-			msg += "</script>";
-			entity = new ResponseEntity<String>(msg, headers, HttpStatus.BAD_REQUEST);
+			msg+="alert('±Û µî·Ï ½ÇÆĞÇÏ¿´½À´Ï´Ù ¤Ğ_¤Ğ');";
+			msg+="history.back();";
+			msg+="</script>";
+			entity = new ResponseEntity<String>(msg,headers,HttpStatus.BAD_REQUEST);
 		}
-
 		return entity;
+				
 	}
-
-	// 4. ê¸€ ë‚´ìš© ë³´ê¸°
+	//4. ±Û ³»¿ë º¸±â
 	@GetMapping("boardView")
 	public ModelAndView boardView(int no) {
 		ModelAndView mav = new ModelAndView();
-
-		service.hitCount(no); // ì¡°íšŒìˆ˜ ì¦ê°€
-
-		mav.addObject("vo", service.boardSelect(no));
+		
+		service.hitCount(no);
+		
+		mav.addObject("vo",service.boardSelect(no));
 		mav.setViewName("board/boardView");
-
+		
 		return mav;
 	}
-
-	// ê¸€ìˆ˜ì • í¼
+	//5. ±Û ¼öÁ¤ Æû
 	@GetMapping("boardEdit")
 	public ModelAndView boardEdit(int no) {
 		ModelAndView mav = new ModelAndView();
-
+		
 		mav.addObject("vo", service.boardSelect(no));
 		mav.setViewName("board/boardEdit");
-
+		
 		return mav;
 	}
-
-	// ê¸€ìˆ˜ì • (DB)
+	//±Û¼öÁ¤(DB)
 	@PostMapping("boardEditOk")
 	public ResponseEntity<String> boardEditOk(BoardVO vo, HttpSession session) {
 		ResponseEntity<String> entity = null;
 		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(new MediaType("text", "html", Charset.forName("utf-8")));
-
-		vo.setUserid((String) session.getAttribute("logId"));
-
+		//header setting
+		headers.add("content-Type","text/html;charset=utf-8");
+		
+		vo.setUserid((String)session.getAttribute("logId"));
 		try {
 			int result = service.boardUpdate(vo);
-			if (result > 0) {// ìˆ˜ì • ì„±ê³µ
+			if(result>0) {//¼öÁ¤ ¼º°ø
 				entity = new ResponseEntity<String>(getEditSuccessMessage(vo.getNo()), headers, HttpStatus.OK);
-			} else {// ìˆ˜ì • ëª»í•¨
+			}else {//¼öÁ¤ ¸øÇÔ
 				entity = new ResponseEntity<String>(getEditFailMessage(), headers, HttpStatus.BAD_REQUEST);
 			}
-		} catch (Exception e) {
+		}catch(Exception e) {
+			//¼öÁ¤ ½ÇÆĞ
 			e.printStackTrace();
-			// ìˆ˜ì • ì‹¤íŒ¨
 			entity = new ResponseEntity<String>(getEditFailMessage(), headers, HttpStatus.BAD_REQUEST);
 		}
-		return entity;
+		return entity;		
 	}
 
-	// ê¸€ ì‚­ì œ
+	//±Û»èÁ¦
 	@GetMapping("boardDel")
 	public ModelAndView boardDel(int no, HttpSession session) {
+		//id ±¸ÇÏ±â
 		String userid = (String)session.getAttribute("logId");
 		
 		int result = service.boardDelete(no, userid);
 		
 		ModelAndView mav = new ModelAndView();
-		if(result>0) {	//ì‚­ì œ
-			mav.setViewName("redirect:boardList");	// listë¡œ ì´ë™í•œ ì»¨íŠ¸ë¡¤ëŸ¬ë¥¼ í˜¸ì¶œ
-		}else {	//ì‚­ì œì‹¤íŒ¨
-			mav.addObject("no", no);
+		
+		if(result > 0) {//»èÁ¦ ¼º°ø
+			mav.setViewName("redirect:boardList"); //list·Î ÀÌµ¿ÇÏ´Â ÄÁÆ®·Ñ·¯ È£Ãâ
+		}else {//»èÁ¦½ÇÆĞ
+			mav.addObject("no",no);
 			mav.setViewName("redirect:boardView");
 		}
 		return mav;
 	}
 	
-	// ê¸€ ìˆ˜ì • ë©”ì†Œë“œ
+	//±Û ¼öÁ¤ ¸Ş¼¼Áö(½ÇÆĞ½Ã)
 	public String getEditFailMessage() {
-		String msg = "<script>";
-		msg += "alert('ê¸€ìˆ˜ì • ì‹¤íŒ¨í•˜ì˜€ìŠµë‹ˆë‹¤.\\nìˆ˜ì •í¼ìœ¼ë¡œ ì´ë™í•©ë‹ˆë‹¤.');";
-		msg += "history.back();";
-		msg += "</script>";
+		String msg="<script>";
+		msg+="alert('±ÛÀ» ¼öÁ¤ ÇÒ ¼ö ¾ø½À´Ï´Ù.. ): \\n¼öÁ¤ ÆûÀ¸·Î ´Ù½Ã ÀÌµ¿ÇÕ´Ï´Ù');";
+		msg+="history.back();";
+		msg+="</script>";
 		return msg;
 	}
-
-	// ê¸€ ìˆ˜ì • ë©”ì†Œë“œ
+	//±Û ¼öÁ¤ ¸Ş¼¼Áö(¼º°ø½Ã)
 	public String getEditSuccessMessage(int no) {
-		String msg = "<script>";
-		msg += "alert('ê¸€ ìˆ˜ì •ì´ ì™„ë£Œë˜ì˜€ìŠµë‹ˆë‹¤.\\nê¸€ ë‚´ìš©ìœ¼ë¡œ ì´ë™í•©ë‹ˆë‹¤.');";
-		msg += "location.href='/myapp/board/boardView?no=" + no + "';";
-		msg += "</script>";
+		String msg="<script>";
+		msg+="alert('±ÛÀ» ¼öÁ¤ Çß¾î¿ä, ¾å! :] \\n¼öÁ¤ÇÑ ±ÛÀ» º¸¿©µå¸±°Ô¿ä-!');";
+		msg+="location.href='/myapp/board/boardView?no="+no+"'";
+		msg+="</script>";
 		return msg;
 	}
-	
 	
 }
