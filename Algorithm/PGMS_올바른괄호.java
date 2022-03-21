@@ -1,6 +1,6 @@
 package week10;
 
-public class Solution_12909 {
+public class PGMS_올바른괄호 {
 	boolean solution(String s) {
 		boolean answer = true;
 		int sum = 0;
