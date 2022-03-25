@@ -1,5 +1,6 @@
 function memberCheck(){
 	//아이디
+	var reg = /^[a-zA-Z]{1}[a-zA-Z0-9_]{7,11}$/;	
 	let userid = document.getElementById("userid");
 	if(userid.value == ''){
 		alert("아이디 입력하세요!");
@@ -44,6 +45,8 @@ function memberCheck(){
 		tel2.focus();
 		return false;
 	}
+	
+	let job = document.getElementById("job");
 	
 	return true;
 }

@@ -36,7 +36,7 @@
 </script>
 
 <div class="container">
-	<h1>자료실 글등록 폼</h1>
+	<h1>리뷰 게시판 글 등록</h1>
 	<!-- 파일 업로드의 기능이 있는 폼은 반드시 enctype속성을 명시하여야한다.!!! -->
 	<form id="dataFrm" method="post" action="/myapp/data/writeOk" enctype="multipart/form-data">
 		<ul>

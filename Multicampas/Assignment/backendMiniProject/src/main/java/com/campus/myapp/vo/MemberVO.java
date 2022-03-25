@@ -13,6 +13,8 @@ public class MemberVO {
 	private String email;
 	private String wirtedate;
 	
+	private String job;
+	
 	public String getUserid() {
 		return userid;
 	}
@@ -74,6 +76,13 @@ public class MemberVO {
 	public void setWirtedate(String wirtedate) {
 		this.wirtedate = wirtedate;
 	}
+	public String getJob() {
+		return job;
+	}
+	public void setJob(String job) {
+		this.job = job;
+	}
+	
 	
 	
 }

@@ -8,27 +8,32 @@ body, ul, li{
 
 .mainMenu a:link, .mainMenu a:visited, .mainMenu a:hover{
 	text-decoration: none;
-	color: white;
+	color: #4795c9;
 }
 
 .top {
-	width: 1200px;
+	padding-right: 50px;
 	text-align: right;
-	background-color: #ddd;
-	margin: 0 auto;
+	/* background-color: #ddd; */
+	margin: 10 auto;
+	text-decoration: none;
+	
 }
 
 .logo{
 	text-align: center;
 	font-size: 3em;
-	height: 100px;
 	line-height: 100px;
+	height: 100px;
 }
 
 .mainMenu{
-	height: 50px;
-	background-color: olivedrab;
-	font-size: 1.5em;
+	height: 45px;
+	font-size: 1em;
+	text-align: center;
+	margin: 0 auto;
+	background-color: #d1e9ff;
+	
 }
 
 .bottom{
@@ -36,14 +41,18 @@ body, ul, li{
 	color: white;
 	text-align: center;
 	height: 100px;
-	line-height: 100px;
+	line-height: 25px;
 	margin-top: 30px;
+	font-size: 10px;
 }
 
 .container{
-	width: 1200px;
-	margin: 0 auto;
+	width: 1000px;
+	margin: 50px auto;
 	overflow: auto;
+	box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7), -1px -1px 5px rgba(0, 0, 0, 0.7);
+	padding: 10px;
+	border-radius: 5px;
 }
 
 /*top 메뉴*/
@@ -52,4 +61,7 @@ body, ul, li{
 	text-align: center;
 	line-height: 50px;
 	width:150px;
+	margin-left: 100px;
+	height: 40px;
+	
 }

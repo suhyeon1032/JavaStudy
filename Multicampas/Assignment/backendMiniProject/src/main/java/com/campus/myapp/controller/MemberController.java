@@ -54,6 +54,7 @@ public class MemberController {
     	if(vo2 != null) {//로그인 성공
     		session.setAttribute("logId", vo2.getUserid());
     		session.setAttribute("logName", vo2.getUsername());
+    		session.setAttribute("logJob", vo2.getJob());
     		session.setAttribute("logStatus", "Y");
     		//컨트롤러에서 다른 컨트롤러 매핑주소를 바로 호출한다.
     		mav.setViewName("redirect:/");

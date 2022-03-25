@@ -9,7 +9,7 @@
 </script>
 
 <div class="container">
-	<h1>자료실 글 내용보기</h1>
+	<h1></h1>
 	<ul>
 		<li>번호 : ${dataVO.no}</li>
 		<li>글쓴이 : ${dataVO.userid }</li>
@@ -19,6 +19,7 @@
 		<hr/>
 		<li><h3>글내용</h3></li>
 		<li>${dataVO.content }</li>
+		<li><img src="../img/${dataVO.filename1 }" width="200px;"></li>
 		<hr/>
 		<li>첨부파일 : <a href="/myapp/upload/${dataVO.filename1 }" download>${dataVO.filename1 }</a>
 			<c:if test="${dataVO.filename2 != null && dataVO.filename2 != '' }">

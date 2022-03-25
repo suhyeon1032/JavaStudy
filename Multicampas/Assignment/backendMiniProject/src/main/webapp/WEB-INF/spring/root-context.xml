@@ -15,7 +15,7 @@
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName"
 			value="com.mysql.cj.jdbc.Driver"></property>
-		<property name="url" value="jdbc:mysql://127.0.0.1/campusDB"></property>
+		<property name="url" value="jdbc:mysql://127.0.0.1/minidb"></property>
 		<property name="username" value="root"></property>
 		<property name="password" value="root1234"></property>
 	</bean>

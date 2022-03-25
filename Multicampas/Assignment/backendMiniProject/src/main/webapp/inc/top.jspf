@@ -7,6 +7,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+a:link, a:visited, a:hover{
+	text-decoration: none;
+	color: black;
+}
+</style>
 <link rel="stylesheet" href="${url}/css/style.css" type="text/css">
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -14,11 +20,11 @@
 <body>
 	<div class="top">
 		<c:if test="${logStatus != 'Y' }">
-			<a href="${url}/member/loginForm">로그인</a>
+			<a href="${url}/member/loginForm">로그인 | </a>
 			<a href="${url}/member/memberForm">회원가입</a>
 		</c:if>
 		<c:if test="${logStatus == 'Y' }">
-      ${logId}님<a href="${url}/member/logout">로그아웃</a>
+      ${logId}님 | 남은 대기수 : 00 | <a href="${url}/member/logout">로그아웃 | </a>
 			<a href="${url}/member/memberEdit">회원 정보 수정</a>
 		</c:if>
 	</div>
@@ -26,17 +32,16 @@
 	<div class="mainMenu">
 		<ul>
 			<li><a href="/myapp/">HOME</a></li>
-			<%-- <c:choose>
-				<c:when test="${logStatus != 'Y'}">
-					<li><a href="${url}/member/loginForm">로그인</a></li>
-					<li><a href="${url}/member/memberForm">회원가입</a></li>
+			<c:choose>
+				<c:when test="${logJob eq 'job1'}">
+					<li><a href="${url}/board/boardList">가게검색</a></li>
 				</c:when>
-				<c:when test="${logStatus == 'Y'}">
-					<li><a href="${url}/member/logout">로그아웃</a></li>
-					<li><a href="${url}/member/memberEdit">회원정보수정</a></li>
+			</c:choose>
+			<c:choose>
+				<c:when test="${logJob eq 'job2'}">
+					<li><a href="${url}/board/boardList">가게등록</a></li>
 				</c:when>
-			</c:choose> --%>
-			<li><a href="${url}/board/boardList">가게찾기</a></li>
+			</c:choose>
 			<li><a href="/myapp/data/dataList">리뷰게시판</a></li>
 		</ul>
 

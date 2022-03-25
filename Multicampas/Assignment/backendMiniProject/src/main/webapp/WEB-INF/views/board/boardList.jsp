@@ -4,6 +4,7 @@
 
 <style>
 .boardList {
+	width: 800px;
 	overflow: auto;
 }
 
@@ -40,26 +41,60 @@
 	padding: 20px 200px;
 	text-align: center;
 }
+.cont{
+	display: flex;
+}
+.box {
+width:100%;
+  display: flex;
+}
+
+.box .firstbox {
+  width: 25%;
+  height: 100px;
+  background-color: #d1e9ff;
+  margin-left: 20px;
+}
+.box .secondbox {
+  width: 25%;
+  height: 100px;
+  background-color: blue;
+}
 </style>
 <script>
-    $(function(){
-        $("#searchFrm").submit(function(){
-            if($("#searchWord").val()==""){
-                alert("검색어를 입력하세요");
-                return false;
-            }
-        });
-    });
+	$(function() {
+		$("#searchFrm").submit(function() {
+			if ($("#searchWord").val() == "") {
+				alert("검색어를 입력하세요");
+				return false;
+			}
+		});
+	});
 </script>
 
 <div class="container">
-	<h1>게시판 목록</h1>
+	
+	<c:choose>
+		<c:when test="${logJob eq 'job2'}">
+			<div>
+				<a href="<%=request.getContextPath()%>/board/boardWrite">글쓰기</a>
+			</div>
+		</c:when>
+	</c:choose>
+	<!-- 검색 -->
 	<div>
-		<a href="<%=request.getContextPath()%>/board/boardWrite">글쓰기</a>
+		<form method="get" action="/myapp/board/boardList" id="searchFrm">
+			<select name="searchKey">
+				<option value="subject">지역</option>
+				<option value="content">카테고리</option>
+				<option value="userid">상호명</option>
+			</select> <input type="text" name="searchWord" id="searchWord"> <input
+				type="submit" value="search">
+		</form>
 	</div>
-	<div>총 레코드수 : ${pVO.totalRecord },
-		${pVO.totalPage}/${pVO.pageNum}</div>
-	<ul class="boardList">
+	<%-- <div>총 레코드수 : ${pVO.totalRecord },
+		${pVO.totalPage}/${pVO.pageNum}</div> --%>
+	<%-- <ul class="boardList">
 		<li>번호</li>
 		<li>제목</li>
 		<li>글쓴이</li>
@@ -73,47 +108,59 @@
 			<li>${vo.writedate}</li>
 		</c:forEach>
 
+	</ul> --%>
+	<div class="cont">
+		<!-- <div><a href="/myapp/board/boardView?no=${vo.no }">${vo.subject }</div> -->
+		<%-- <c:forEach var="vo" items="${list}">
+			<li><a href="/myapp/board/boardView?no=${vo.no }"><img src="../../img/mainEx01.png"/></a></li>
+		</c:forEach> --%>
+		<div class="box">
+    <div class="firstbox">BOX1</div>
+    <div class="firstbox">BOX2</div>
+    <div class="firstbox">BOX1</div>
+    <div class="firstbox">BOX2</div>
+  </div>
+
 	</ul>
 
+	</ul>
+	</div>
+
 	<!-- 페이징 -->
-	
+
 	<ul class="paging">
 		<!--  이전페이지 -->
 		<c:if test="${pVO.pageNum==1}">
 			<li>prev</li>
 		</c:if>
 		<c:if test="${pVO.pageNum>1}">
-			<li><a href="/myapp/board/boardList?pageNum=${pVO.pageNum-1}<c:if test='${pVO.searchWord != null}'>&searchKey=${pVO.searchKey }&searchWord=${pVO.searchWord }</c:if>">prev</a></li>
+			<li><a
+				href="/myapp/board/boardList?pageNum=${pVO.pageNum-1}<c:if test='${pVO.searchWord != null}'>&searchKey=${pVO.searchKey }&searchWord=${pVO.searchWord }</c:if>">prev</a></li>
 		</c:if>
 		<!--  페이지 번호                 1,5      6,10         11,15-->
-		<c:forEach var="p" begin="${pVO.startPage}" end="${pVO.startPage+pVO.onePageCount-1}">
+		<c:forEach var="p" begin="${pVO.startPage}"
+			end="${pVO.startPage+pVO.onePageCount-1}">
 			<!--  총 페이지수보다 출력할 페이지번호가 작을때 -->
 			<c:if test="${p <= pVO.totalPage}">
 				<c:if test="${p == pVO.pageNum}">
-					<li style="background-color: red">
+					<li style="color: red">
 				</c:if>
 				<c:if test="${p != pVO.pageNum}">
 					<li>
 				</c:if>
-				<a href="/myapp/board/boardList?pageNum=${p}<c:if test='${pVO.searchWord != null}'>&searchKey=${pVO.searchKey }&searchWord=${pVO.searchWord }</c:if>">${p}	</a></li>
+				<a
+					href="/myapp/board/boardList?pageNum=${p}<c:if test='${pVO.searchWord != null}'>&searchKey=${pVO.searchKey }&searchWord=${pVO.searchWord }</c:if>">${p}
+				</a>
+				</li>
 			</c:if>
 		</c:forEach>
 		<c:if test="${pVO.pageNum==pVO.totalPage}">
 			<li>next</li>
 		</c:if>
 		<c:if test="${pVO.pageNum<pVO.totalPage}">
-			<li><a href="/myapp/board/boardList?pageNum=${pVO.pageNum+1}<c:if test='${pVO.searchWord != null}'>&searchKey=${pVO.searchKey }&searchWord=${pVO.searchWord }</c:if>">next</a></li>
+			<li><a
+				href="/myapp/board/boardList?pageNum=${pVO.pageNum+1}<c:if test='${pVO.searchWord != null}'>&searchKey=${pVO.searchKey }&searchWord=${pVO.searchWord }</c:if>">next</a></li>
 		</c:if>
 	</ul>
-	<!-- 검색 -->
-	<div>
-		<form method="get" action="/myapp/board/boardList" id="searchFrm">
-			<select name="searchKey">
-				<option value="subject">제목</option>
-				<option value="content">글내용</option>
-				<option value="userid">글쓴이</option>
-			</select> <input type="text" name="searchWord" id="searchWord"> <input
-				type="submit" value="search">
-		</form>
-	</div>
+	
 </div>

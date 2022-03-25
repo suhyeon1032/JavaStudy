@@ -13,4 +13,5 @@ public interface MemberService {
 	public int memberUpdate(MemberVO vo);
 	
 	public int idCheck(String userid);
+	
 }

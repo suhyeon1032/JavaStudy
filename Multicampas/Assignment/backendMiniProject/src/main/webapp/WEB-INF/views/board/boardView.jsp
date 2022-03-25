@@ -132,7 +132,7 @@
 	});
 </script>
 <div class="container">
-	<h1>글내용보기</h1>
+	<h1>가게 정보</h1>
 	<ul>
 		<li>번호 : ${vo.no }</li>
 		<li>작성자 : ${vo.userid }</li>

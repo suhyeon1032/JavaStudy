@@ -156,6 +156,8 @@ public class DataController {
 		return mav;
 	}
 	
+	
+	
 	//글 수정폼
 	@GetMapping("/data/dataEdit")
 	public ModelAndView editForm(int no) {

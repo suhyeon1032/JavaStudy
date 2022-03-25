@@ -27,7 +27,7 @@
    });
 </script>
 <div class="container">
-	<h1>글등록 폼</h1>
+	<h1>가게 등록</h1>
 	<form method="post" action="/myapp/board/boardWriteOk" id="boardFrm">
 		<ul>
 			<li>제목</li>

@@ -13,35 +13,55 @@
 	#mFrm li:last-child {
 		width: 100%;
 	}
+	#loginbtn {
+	width: 260px;
+	height: 35px;
+	border: none;
+	background-color: #d1e9ff;
+	border-radius: 3px;
+	color: #4795c9;
+	font-size: 14px;
+	font-weight: bold;
+	position: relative;
+	top: 1px;
+	margin:auto;
+    display:block;
+}
+.container>h1 {
+	text-align: center;
+}
+.container{
+	width: 600px;
+}
 </style>	
 <script src="/myapp/js/member.js" type="text/javascript"></script>
 <script type="text/javascript">
-	$(function(){
+	$(function() {
 		//아이디 중복검사
-		$("#userid").keyup(function(){
+		$("#userid").keyup(function() {
 			var userid = $("#userid").val();
-			if(userid!=''&& userid.length>=6){
+			if (userid != '' && userid.length >= 6) {
 				var url = "/myapp/member/memberIdCheck";
 				$.ajax({
 					url : url,
 					data : "userid=" + userid,
-					type: "POST",
-					success : function(result){
-						if(result>0){//사용불가능
+					type : "POST",
+					success : function(result) {
+						if (result > 0) {//사용불가능
 							$("#chk").html("이미 존재하는 아이디 입니다.");
 							$("#idchk").val("N");
-							$("#chk").css("color","red")
-						}else{//사용가능
+							$("#chk").css("color", "red")
+						} else {//사용가능
 							$("#chk").html("사용가능합니다.");
 							$("#idchk").val("Y");
-							$("#chk").css("color","blue")
+							$("#chk").css("color", "blue")
 						}
 					}
 				});
-			}else{//사용불가
-				$("#chk").html("6글자 이상입력하세요.");	
+			} else {//사용불가
+				$("#chk").html("6글자 이상입력하세요.");
 				$("#idchk").val("N");
-				$("#chk").css("color","red")
+				$("#chk").css("color", "red")
 			}
 		});
 	});
@@ -79,10 +99,10 @@
 		<li><input type="text" name="email" id="email" placeholder="이메일 입력"></li>
 		<li>사용형태</li>
 		<li>
-			<input type="radio" name="job" id="job1" checked>고객
-			<input type="radio" name="job" id="job2">사업자
+			<input type="radio" name="job" id="job" value="job1" checked>고객
+			<input type="radio" name="job" id="job" value="job2">사업자
 		</li>
-		<li><input type="submit" value="가입하기"/></li>
+		<li><input type="submit" value="가입하기" id="loginbtn"/></li>
 	</ul>
 	</form>
 </div>

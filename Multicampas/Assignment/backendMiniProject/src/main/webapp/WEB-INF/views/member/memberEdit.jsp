@@ -40,7 +40,7 @@
 <!-- top bottom jspf 에 html 태그및 css 다있기 때문에 중간에 작성할 요소만 적어준다 -->
 <div class="container">
    <h1>회원 정보 수정</h1>
-   <form method="post" action="/myapp/member/memberEditOk" id="mFrm">
+   <form method="post" action="/myapp/member/memberEditOk" id="mFrm" onsubmit="return memberCheck()">
       <ul>
          <li>아이디</li>
          <li>${vo.userid }</li>
