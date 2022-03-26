@@ -1,0 +1,11 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+<div class="bottom">
+<div><br>
+문의메일 : daram_9@naver.com<br>
+© 2022 Heo, Su-Hyeon. All rights reserved.
+</div>
+</div>
+</body>
+</html>

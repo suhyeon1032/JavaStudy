@@ -1,0 +1,67 @@
+@charset "UTF-8";
+
+body, ul, li{
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+.mainMenu a:link, .mainMenu a:visited, .mainMenu a:hover{
+	text-decoration: none;
+	color: #4795c9;
+}
+
+.top {
+	padding-right: 50px;
+	text-align: right;
+	/* background-color: #ddd; */
+	margin: 10 auto;
+	text-decoration: none;
+	
+}
+
+.logo{
+	text-align: center;
+	font-size: 3em;
+	line-height: 100px;
+	height: 100px;
+}
+
+.mainMenu{
+	height: 45px;
+	font-size: 1em;
+	text-align: center;
+	margin: 0 auto;
+	background-color: #d1e9ff;
+	
+}
+
+.bottom{
+	background-color: #999;
+	color: white;
+	text-align: center;
+	height: 100px;
+	line-height: 25px;
+	margin-top: 30px;
+	font-size: 10px;
+}
+
+.container{
+	width: 1000px;
+	margin: 50px auto;
+	overflow: auto;
+	box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7), -1px -1px 5px rgba(0, 0, 0, 0.7);
+	padding: 10px;
+	border-radius: 5px;
+}
+
+/*top 메뉴*/
+.mainMenu li{
+	float: left;
+	text-align: center;
+	line-height: 50px;
+	width:150px;
+	margin-left: 100px;
+	height: 40px;
+	
+}
