@@ -53,7 +53,7 @@ width:100%;
   width: 25%;
   height: 100px;
   background-color: #d1e9ff;
-  margin-left: 20px;
+  margin: 10px;
 }
 .box .secondbox {
   width: 25%;
@@ -109,21 +109,18 @@ width:100%;
 		</c:forEach>
 
 	</ul> --%>
-	<div class="cont">
+	<div class="cont" height="200px;">
 		<!-- <div><a href="/myapp/board/boardView?no=${vo.no }">${vo.subject }</div> -->
 		<%-- <c:forEach var="vo" items="${list}">
 			<li><a href="/myapp/board/boardView?no=${vo.no }"><img src="../../img/mainEx01.png"/></a></li>
 		</c:forEach> --%>
 		<div class="box">
-    <div class="firstbox">BOX1</div>
-    <div class="firstbox">BOX2</div>
-    <div class="firstbox">BOX1</div>
-    <div class="firstbox">BOX2</div>
+    <div class="firstbox"><img src="../img/mainEx01.png" width="100%" height="130px;"></div>
+    <div class="firstbox"><img src="../img/mainEx02.jpg" width="100%" height="130px;"></div>
+    <div class="firstbox"><img src="../img/mainEx03.jpg" width="100%" height="130px;"></div>
+    <div class="firstbox"><img src="../img/mainEx04.jpg" width="100%" height="130px;"></div>
   </div>
 
-	</ul>
-
-	</ul>
 	</div>
 
 	<!-- 페이징 -->
