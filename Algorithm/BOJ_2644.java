@@ -21,20 +21,20 @@ public class BOJ_2644 {
 		
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		
-		int x = Integer.parseInt(st.nextToken());
-		int y = Integer.parseInt(st.nextToken());
+		int num1 = Integer.parseInt(st.nextToken()); // 비교할 사람
+		int num2 = Integer.parseInt(st.nextToken());
+		int m = Integer.parseInt(br.readLine()); // 관계의 개수
 		
-		int l = Integer.parseInt(br.readLine());
-		
-		for(int i=0; i<l; i++) {
+		for(int i=0; i<m; i++) {
 			st = new StringTokenizer(br.readLine());
-			int p = Integer.parseInt(st.nextToken());
-			int c = Integer.parseInt(st.nextToken());
-			relation[p].add(c);
-			relation[c].add(p);
+			int x = Integer.parseInt(st.nextToken()); // 부모
+			int y = Integer.parseInt(st.nextToken()); // 자식
+			// 방향이 없는 양방향 그래프
+			relation[x].add(y);
+			relation[y].add(x);
 		}
-		
-		dfs(x,y, 0);
+		// 시작 정점, 끝 정점, 촌 수
+		dfs(num1,num2, 0);
 		System.out.println(res);
 	}
 	
@@ -46,9 +46,9 @@ public class BOJ_2644 {
 		
 		checked[start] = true;
 		for(int i=0; i<relation[start].size(); i++) { 
-			int next = relation[start].get(i);
-			if(!checked[next]) {
-				dfs(next, end, cnt+1);
+			int next = relation[start].get(i); // i번째의 값을 가져온다
+			if(!checked[next]) { // 방문처리 되지 않으면
+				dfs(next, end, cnt+1); // 시작점을 바꾸고 다음 촌수로 이동
 			}
 		}
 	}
