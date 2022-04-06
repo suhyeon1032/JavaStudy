@@ -6,7 +6,7 @@ var server = http.createServer(function(req, res){
     var mapping = req.url;
     // html 문서보내기
     if(mapping=='/'){
-        fs.readFile(__dirname+'/movie.html','utf-8',function(error, htmlData){
+        fs.readFile(__dirname+'/movie_play.html','utf-8',function(error, htmlData){
             if(!error){
                 res.writeHead(200, {"Content-Type":"text/html; charset=utf-8"});
                 res.end(htmlData);
