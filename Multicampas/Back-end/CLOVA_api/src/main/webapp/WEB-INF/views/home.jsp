@@ -12,6 +12,8 @@
 	<ol>
 		<li><a href="/cfrform">CFRecognition:얼굴감지</a></li>
 		<li><a href="/cfrform2">CFRecognition:유명인감지</a></li>
+		<li><a href="/voiceform">Voice:텍스트를 음성으로 변환</a></li>
+		<li><a href="/speechform">Speech:음성을 텍스트로 변환</a></li>
 	</ol>
 </body>
 </html>
