@@ -17,17 +17,21 @@ public class RidingVO {
 	private int ridingMemberNo;
 	private int ridingState;
 	private int ridingCount;
+	private String ridingStartMember;
+	private String applicantNickName;
 	
-	private String applyNickname;
 	
-	
-		
-
-	public String getApplyNickname() {
-		return nickname;
+	public String getApplicantNickName() {
+		return applicantNickName;
 	}
-	public void setApplyNickname(String applyNickname) {
-		this.nickname = applyNickname;
+	public void setApplicantNickName(String applicantNickName) {
+		this.applicantNickName = applicantNickName;
+	}
+	public String getRidingStartMember() {
+		return ridingStartMember;
+	}
+	public void setRidingStartMember(String ridingStartMember) {
+		this.ridingStartMember = ridingStartMember;
 	}
 	public int getRidingCount() {
 		return ridingCount;
