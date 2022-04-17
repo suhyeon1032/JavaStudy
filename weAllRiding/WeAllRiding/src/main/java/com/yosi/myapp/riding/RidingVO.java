@@ -12,10 +12,54 @@ public class RidingVO {
 	private int courseLevel;
 	private String ridingContent;
 	private int ridingHit;
+	private String gender;
+	private int userScore;
+	private int ridingMemberNo;
+	private int ridingState;
+	private int ridingCount;
 	
+	private String applyNickname;
+	
+	
+		
+
+	public String getApplyNickname() {
+		return nickname;
+	}
+	public void setApplyNickname(String applyNickname) {
+		this.nickname = applyNickname;
+	}
+	public int getRidingCount() {
+		return ridingCount;
+	}
+	public void setRidingCount(int ridingCount) {
+		this.ridingCount = ridingCount;
+	}
+	public int getRidingMemberNo() {
+		return ridingMemberNo;
+	}
+	public void setRidingMemberNo(int ridingMemberNo) {
+		this.ridingMemberNo = ridingMemberNo;
+	}
+	public int getRidingState() {
+		return ridingState;
+	}
+	public void setRidingState(int ridingState) {
+		this.ridingState = ridingState;
+	}
+	public String getGender() {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	public int getUserScore() {
+		return userScore;
+	}
+	public void setUserScore(int userScore) {
+		this.userScore = userScore;
+	}
 	private String ridingKeyword;
-	
-	
 	
 	public String getRidingKeyword() {
 		return ridingKeyword;

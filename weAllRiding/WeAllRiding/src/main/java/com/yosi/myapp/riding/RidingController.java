@@ -16,10 +16,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mysql.cj.Session;
 import com.yosi.myapp.PagingVO;
 
 @RestController
@@ -28,6 +31,7 @@ public class RidingController {
 	RidingService RidingService;
 	@Inject
 	RidingService service;
+	
 	
 	/*
 	 * @Inject RidingReplyService replyService;
@@ -44,6 +48,18 @@ public class RidingController {
 		mav.addObject("pVO", pVO);
 		
 		mav.setViewName("riding/ridingList");
+		return mav;
+	}
+	
+	@GetMapping("/riding/myRidingList")
+	public ModelAndView myRidingList(RidingVO vo, HttpSession session) {
+		vo.setNickname((String)session.getAttribute("nickName"));
+		System.out.println(vo.getNickname());
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("myRidingJoinList", service.myRidingJoinList(vo));
+		mav.addObject("myRidingEndList", service.myRidingEndList(vo));
+		mav.addObject("myRidingMadeList", service.myRidingMadeList(vo));
+		mav.setViewName("riding/myRidingList");
 		return mav;
 	}
 	
@@ -78,28 +94,128 @@ public class RidingController {
 		return entity;
 	}
 	
+	@GetMapping("/riding/ridingMemberOk")
+    public ResponseEntity<String> ridingMemberOk(RidingVO vo, HttpServletRequest request) {
+        vo.setNickname((String)request.getSession().getAttribute("nickName"));
+
+        // DB작업
+        ResponseEntity<String> entity = null; // 데이터와 처리상태를 가진다.
+
+        HttpHeaders headers = new HttpHeaders();
+        ModelAndView mav = new ModelAndView();
+        headers.add("Content-Type", "text/html; charset=utf-8");
+        try {
+        	
+            service.ridingMemberInsert(vo);
+            service.ridingMemberUpdate(vo);
+            String msg = "<script>";
+            msg += "alert('글이 등록되었습니다');";
+            msg += "location.href='/riding/ridingList';";
+            msg += "</script>";
+            entity = new ResponseEntity<String>(msg, headers, HttpStatus.OK);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            // 등록안됨
+            String msg = "<script>";
+            msg += "alert('글등록이 실패하였습니다');";
+            msg += "history.back();";
+            msg += "</script>";
+            entity = new ResponseEntity<String>(msg, headers, HttpStatus.BAD_REQUEST);
+        }
+
+        return entity;
+    }
+	//라이딩 신청 삭제
+	@GetMapping("/riding/ridingMemberDelete")
+	public ResponseEntity<String> ridingMemberDelete(RidingVO vo, HttpServletRequest request) {
+        vo.setNickname((String)request.getSession().getAttribute("nickName"));
+        //vo.setRidingNo((int)request.getSession().getAttribute("ridingNo"));
+
+        // DB작업
+        ResponseEntity<String> entity = null; // 데이터와 처리상태를 가진다.
+
+        HttpHeaders headers = new HttpHeaders();
+        ModelAndView mav = new ModelAndView();
+        headers.add("Content-Type", "text/html; charset=utf-8");
+        try {
+        	
+            service.ridingMemberDelete(vo);
+            String msg = "<script>";
+            msg += "alert('라이딩 취소 성공');";
+            msg += "history.back();";
+            msg += "</script>";
+            entity = new ResponseEntity<String>(msg, headers, HttpStatus.OK);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            // 등록안됨
+            String msg = "<script>";
+            msg += "alert('라이딩 취소 실패');";
+            msg += "history.back();";
+            msg += "</script>";
+            entity = new ResponseEntity<String>(msg, headers, HttpStatus.BAD_REQUEST);
+        }
+
+        return entity;
+    }
+	
+	@GetMapping("/riding/ridingStateOk")
+    public ResponseEntity<String> ridingStateOk(RidingVO vo, HttpServletRequest request) {
+        vo.setNickname((String)request.getSession().getAttribute("nickName"));
+
+        // DB작업
+        ResponseEntity<String> entity = null; // 데이터와 처리상태를 가진다.
+
+        HttpHeaders headers = new HttpHeaders();
+
+        headers.add("Content-Type", "text/html; charset=utf-8");
+        try {
+            service.ridingStateUpdate(vo);
+            String msg = "<script>";
+            msg += "alert('글이 등록되었습니다');";
+            msg += "location.href='/riding/ridingList';";
+            msg += "</script>";
+            entity = new ResponseEntity<String>(msg, headers, HttpStatus.OK);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            // 등록안됨
+            String msg = "<script>";
+            msg += "alert('글등록이 실패하였습니다');";
+            msg += "history.back();";
+            msg += "</script>";
+            entity = new ResponseEntity<String>(msg, headers, HttpStatus.BAD_REQUEST);
+        }
+
+        return entity;
+    }
+	
+	
 	//글 보기
-	@RequestMapping("/riding/ridingView")
-	public ModelAndView ridingView(@RequestParam(value="ridingNo", required=false) int ridingNo) {
-		 ModelAndView mav = new ModelAndView();
-		 
-		 
-		 service.cntHit(ridingNo); // 조회수 증가
-		 
-		 mav.addObject("vo", service.ridingSelect(ridingNo));
-		 mav.setViewName("riding/ridingView");
-		 
-		 return mav;
-	}
+	@GetMapping("/riding/ridingView")
+    public ModelAndView ridingView(int ridingNo) {
+        ModelAndView mav = new ModelAndView();
+        service.cntHit(ridingNo); // 조회수 증가
+        
+        mav.addObject("vo", service.ridingSelect(ridingNo));
+        mav.addObject("lst2", service.ridingMemberShow(ridingNo));
+        mav.setViewName("riding/ridingView");
+        return mav;
+    }
 	
 	//글 수정
 	@GetMapping("/riding/ridingEdit")
-	public ModelAndView ridingEdit(int ridingNo) {
-		System.out.println(ridingNo);
+	public ModelAndView ridingEdit(int ridingNo, RidingVO vo) {
+		System.out.println(ridingNo+"diq");
 		ModelAndView mav = new ModelAndView();
-		 mav.addObject("vo", service.ridingSelect(ridingNo));
-		 mav.setViewName("riding/ridingEdit");
-		 return mav;
+		mav.addObject("lst2", service.ridingMemberShow(ridingNo));
+		mav.addObject("vo", service.ridingSelect(ridingNo));
+		mav.setViewName("riding/ridingEdit");
+		return mav;
 	}
 	
 	@PostMapping("/riding/ridingEditOk")
@@ -141,5 +257,5 @@ public class RidingController {
 		
 		return mav;
 	}
-
+	
 }

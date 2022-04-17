@@ -43,5 +43,43 @@ public class RidingServiceImpl implements RidingService {
 	public int totalRecord(PagingVO pVO) {
 		return dao.totalRecord(pVO);
 	}
+	
+	
+	@Override
+	public int ridingMemberInsert(RidingVO vo) {
+		return dao.ridingMemberInsert(vo);
+	}
+	@Override
+	public int ridingMemberUpdate(RidingVO vo) {
+		return dao.ridingMemberUpdate(vo);
+	}
+	@Override
+	public List<RidingVO> ridingMemberShow(int ridingMemberNo) {
+		return dao.ridingMemberShow(ridingMemberNo);
+	}
+	@Override
+	public int ridingMemberDelete(RidingVO vo) {
+		
+		return dao.ridingMemberDelete(vo);
+	}
+	@Override
+	public int ridingStateUpdate(RidingVO vo) {
+		return dao.ridingUpdate(vo);
+	}
+	
+	
+	@Override
+	public List<RidingVO> myRidingJoinList(RidingVO vo) {
+		return dao.myRidingJoinList(vo);
+	}
+	@Override
+	public List<RidingVO> myRidingEndList(RidingVO vo) {
+		return dao.myRidingEndList(vo);
+	}
+	@Override
+	public List<RidingVO> myRidingMadeList(RidingVO vo) {
+		return dao.myRidingMadeList(vo);
+	}
+	
 
 }
