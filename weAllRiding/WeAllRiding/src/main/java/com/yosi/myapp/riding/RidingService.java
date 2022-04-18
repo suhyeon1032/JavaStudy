@@ -22,9 +22,15 @@ public interface RidingService {
 	public int ridingMemberDelete(RidingVO vo);
 	
 	public int ridingStateUpdate(RidingVO vo);
+	public int ridingStateDel(RidingVO vo);
 	
 	//마이라이딩
 	public List<RidingVO> myRidingJoinList(RidingVO vo);
 	public List<RidingVO> myRidingEndList(RidingVO vo);
 	public List<RidingVO> myRidingMadeList(RidingVO vo);
+	
+	//후기등록
+	public int ridingReviewWrite(RidingVO vo);
+	//후기목록
+	public List<RidingVO> ridingReviewList(RidingVO vo);
 }

@@ -66,7 +66,10 @@ public class RidingServiceImpl implements RidingService {
 	public int ridingStateUpdate(RidingVO vo) {
 		return dao.ridingStateUpdate(vo);
 	}
-	
+	@Override
+	public int ridingStateDel(RidingVO vo) {
+		return dao.ridingStateDel(vo);
+	}
 	
 	@Override
 	public List<RidingVO> myRidingJoinList(RidingVO vo) {
@@ -80,6 +83,17 @@ public class RidingServiceImpl implements RidingService {
 	public List<RidingVO> myRidingMadeList(RidingVO vo) {
 		return dao.myRidingMadeList(vo);
 	}
+	
+	
+	@Override
+	public int ridingReviewWrite(RidingVO vo) {
+		return dao.ridingReviewWrite(vo);
+	}
+	@Override
+	public List<RidingVO> ridingReviewList(RidingVO vo) {
+		return dao.ridingReviewList(vo);
+	}
+	
 	
 
 }
