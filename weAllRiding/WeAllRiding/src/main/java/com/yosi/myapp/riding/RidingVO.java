@@ -22,10 +22,14 @@ public class RidingVO {
 	private String ridingReviewComent;
 	private String ridingReviewWriteDate;
 	private String applicantNickName;
+	private int applicantCnt;
 	
-	
-	
-	
+	public int getApplicantCnt() {
+		return applicantCnt;
+	}
+	public void setApplicantCnt(int applicantCnt) {
+		this.applicantCnt = applicantCnt;
+	}
 	public String getApplicantNickName() {
 		return applicantNickName;
 	}
@@ -56,6 +60,7 @@ public class RidingVO {
 	public void setRidingStartMember(String ridingStartMember) {
 		this.ridingStartMember = ridingStartMember;
 	}
+	
 	public int getRidingCount() {
 		return ridingCount;
 	}
@@ -161,5 +166,14 @@ public class RidingVO {
 		this.ridingHit = ridingHit;
 	}
 	
+	//--> course에서 받은 데이터/
+    private String courseSendData;
+    public String getCourseSendData() {
+        return courseSendData;
+    }
+    public void setCourseSendData(String courseSendData) {
+        this.courseSendData = courseSendData;
+    }
+    //course에서 받은 데이터 <--//
 	
 }

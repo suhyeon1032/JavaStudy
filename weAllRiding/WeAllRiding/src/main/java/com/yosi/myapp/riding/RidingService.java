@@ -32,5 +32,17 @@ public interface RidingService {
 	//후기등록
 	public int ridingReviewWrite(RidingVO vo);
 	//후기목록
-	public List<RidingVO> ridingReviewList(RidingVO vo);
+	public List<RidingVO> ridingReviewList(int ridingNo);
+	
+	//유저평가
+	public int ridingScoreUp(RidingVO vo);
+	public int ridingScoreDown(RidingVO vo);
+	
+	public int applyUserCount(RidingVO vo);
+	
+	public int ridingApplyUpdate(RidingVO vo);
+	
+	public int ridingApplicantCntUp(RidingVO vo);
+	public int ridingApplicantCntDown(RidingVO vo);
+	public int ridingStateCancle(RidingVO vo);
 }

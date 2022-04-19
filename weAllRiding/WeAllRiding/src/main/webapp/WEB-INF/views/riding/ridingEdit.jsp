@@ -25,6 +25,17 @@
 }
 </style>
 <script src="https://cdn.ckeditor.com/4.17.2/standard/ckeditor.js"></script>
+<!-- parallax START -->
+<div class="home">
+	<div class="homeBackground parallaxWindow" data-parallax="scroll"
+		data-image-src="${url}/images/home/home_background.png"></div>
+	<!-- 배경 이미지 -->
+	<div class="homeContent">
+		<div class="homeTitle">라이딩 수정 하기</div>
+		<!-- 페이지 타이틀 -->
+	</div>
+</div>
+<!-- parallax END -->
 <script type="text/javascript">
 	function ridingStateUpdate() {
 		event.preventDefault();//form 기본 이벤트 제거
@@ -32,7 +43,6 @@
 			location.href = "/riding/ridingStateOk?ridingNo=${vo.ridingNo}";
 		}
 	}	
-	
 </script>
 <main>
 <div class="ridingViewContainer">
@@ -47,16 +57,22 @@
          <h2 id="ridingViewTitle">키워드</h2>
          <li style="color: black;">${vo.ridingKeyword }</li><br>
          
-         <h2 id="ridingViewTitle">코스</h2>
-         <li style="height:400px; color:black;">코스가 나올 공간입니다.</li>
-         
          <li id="dateAll" style="color:black;">
          <h2 id="ridingViewTitle">일정</h2>
     	 <input type="date" name="startDate" id="startDate" value="${vo.startDate }" > - <input type="date" name="endDate" id="endDate" value="${vo.endDate }">
          </li>
-        
+         <%-- <li id=courseLevel style="color:black">
+         <h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;난이도</h2>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${vo.courseLevel }
+         </li>
+         
+         <li id="maxUser" style="color:black">
+         <h2>참가인원</h2>
+         ${vo.maxUser } 
          </li>
          <br><br><br><br>--%>
+         </li>
+         <br><br><br><br>
          <li id=courseLevel style="color:black">
          <h2>난이도</h2>
          <select id="courseLevelsel" name="courseLevel" class="courseLevelsel" value="${vo.courseLevel }">
