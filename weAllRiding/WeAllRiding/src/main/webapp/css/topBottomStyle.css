@@ -2,6 +2,19 @@
 /* As hex codes */
 
 :root{
+	
+	/* 메인컬러 */
+	/* 진한 회색 */
+	--color-theme-0 : #313942;
+	
+	/* 회색 */
+	--color-theme-1 : #3A4750;
+	
+	/* 노랑 */
+	--color-theme-2 : #F6C90E;;
+	--color-theme-2-gra: linear-gradient(0deg, rgba(246,201,14,1) 1%, rgba(255,222,83,1) 100%);
+	--color-theme-3 : rgba(237, 237, 237, 1);
+
 	--main-gray : #dddddd;
 	
 	/* 진한 회색 */
@@ -41,6 +54,8 @@
 	--rgba-gray-3:rgba( 30, 30, 28,1);
 	--rgba-gray-4:rgba( 22, 23, 20,1);
 	
+	--transperate-gray2-04:rgba( 41, 42, 39,0.4);
+	--transperate-gray2-08:rgba( 41, 42, 39,0.8);
 	--transperate-gray-05:rgba( 52, 53, 50,0.5);
 	--transperate-gray-08:rgba( 52, 53, 50,0.8);
 	
@@ -150,7 +165,7 @@ body{
 /* 텍스트 강조효과 초기화*/
 a{text-decoration:none;color:black;}
 a:hover{text-decoration:none;color:black;}
-a:visited{text-decoration:none;	color:black;}
+/* a:visited{text-decoration:none;	color:black;} */
 a:linked{text-decoration:none;color:black;}
 
 /*페이지 전체 공통 설정 <--*/
@@ -164,46 +179,53 @@ header{
 header a, li{
 	color : #ffffff;
 }
-header>img{
-	height:10px; 
-	width: 15px;
-}
-.top{
-	font-size:20px;
-	width:100%;
-	height:100%;
+
+.top{  
+	width:100vw;
 	text-align:right;
-	padding-right:150px;
 	background:var(--transperate-gray-08);
-	height:25px;
-	line-height:25px;
+	height: 3vh;
+	line-height: 3vh;
 	transition-property: height, opacity,visibility;
-  	transition-duration:0.7s,0.6s,0.6s;
-  	transition-delay:0s,0s,0.7s;
+  	transition-duration:0.5s,0.5s,0.4s;
+  	transition-delay:0s,0s,0.2s;
   	transition-timing-function:ease-in-out;
+}
+.logContainer{
+	position:absolute;
+	display:flex;
+	justify-content: right;
+	width:30vw;
+    height: 3vh;
+	float:right;
+	right: 4vw;
 }
 .top.active{
-	height: 0;
+	height: 0vh;
 	opacity:0;
-	visibility:none;
+	visibility:hidden;
 }
-#login, #logout, #admin{
-	width:150px;
-	float:left;
-	margin-left:5px;
-	margin-right:5px;
-	color:#fff;
-	position:relative;
-	left: 70%;
-    text-align: center;
-	transition-property: background-color;
-  	transition-duration:0.3s;
-  	transition-delay:0s;
+
+
+
+ #login, #logout, #admin {
+	width: 33.3%;
+ 	padding-left:1vw;
+ 	padding-right:1vw;
+	opacity:1;
+	transition-property: height, opacity,visibility, background-color;
+  	transition-duration:0.5s,0.5s,0.5s, 0.2s;
   	transition-timing-function:ease-in-out;
-}
-#login a, #logout a, #admin a{
+  	text-align: center;
+	color:#fff;
+	font-size:1vw;
+} 
+
+
+#login i, #logout i, #admin i{
 	text-decoration: none;
 	color:#fff;
+	font-size:1.2vw;
 }
 #login:hover, #logout:hover, #admin:hover{
 	background-color:var(--color-gray-0);
@@ -216,10 +238,45 @@ header>img{
 }
 
 
+
+.sub{
+    right: 1vw;
+    width: 12vw;
+	position: relative;
+ 	z-index: 101;
+	background: var(--transperate-gray2-04);
+    color: #ffffff;
+    height: 0vh;
+	opacity:0;
+	visibility:hidden;
+    transition-property: height, opacity,visibility;
+  	transition-duration:0.4s,0.5s,0.5s;
+  	transition-timing-function:ease-in-out;
+   
+}
+
+#login:hover .sub{
+    height: 6.2vh;
+	opacity:1;
+	visibility: visible;
+}
+
+.sub>li{
+	transition-property: background-color;
+  	transition-duration:0.4s;
+  	transition-timing-function:ease-in-out;
+}
+.sub>li:hover{
+	background: var(--transperate-gray2-08);
+}
+
 .navBar{
+	display:flex;
+	position:absolue;
+	flex-wrap: wrap;
 	font-size:1.5em;
-	width:100%;	
-	height:160px;
+	width:100vw;	
+	height:auto;
 	background:var(--transperate-gray-05);
 	transition-property:background, height;
   	transition-duration:0.5s;
@@ -229,25 +286,32 @@ header>img{
 .navBar.active{
 	top:0;
 	z-index:100;
-	height:140px;
+	height:auto;
 	background:var(--transperate-gray-08);
 }
 .logo{
-	font-size: 25px;
-    font-weight: 800;
-    float:left;
-    margin: 20px;
-    margin-left: 50px;
+	margin-left: 2vw;
+    margin-right: 2vw;
+    margin-top:1vh;
+    margin-bottom:1vh;
+    flex-shrink: 0;
+    width: 19vw;
 }
-.logo>img{
-	width: 35px;
-	height: 47px;
+.logo>a>img{
+	width:100%
 }
 .mainMenu{
-	margin-left:25%;
 	/* line-height: 140px;*/
-	height:100%; 
+	height:auto;
+    flex-shrink: 0;
+    width: 71vw;
 }
+
+.mainMenu.active{
+	height:auto;
+}
+
+
 
 /* 
 .mainMenu>ul>app{
@@ -303,37 +367,30 @@ main{
 /*bottom*/
 footer{
 	background: var(--color-gray-0);
-	width: 100%;
-	height: 120px;
+    width: 100vw;
+    height: 12vh;
 	text-align: center;
-	
 }
-footer .logo{
-	position:relative;
-	width:50%;
-	float:left;
-	margin:0;
-	padding:10px;
-	
+.footerContainer{
+	display:flex;
+}
+.footerLogo{
+	margin-left: 2vw;
+    margin-right: 2vw;
+    margin-top:1vh;
+    margin-bottom:1vh;
+    flex-shrink: 0;
+    width: 19vw;
+}
+.footerLogo>a>img{
+	width:100%
 }
 
-footer .content{
-	width:45%;
-	position:relative; 
- 	float:left;
- 	margin:0;
-	padding:10px;
+.footerContent{
+	flex-grow: 1;
 }
-.content .text{
-	margin:0 auto;
-	position:relative;
-	height:70%;
-	padding:10px 0 10px 0;
-	float:center;
-}
-.content span{
+
+.footerContent p{
 	text-align:left;
 	color:var(--color-lightGray-1);
-	display:block;
-	padding:10px;
 }

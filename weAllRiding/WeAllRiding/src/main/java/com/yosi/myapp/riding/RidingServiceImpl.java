@@ -6,7 +6,7 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
-import com.yosi.myapp.PagingVO;
+import com.yosi.myapp.RidingPagingVO;
 
 @Service
 public class RidingServiceImpl implements RidingService {
@@ -14,8 +14,13 @@ public class RidingServiceImpl implements RidingService {
 	@Inject
 	RidingDAO dao;
 	
+	//참가 여부
+	public int resolveStatus(String nickName,int ridingNo) {
+		return dao.resolveStatus(nickName,ridingNo);
+	}
+	
 	@Override
-	public List<RidingVO> ridingList(PagingVO pVO) {
+	public List<RidingVO> ridingList(RidingPagingVO pVO) {
 		return dao.ridingList(pVO);
 	}
 	@Override
@@ -40,9 +45,24 @@ public class RidingServiceImpl implements RidingService {
 		dao.cntHit(ridingNo);
 	}
 	@Override
-	public int totalRecord(PagingVO pVO) {
+	public int totalRecord(RidingPagingVO pVO) {
 		return dao.totalRecord(pVO);
 	}
+	//
+	@Override
+	public int totalRecord1(RidingVO vo, RidingPagingVO pVO) {
+		return dao.totalRecord1(vo, pVO);
+	}
+	@Override
+	public int totalRecord2(RidingVO vo, RidingPagingVO pVO) {
+		return dao.totalRecord2(vo, pVO);
+	}
+	@Override
+	public int totalRecord3(RidingVO vo, RidingPagingVO pVO) {
+		return dao.totalRecord3(vo, pVO);
+	}
+	
+	//
 	
 	
 	@Override
@@ -72,16 +92,16 @@ public class RidingServiceImpl implements RidingService {
 	}
 	
 	@Override
-	public List<RidingVO> myRidingJoinList(RidingVO vo) {
-		return dao.myRidingJoinList(vo);
+	public List<RidingVO> myRidingJoinList(RidingVO vo, RidingPagingVO pVO) {
+		return dao.myRidingJoinList(vo, pVO);
 	}
 	@Override
-	public List<RidingVO> myRidingEndList(RidingVO vo) {
-		return dao.myRidingEndList(vo);
+	public List<RidingVO> myRidingEndList(RidingVO vo, RidingPagingVO pVO) {
+		return dao.myRidingEndList(vo, pVO);
 	}
 	@Override
-	public List<RidingVO> myRidingMadeList(RidingVO vo) {
-		return dao.myRidingMadeList(vo);
+	public List<RidingVO> myRidingMadeList(RidingVO vo, RidingPagingVO pVO) {
+		return dao.myRidingMadeList(vo, pVO);
 	}
 	
 	
@@ -121,6 +141,21 @@ public class RidingServiceImpl implements RidingService {
 	public int ridingStateCancle(RidingVO vo) {
 		return dao.ridingStateCancle(vo);
 	}
-	
+
+	@Override
+	public String availableRiding() {
+		return dao.availableRiding();
+	}
+
+	@Override
+	public String todayRiding() {
+		return dao.todayRiding();
+	}
+
+	@Override
+	public int ridingCountUp(RidingVO vo) {
+		return dao.ridingCountUp(vo);
+	}
+
 
 }

@@ -2,11 +2,13 @@ package com.yosi.myapp.riding;
 
 import java.util.List;
 
-import com.yosi.myapp.PagingVO;
+import com.yosi.myapp.RidingPagingVO;
 
 
 public interface RidingService {
-	public List<RidingVO> ridingList(PagingVO pVO);
+	//참가 여부
+	public int resolveStatus(String nickName,int ridingNo);
+	public List<RidingVO> ridingList(RidingPagingVO pVO);
 	public int ridingInsert(RidingVO vo); 
 	public RidingVO ridingSelect(int ridingNo);
 	public int ridingUpdate(RidingVO vo);
@@ -14,7 +16,10 @@ public interface RidingService {
 	public void cntHit (int ridingNo);
 		
 	//총레코드수
-	public int totalRecord(PagingVO pVO);
+	public int totalRecord(RidingPagingVO pVO);
+	public int totalRecord1(RidingVO vo, RidingPagingVO pVO);
+	public int totalRecord2(RidingVO vo, RidingPagingVO pVO);
+	public int totalRecord3(RidingVO vo, RidingPagingVO pVO);
 	
 	public int ridingMemberInsert(RidingVO vo);
 	public int ridingMemberUpdate(RidingVO vo);
@@ -25,14 +30,17 @@ public interface RidingService {
 	public int ridingStateDel(RidingVO vo);
 	
 	//마이라이딩
-	public List<RidingVO> myRidingJoinList(RidingVO vo);
-	public List<RidingVO> myRidingEndList(RidingVO vo);
-	public List<RidingVO> myRidingMadeList(RidingVO vo);
+	public List<RidingVO> myRidingJoinList(RidingVO vo, RidingPagingVO pVO);
+	public List<RidingVO> myRidingEndList(RidingVO vo, RidingPagingVO pVO);
+	public List<RidingVO> myRidingMadeList(RidingVO vo, RidingPagingVO pVO);
 	
 	//후기등록
 	public int ridingReviewWrite(RidingVO vo);
 	//후기목록
 	public List<RidingVO> ridingReviewList(int ridingNo);
+	
+	//라이딩 참가 횟수
+	public int ridingCountUp(RidingVO vo);
 	
 	//유저평가
 	public int ridingScoreUp(RidingVO vo);
@@ -45,4 +53,7 @@ public interface RidingService {
 	public int ridingApplicantCntUp(RidingVO vo);
 	public int ridingApplicantCntDown(RidingVO vo);
 	public int ridingStateCancle(RidingVO vo);
+
+    public String availableRiding();
+	public String todayRiding();
 }

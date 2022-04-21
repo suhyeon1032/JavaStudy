@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="/css/statistics/statistics.css" type="text/css"/>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="${url}/js/statistics/statisticsMake.js"></script>
 
 <!-- 탭메뉴 바꾸기 -->
 
@@ -37,26 +38,12 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/admin/adminMain">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
             <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fas fa-laugh-wink"></i>
             </div>
             <div class="sidebar-brand-text mx-3">WeAllRiding Admin <sup>TM</sup></div>
         </a>
-
-        <!-- Divider -->
-        <hr class="sidebar-divider my-0">
-
-        <!-- Nav Item - Dashboard -->
-        <li class="nav-item">
-            <a class="nav-link" href="index.html">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Dashboard</span></a>
-        </li>
-
-        <!-- Divider -->
-        <hr class="sidebar-divider">
-
         <!-- Heading -->
         <div class="sidebar-heading">
             관리자
@@ -75,7 +62,7 @@
                     <h6 class="collapse-header">관리자 메뉴</h6>
                     <a class="collapse-item" href="${url}/admin/adminMember">회원 관리</a>
                     <a class="collapse-item" href="${url}/admin/adminComty">커뮤니티 관리</a>
-                    <a class="collapse-item" href="${url}/admin/adminCourse">추천경로 관리</a>
+                    <a class="collapse-item" href="${url}/admin/adminRecommend">추천경로 관리</a>
                     <a class="collapse-item" href="${url}/admin/adminRiding">라이딩 관리</a>
                     <a class="collapse-item" href="${url}/admin/adminShop">정비샵 관리</a>
                 </div>
@@ -107,7 +94,7 @@
             <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">회원 이용 메뉴</h6>
-                    <a class="collapse-item" href="${url}/courseCreate">코스</a>
+                    <a class="collapse-item" href="${url}/recommendView">코스</a>
                     <a class="collapse-item" href="${url}/riding/ridingList">라이딩</a>
                     <a class="collapse-item" href="${url}/shopView">장비샵</a>
                     <a class="collapse-item" href="${url}/comty/comtyList">커뮤니티</a>
@@ -148,19 +135,6 @@
                     </button>
                 </form>
 
-                <!-- Topbar Search -->
-                <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                    <div class="input-group">
-                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                               aria-label="Search" aria-describedby="basic-addon2">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="button">
-                                <i class="fas fa-search fa-sm"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
 
                 <!-- Topbar Navbar -->
                 <ul class="navbar-nav ml-auto">
@@ -189,95 +163,19 @@
                         </div>
                     </li>
 
-                    <!-- Nav Item - Alerts -->
-                    <li class="nav-item dropdown no-arrow mx-1">
-                        <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-bell fa-fw"></i>
-                            <!-- Counter - Alerts -->
-                            <span class="badge badge-danger badge-counter"></span>
-                        </a>
-                        <!-- Dropdown - Alerts -->
-                        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                             aria-labelledby="alertsDropdown">
-                            <h6 class="dropdown-header">
-                                알림창
-                            </h6>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-primary">
-                                        <i class="fas fa-file-alt text-white"></i>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="small text-gray-500">April 18, 2022</div>
-                                    <span class="font-weight-bold">알림이 없습니다</span>
-                                </div>
-                            </a>
-
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-warning">
-                                        <i class="fas fa-exclamation-triangle text-white"></i>
-                                    </div>
-                                </div>
-                            </a>
-                            <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                        </div>
-                    </li>
-
-                    <!-- Nav Item - Messages -->
-                    <li class="nav-item dropdown no-arrow mx-1">
-                        <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-envelope fa-fw"></i>
-                            <!-- Counter - Messages -->
-                            <span class="badge badge-danger badge-counter"></span>
-                        </a>
-                        <!-- Dropdown - Messages -->
-                        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                             aria-labelledby="messagesDropdown">
-                            <h6 class="dropdown-header">
-                                메세지
-                            </h6>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="dropdown-list-image mr-3">
-                                    <i class="fas fa-fw fa-cog"></i>
-                                </div>
-                                <div class="font-weight-bold">
-                                    <div class="text-truncate">메세지 기능 점검 중</div>
-                                </div>
-                            </a>
-                            <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
-                        </div>
-                    </li>
-
                     <div class="topbar-divider d-none d-sm-block"></div>
 
                     <!-- Nav Item - User Information -->
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">${nickName}</span>
                             <img class="img-profile rounded-circle"
                                  src="${url}/css/admin/img/undraw_profile.svg">
                         </a>
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                              aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="#">
-                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Profile
-                            </a>
-                            <a class="dropdown-item" href="#">
-                                <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Settings
-                            </a>
-                            <a class="dropdown-item" href="#">
-                                <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Activity Log
-                            </a>
-                            <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Logout
@@ -303,12 +201,23 @@
                     </div>
                     <div class="card-body">
                         <main>
-                            <div class="statisticsContainer">
-                                <div id="gender">
-                                    <canvas id="genderChart" width="400px" height="400px"></canvas>
-                                </div>
-                                <div id="age">
-                                    <canvas id="ageChart" width="400px" height="400px"></canvas>
+                            <div class="st">
+                                <div class="statisticsContainer" >
+                                    <div id="gender" class="gender">
+                                        <canvas id="genderChart" width="400px" height="400px"></canvas>
+                                    </div>
+                                    <div id="age" class="age">
+                                        <canvas id="ageChart" width="400px" height="400px"></canvas>
+                                    </div>
+                                    <div id="ariding">
+                                        <span id="ridingCount"></span>
+                                    </div>
+                                    <div id="triding">
+                                        <span id="todayRiding"></span>
+                                    </div>
+                                    <div id="acourse">
+                                        <span id="courseCount"></span>
+                                    </div>
                                 </div>
                             </div>
                         </main>
@@ -336,26 +245,6 @@
     <i class="fas fa-angle-up"></i>
 </a>
 
-<!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-primary" href="login.html">Logout</a>
-            </div>
-        </div>
-    </div>
-</div>
-
 <!-- Bootstrap core JavaScript-->
 <script src="${url}/css/admin/vendor/jquery/jquery.min.js"></script>
 <script src="${url}/css/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -368,9 +257,9 @@
 
 <!-- Page level plugins -->
 <script src="${url}/css/admin/vendor/datatables/jquery.dataTables.min.js"></script>
-<script src="${url}css/admin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+<script src="${url}/css/admin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
 <!-- Page level custom scripts -->
-<script src="${url}js/admin/js/demo/datatables-demo.js"></script>
+<script src="${url}/js/admin/js/demo/datatables-demo.js"></script>
 
 </main>

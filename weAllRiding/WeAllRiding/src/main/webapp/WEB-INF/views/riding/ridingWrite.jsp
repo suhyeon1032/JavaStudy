@@ -2,22 +2,7 @@
 <link href="${url}/css/riding/ridingList.css" rel="stylesheet" type="text/css">
 <script src="https://cdn.ckeditor.com/4.17.2/standard/ckeditor.js"></script>
 <script type="text/javascript">
-	$(function() {
-		$("#ridingFrm").submit(function() {
-			if ($("#ridingSubject").val() == '') {
-				alert("글 제목을 입력하세요");
-				return false;
-			}
-			if ($("#ridingContent").val() == '') {
-				alert("글내용을 입력하세요");
-				return false;
-			}
-			if ($("#courseSendData").val() == '') {
-				alert("코스를 입력하세요");
-				return false;
-			}
-		});
-	});
+	
 </script>
 <!-- parallax START -->
 <div class="home">
@@ -31,7 +16,6 @@
 </div>
 <!-- parallax END -->
 <main>
-
 <div class="ridingContainer">
    <form method="post" action="/riding/ridingWriteOk" id="ridingFrm">
          <textarea style="display:none" id="courseSendData"name="courseSendData">${rVO.courseSendData}</textarea>
@@ -40,7 +24,7 @@
          <h2>제목</h2>
          <li><input type="text" name="ridingSubject" id="ridingSubject" /></li><br>
          <h2>키워드</h2>
-         <li><input type="text" name="ridingKeyword" id="ridingKeyword" placeholder="ex)  #순천  #광양"/></li><br>
+         <li><input type="text" name="ridingKeyword" id="ridingKeyword" placeholder="ex)  #순천  #광양"/></li><br/>
          <li>
          <div class="btnContainer" id="courseMakeLst">
         	<a href="${url}/courseCreate" class="btn btn-1">나만의 코스 만들기</a>
@@ -88,10 +72,14 @@
          </li>
          <br><br><br><br>
          <h2>내용</h2>
-         <li><input type="text" name="ridingContent" id="ridingContent" style="min-height:400px; width: 100%;"></input></li>
+         <li><textarea name="ridingContent" id="ridingContent"
+						style="min-height: 400px; width: 100%;">
+			</textarea>
+		</li>
+         
          
          <li id="ridingwriteBTN">
-            <button id="ridingwriteBtn">글 등록</button>
+            <button type="button" onclick="submitRidingFrm()" id="ridingwriteBtn">글 등록</button>
          </li>
       </ul>
    </form>
