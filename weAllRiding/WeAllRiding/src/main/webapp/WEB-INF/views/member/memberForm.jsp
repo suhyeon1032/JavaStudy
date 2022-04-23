@@ -27,20 +27,8 @@
 <link href="${url}/css/admin/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
 
-
 <title>SB Admin 2 - Tables</title>
 
-<!-- Custom fonts for this template -->
-<link href="${url}/css/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-<link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
-
-<!-- Custom styles for this template -->
-<link href="${url}/css/admin/sb-admin-2.min.css" rel="stylesheet">
-
-<!-- Custom styles for this page -->
-<link href="${url}/css/admin/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
 
 
@@ -51,12 +39,12 @@
             <div class="member-input">
                 <input type="text" name="userId" id="userId" onkeyup="CheckId()" required/>
                 <label>아이디</label>
-                <span id="stateIdChk" class="stateIdChk" style="font-size: 0.5em; color: #ca2819">아이디를 입력하세요</span>
+                <span id="stateIdChk" class="state">아이디를 입력하세요</span>
             </div>
             <div class="member-input">
                 <input type="text" name="nickname" id="nickname" onkeyup="CheckNick()" required/>
                 <label>닉네임</label>
-                <span id="stateNickChk" class="stateNickChk" style="font-size: 0.5em; color: #ca2819">닉네임을 입력하세요</span>
+                <span id="stateNickChk" class="state">닉네임을 입력하세요</span>
             </div>
             <div class="member-input">
                 <input type="password" name="userPwd" id="userPwd" required/>
@@ -77,7 +65,7 @@
                 <label><input type="radio" name="gender" value="여" required>여</label>
             </div>
             <div class="userTel1">
-                <select class="selectpicker" id="userTel1" name="userTel1">
+                <select class="selectpicker" id="userTel1" name="userTel1" style="font-size: 0.72em;">
                     <option value="010">010</option>
                     <option value="02">02</option>
                     <option value="031">031</option>
@@ -89,15 +77,15 @@
                 <label>연락처</label>
             </div>
             <div class="push-number">
-                <button class="btn"style="opacity: 70%; background-color: rgb(0, 238, 238); width: 200px; height: 40px; font-size: 0.8em;" id="phoneChk" class="phoneChk" type="button" onclick="CheckTel()">인증번호 보내기</button>
+                <button class="btn"style="opacity: 70%; color: ivory; background-color: rgba(58, 71, 80, 1); width: 200px; height: 40px; font-size: 0.8em;" id="phoneChk" class="phoneChk" type="button" onclick="CheckTel()">인증번호 보내기</button>
             </div>
             <div class="tel-2">
                 <input id="certNo" type="text" name="certNo" title="인증번호 입력" required/>
                 <label>인증번호 입력</label>
-                <span id="statePhoneChk" class="statePhoneChk" style="font-size: 0.5em; color: #ca2819">번호 입력 후 인증번호 보내기를 해주십시오.</span>
+                <span id="statePhoneChk" class="state" >번호 입력 후 인증번호 보내기를 해주십시오.</span>
             </div>
             <div class="confirm-number">
-                <button class="btn"style="opacity: 70%; background-color: rgb(0, 238, 238); width: 5vm; height: 30px; font-size: 0.4em;"  id="certChk" class="certChk" type="button" onclick="CheckCode()">본인인증</button>
+                <button class="btn"style="opacity: 70%; color: ivory; background-color: rgba(58, 71, 80, 1); width: 5vm; height: 30px; font-size: 0.4em;"  id="certChk" class="certChk" type="button" onclick="CheckCode()">본인인증</button>
             </div>
             <div class="date">
                 <label>생년월일: </label>

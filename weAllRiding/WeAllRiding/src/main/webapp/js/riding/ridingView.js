@@ -1,3 +1,4 @@
+
 //===================================> 지도/차트/코스정보 생성 Start <====================================================
 //-------------------> courseCreate에서 전달받은 데이터 저장 Start <--------------------------
 var courseSendDataRecived = document.getElementById("courseSendData");
@@ -374,16 +375,23 @@ function ridingReplyListAll() { //현재글의 댓글을 모두 가져오기
 }
 
 // 댓글등록
-function ridingReplyFrm() {
+function ridingReplyFrm(nickName, No) {
 	event.preventDefault();//form 기본 이벤트 제거
+	const nickname = nickName;
+	const rNo = No;
 	if ($("#ridingReplyComent").val() == "") {//댓글 안쓴경우
 		alert("댓글을 입력후 등록하세요");
 		return;
 	} else {//댓글 입력한경우
-		var params = $("#ridingReplyFrm").serialize();
+		const ridingReplyComent = document.getElementById("ridingReplyComent").value;
+		const body = {
+			ridingReplyComent : ridingReplyComent,
+			nickname : nickname,
+			ridingNo : rNo
+		}
 		$.ajax({
 			url: '/riding/ridingReplyWriteOk',
-			data: params,
+			data: body,
 			type: 'POST',
 			success: function() {
 				//폼을초기화

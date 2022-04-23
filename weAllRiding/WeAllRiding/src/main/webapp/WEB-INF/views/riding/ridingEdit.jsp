@@ -42,8 +42,7 @@
 					
 					<div id="listTitle">키워드</div>
 					<li>
-						<input type="text" name="ridingKeyword" id="ridingKeyword"
-							value="${vo.ridingKeyword }"></input>
+						<input type="text" name="ridingKeyword" id="ridingKeyword"value="${vo.ridingKeyword }"></input>
 					</li>
 					<br>
 					<div id="date_Level_User">
@@ -76,8 +75,7 @@
 							<div id="maxUserSet">
 								<li id="maxUser" style="color: black">
 									<div id="listTitle">참가인원</div>
-									<select id="maxUsersel" name="maxUsersel"
-										class="maxUsersel">
+									<select id="maxUsersel" name="maxUsersel"class="maxUsersel">
 										<option value="1">1</option>
 										<option value="2">2</option>
 										<option value="3">3</option>

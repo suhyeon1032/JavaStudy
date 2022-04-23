@@ -12,7 +12,7 @@ main{
 
 .memberForm{
     width: 700px;
-    height: 790px;
+    height: 710px;
     padding: 20px;
     padding-left: 40px;
     align-items: center;
@@ -25,7 +25,7 @@ main{
 
 .memberForm h3{
     position: relative;
-    left: 250px;
+    left: 220px;
     color: #313942;
 }
 
@@ -47,8 +47,8 @@ main{
     padding: 20px 10px 10px;
     background-color: transparent;
     border: none;
-    border-bottom: 1px solid #313942;
-    font-size: 16px;
+    border-bottom: 1px solid#313942;
+    font-size: 14px;
     color: #313942;
     outline: none;
 }
@@ -71,7 +71,7 @@ main{
 
 .radio{
     font-size: 15px;
-    color: #313942;
+    color: #999999;
     position: relative;
     left:385px;
     bottom:20px;
@@ -83,13 +83,13 @@ main{
     left:335px;
     bottom:120px;
     font-size: 15px;
-    color: #313942;
+    color: #999999;
 }
 
 .userTel1{
     position: relative;
-    left: 38px;
-    top: 0.8vh;
+    left: 27px;
+    bottom: -5px;
 }
 
 .tel{
@@ -110,7 +110,7 @@ main{
     background-color: transparent;
     border: none;
     border-bottom: 1px solid #313942;
-    font-size: 16px;
+    font-size: 14px;
     color: #313942;
     outline: none;
 }
@@ -135,22 +135,23 @@ main{
     font-size: 12px;
     color: #313942;
     position: relative;
-    left: 32px;
-    bottom: 120px;
+    left: 34px;
+    top: 45px;
 }
 
-.join-btn{
-    margin-top: 5px;
+.edit-btn{
+    margin-top: 30px;
     margin-left: 50px;
     position: relative;
-    bottom: 2vh;
+    bottom: 3vh;
+    top: 65px;
 }
 
-.join-btn button{
+.edit-btn button{
     width: 80%;
     height: 50px;
     background: #F6C90E;
-    color: #313942;
+    color:#313942;
     border: none;
     border-radius: 7px;
     cursor: pointer;
@@ -158,6 +159,29 @@ main{
     margin-bottom: 10px;
     margin-left: 30px;
     opacity: 80%;
+}
+
+.exit-btn{
+    margin-top: 50px;
+    margin-left: 50px;
+    position: relative;
+    bottom: 3vh;
+    top: 65px;
+}
+
+.exit-btn button{
+    width: 80%;
+    height: 50px;
+    background: #C13827;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    float: left;
+    margin-bottom: 10px;
+    margin-left: 30px;
+    opacity: 80%;
+    margin-top: 20px;
 }
 
 .push-number {
@@ -194,7 +218,7 @@ main{
     background-color: transparent;
     border: none;
     border-bottom: 1px solid #313942;
-    font-size: 16px;
+    font-size: 14px;
     color: #313942;
     outline: none;
 }
@@ -213,13 +237,4 @@ main{
     top: -2px;
     font-size: 13px;
     color: #313942;
-}
-
-.state{
-    font-size: 0.5em;
-    color: #ca2819
-}
-.stateOk{
-    font-size: 0.5em;
-    color: 	#0000CD
 }
