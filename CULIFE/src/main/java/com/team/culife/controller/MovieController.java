@@ -17,7 +17,7 @@ public class MovieController {
 	@Inject
 	MovieService service;
 	
-	//ì˜í™” ë©”ì¸í˜ì´ì§€ì´ë™
+	//¿µÈ­ ¸ŞÀÎÆäÀÌÁöÀÌµ¿
 	@GetMapping("movieList")
 	public ModelAndView movieList(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
@@ -25,7 +25,7 @@ public class MovieController {
 		return mav;
 	}
 	
-	//ì˜í™” ì„¸ë¶€í˜ì´ì§€ì´ë™
+	//¿µÈ­ ¼¼ºÎÆäÀÌÁöÀÌµ¿
 	@GetMapping("movieView")
 	public ModelAndView movieView(int movie_id) {
 		ModelAndView mav = new ModelAndView();
