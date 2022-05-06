@@ -8,6 +8,9 @@ public class ExhibitionVO {
 	private String author_thumbnail;
 	private String create_date;
 	private String nickname;
+	private String debut_year;
+	private String auhor_status;
+	private String msg;
 	
 	public int getNo() {
 		return no;
@@ -50,6 +53,24 @@ public class ExhibitionVO {
 	}
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
+	}
+	public String getDebut_year() {
+		return debut_year;
+	}
+	public void setDebut_year(String debut_year) {
+		this.debut_year = debut_year;
+	}
+	public String getAuhor_status() {
+		return auhor_status;
+	}
+	public void setAuhor_status(String auhor_status) {
+		this.auhor_status = auhor_status;
+	}
+	public String getMsg() {
+		return msg;
+	}
+	public void setMsg(String msg) {
+		this.msg = msg;
 	}
 	
 	

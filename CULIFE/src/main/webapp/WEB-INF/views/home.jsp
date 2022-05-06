@@ -1,7 +1,137 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-	<main id="home_main_container">
-		<article>
+
+<link rel="stylesheet" href="/css/home.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r75/three.min.js"></script>
+<script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/175711/pnltri.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.0/TweenMax.min.js"></script>
+<script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/175711/bas.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="/js/home_main_visual.js"></script>
+<script src="/js/home.js"></script>
+<script>
+	/*스크롤 무빙*/
+
+	var html = $('html');
+	var page = 1;
+	html.animate({scrollTop:0}, 10);
+	$(window).on("wheel", function(e) {
+	    if(html.is(":animated")) return;
+	    if(e.originalEvent.deltaY > 0) {
+	        if(page == 4) return;
+	        page++;
+	    } else if(e.originalEvent.deltaY < 0) {
+	        if(page == 1) return;
+	        page--;
+	    }
+	    var posTop =(page-1) * $(window).height();
+	    html.animate({scrollTop : posTop});
+	});
+</script>
+
+<style>
+	main {width:100vw; height:400vh;}
+	section{
+		width:100vw; height:100vh;
+		display:block;
+		position:relative
+	}
+</style>
 	
-		</article>
+	<main id="home_main_container">
+		<h1 class="hidden">본문보기</h1>
+		<section id="home_visual">
+			<h2 class="hidden">share your cultural life</h2>
+			<div id="three-container"></div>
+    		<button class="fun-btn" onclick="location.href='/login'">JOIN US</button>
+    		<img class="home_scrolldown" id="home_scrolldown1" src="/img/scrolldown.png">
+		</section>
+		<section id="home_entertain">
+			<h2>영화, 연극, 뮤지컬을 한 곳에서</h2>
+			<ul>
+				<li onmouseover="movieplay('/img/Reality - From La Boum_cut.mp3')" onmouseleave="movieplay('')">
+					<a href="">영화</a>
+					<em>마우스 오버 시 오디오 재생</em>
+					<span class="skew_box1"></span>
+					<span class="skew_box2"></span>
+					<audio id='movie_audio' controls><source src="" type="audio/mp3" /></audio>
+				</li>				
+				<li onmouseover="musicalplay('/img/웃는남자_일단와_cut.mp3')" onmouseleave="musicalplay('')">
+					<a href="">연극 / 뮤지컬</a>
+					<em>마우스 오버 시 오디오 재생</em>
+					<span class="skew_box1"></span>
+					<span class="skew_box2"></span>
+					<audio id='musical_audio' controls><source src="" type="audio/mp3" /></audio>
+				</li>
+			</ul>
+			<img class="home_scrolldown" id="home_scrolldown2" src="/img/scrolldown.png">
+		</section>
+		<section id="home_exhibition">
+			<h2>온라인에서 만나는 전시회 작품</h2>
+			<button class="fun-btn" id="home_author_regi">전시하기</button>
+			<button class="fun-btn" id="home_online_ex">작품보기</button>
+			<ul>
+				<li id="home_sec3_img1"></li>
+				<li id="home_sec3_img2"></li>
+				<li id="home_sec3_img3"></li>
+				<li id="home_sec3_img4"></li>
+				<li id="home_sec3_img5"></li>
+				<li id="home_sec3_img6"></li>
+			</ul>
+			<img class="home_scrolldown" id="home_scrolldown3" src="/img/scrolldown.png">
+		</section>
+		<section id="home_notice">
+			<div id="home_commu">
+				<h2>자유게시판</h2>
+				<ul>
+					<li>
+						<p>제목</p>
+						<span>날짜</span>
+						<a href=""></a>
+					</li>
+					<li>
+						<p>제목</p>
+						<span>날짜</span>
+						<a href=""></a>
+					</li>
+					<li>
+						<p>제목</p>
+						<span>날짜</span>
+						<a href=""></a>
+					</li>
+					<li>
+						<p>제목</p>
+						<span>날짜</span>
+						<a href=""></a>
+					</li>
+				</ul>
+				<a href="">+ 더보기</a>
+			</div>
+			<div id="home_author">
+				<img src="" alt="작가프로필">
+				<button>팔로우</button>
+				<button>작품보기</button>
+			</div>
+			<img class="home_scrolldown" id="home_scrolldown4" src="/img/scrolldown.png">
+		</section>
+		<ul id="home_pagination">
+			<li class="hidden">페이지네이션</li>
+			<li>
+				<h3 class="hidden">첫번째 페이지</h3>
+				<span id="home_tab1" class="home_tab_filled"></span>
+			</li>
+			<li>
+				<h3 class="hidden">두번째 페이지</h3>
+				<span id="home_tab2"></span>
+			</li>
+			<li>
+				<h3 class="hidden">세번째 페이지</h3>
+				<span id="home_tab3"></span>
+			</li>
+			<li>
+				<h3 class="hidden">네번째 페이지</h3>
+				<span id="home_tab4"></span>
+			</li>
+		</ul>
 	</main>

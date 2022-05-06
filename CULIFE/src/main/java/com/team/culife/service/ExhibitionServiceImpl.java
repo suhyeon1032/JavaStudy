@@ -17,13 +17,4 @@ public class ExhibitionServiceImpl implements ExhibitionService {
 	@Inject
 	ExhibitionDAO dao;
 	
-	@Override
-	public int authorWrite(ExhibitionVO vo) {
-		return dao.authorWrite(vo);
-	}
-
-	@Override
-	@Autowired
-	public void authorWriteOk(Map<String, Object> map) {
-	}
 }

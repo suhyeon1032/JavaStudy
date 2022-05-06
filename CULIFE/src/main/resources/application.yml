@@ -4,8 +4,6 @@ server:
 spring:
     profiles:
         default : dev
-    main:
-      allow-circular-references: true
       
     # 서버 자동시작 
     mvc:

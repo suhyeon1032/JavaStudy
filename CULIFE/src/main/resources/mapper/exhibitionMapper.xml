@@ -3,9 +3,6 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team.culife.dao.ExhibitionDAO">
-	<insert id="authorWrite" >
-		insert into author(member_no, author, sns_link, author_thumbnail)
-		values(#{member_no}, #{author}, #{sns_link}, #{author_thumbnail})
-	</insert>
+	
 	
 </mapper>
