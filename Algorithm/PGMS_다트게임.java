@@ -10,9 +10,9 @@ public class PGMS_다트게임 {
         	char c = dartResult.charAt(i);
         	int dartI = Character.getNumericValue(c);
         	
-        	if(dartI >= 0 && dartI <=10) {
+        	if(dartI >= 0 && dartI <= 10) {
         		if(dartI == 1) {
-        			if(Character.getNumericValue(dartResult.charAt(i+1)) == 0) {
+        			if(Character.getNumericValue(dartResult.charAt(i+1)) == 0) { // 1다음 정수가 0일 경우
 	        			dartI = 10;
 	        			i++;
 	        		}
@@ -35,10 +35,22 @@ public class PGMS_다트게임 {
 					break;
 				default:
 					break;
-				}
+				
+				case '*': // 스타
+					idx = idx - 2 < 0 ? 0 : idx - 2;
+					while (idx < intCnt) {
+						arr[idx] = arr[idx] * 2;
+						idx++;
+					}
+					break;
+				case '#': // 아차
+					arr[idx - 1] = arr[idx - 1] * (-1);
+					// 가장 최근 점수	에	* -1
+					break;
+        		}
         	}
         	
         }
-        return answer;
+        return arr[0] + arr[1] + arr[2];
     }
 }
