@@ -37,7 +37,7 @@ public class ExhibitionController {
 	AuthorService authorService;
 	
 	@GetMapping("mypage/authorWrite")
-	public ModelAndView authorWrite(HttpSession session,ExhibitionVO vo) {
+	public ModelAndView authorWrite(HttpSession session,AuthorVO vo) {
 		ModelAndView mav = new ModelAndView();
 		Integer memberNo = (Integer)session.getAttribute("logNo");
 		MemberVO mvo = memberService.memberSelectByNo(memberNo);
@@ -51,7 +51,7 @@ public class ExhibitionController {
 	}
 	// 작가등록
 	@PostMapping("authorWriteOk")
-	public ResponseEntity<String> authorWriteOk(ExhibitionVO vo, HttpServletRequest request, HttpSession session){
+	public ResponseEntity<String> authorWriteOk(AuthorVO vo, HttpServletRequest request, HttpSession session){
 		vo.setMember_no((Integer)request.getSession().getAttribute("logNo"));
 		Integer memberNo = (Integer)session.getAttribute("logNo");
 		
@@ -87,26 +87,21 @@ public class ExhibitionController {
 		String cnt = authorService.authorCheck(author);
 		return cnt;
 	}
-	
-	@GetMapping("authorView")
-	public ModelAndView authorView(HttpSession session, ExhibitionVO vo, String author) {
-		ModelAndView mav = new ModelAndView();
 
-		mav.addObject("vo", authorService.authorSelect(author));
-		mav.setViewName("exhibition/authorView");
-		return mav;
-	}
 	
 	@GetMapping("exhibitionWrite")
 	public ModelAndView exhibitionApply(HttpSession session, ExhibitionVO vo) {
+
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("exhibition/exhibitionWrite");
 		return mav;
 	}
 	@PostMapping("exhibitionWriteOk")
 	public ResponseEntity<String> exhibitionWriteOk(ExhibitionVO vo, HttpServletRequest request, HttpSession session){
+
 		System.out.println("exhibitionWriteOk");
-		System.out.println("author " + vo.getAuthor());
+		System.out.println("end_date " + vo.getEnd_date());
+		System.out.println("Type " + vo.getType());
 		ResponseEntity<String> entity = null;
 		return entity;
 	}

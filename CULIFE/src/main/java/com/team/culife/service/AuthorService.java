@@ -8,7 +8,7 @@ import com.team.culife.vo.ExhibitionVO;
 public interface AuthorService {
 	public AuthorVO authorSelectByName(String author);
 	// 작가등록
-	public int authorWrite(ExhibitionVO vo);
+	public int authorWrite(AuthorVO vo);
 	public void authorWriteOk(Map<String, Object> map);
 	public ExhibitionVO authorSelect(String author);
 	public String authorCheck(String author);

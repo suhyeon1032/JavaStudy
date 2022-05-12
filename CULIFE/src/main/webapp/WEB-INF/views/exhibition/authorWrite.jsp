@@ -117,7 +117,7 @@ function authorSubmit() {
 						<div class="authorWriteContent">
 							<div class="authorWriteID">
 								<label>닉네임</label>
-								<input type="text" value="${mvo.nickname}" class="form-control" id="authorWriteName" readonly>
+								<input type="text" value="${mvo.nickname}" class="form-control" readonly>
 								
 
 							</div>
