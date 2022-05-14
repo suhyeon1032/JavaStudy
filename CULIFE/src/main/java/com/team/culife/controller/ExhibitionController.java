@@ -37,14 +37,17 @@ public class ExhibitionController {
 	AuthorService authorService;
 	
 	@GetMapping("mypage/authorWrite")
-	public ModelAndView authorWrite(HttpSession session,AuthorVO vo) {
+	public ModelAndView authorWrite(HttpSession session,AuthorVO vo, String author) {
 		ModelAndView mav = new ModelAndView();
 		Integer memberNo = (Integer)session.getAttribute("logNo");
 		MemberVO mvo = memberService.memberSelectByNo(memberNo);
+		AuthorVO avo = authorService.authorSelect(author);
 		mav.addObject("mvo", mvo);
+		mav.addObject("avo", avo);
 		
 		System.out.println(mvo.getNickname());
 		System.out.println(mvo.getNo());
+		//System.out.println(avo.getAuthor_status());
 		 
 		mav.setViewName("exhibition/authorWrite");
 		return mav;
@@ -60,9 +63,6 @@ public class ExhibitionController {
 		ResponseEntity<String> entity = null;
 		
 		System.out.println("author " + vo.getAuthor());
-		System.out.println("no " + vo.getMember_no());
-		System.out.println("sns_link  " + vo.getSns_link());
-		System.out.println("author_thumbnail " + vo.getAuthor_thumbnail());
 		System.out.println("debut_year " + vo.getDebut_year());
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(new MediaType("text", "html",Charset.forName("UTF-8")));
@@ -99,7 +99,6 @@ public class ExhibitionController {
 	@PostMapping("exhibitionWriteOk")
 	public ResponseEntity<String> exhibitionWriteOk(ExhibitionVO vo, HttpServletRequest request, HttpSession session){
 
-		System.out.println("exhibitionWriteOk");
 		System.out.println("end_date " + vo.getEnd_date());
 		System.out.println("Type " + vo.getType());
 		ResponseEntity<String> entity = null;

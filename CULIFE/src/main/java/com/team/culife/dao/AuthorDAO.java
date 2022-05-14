@@ -13,6 +13,6 @@ public interface AuthorDAO {
 	// 작가등록
 	public int authorWrite(AuthorVO vo);
 	public void authorWriteOk(Map<String, Object> map);
-	public ExhibitionVO authorSelect(String author);
+	public AuthorVO authorSelect(String author);
 	public String authorCheck(String author);
 }

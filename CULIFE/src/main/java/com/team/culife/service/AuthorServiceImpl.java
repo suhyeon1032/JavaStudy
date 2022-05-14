@@ -31,7 +31,7 @@ public class AuthorServiceImpl implements AuthorService{
 	}
 
 	@Override
-	public ExhibitionVO authorSelect(String author) {
+	public AuthorVO authorSelect(String author) {
 		return dao.authorSelect(author);
 	}
 
