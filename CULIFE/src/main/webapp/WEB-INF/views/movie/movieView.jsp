@@ -1,397 +1,231 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<link rel="stylesheet" href="${url}/css/movie/movieView.css"
+	type="text/css" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	
+<script>
+$(function(){
+	mreviewListAll();
+});
+function editForm(idx){
+	$('#editDiv'+idx).show()
+}
+//영화리뷰리스트
+	function mreviewListAll(){
+		var url = "/mreview/mreviewList";
+		var params = "movie_id=" + movieId;
+		$.ajax({
+			url:url,
+			data:params,
+			success:function(result){
+				//alert(JSON.stringify(result))
+				var score = result.star_avg;
+					$('#mstarAvg').html("<h1>"+score+"</h1>");
+					console.log(score)
+					$('#avg').html(score);
+				var cnt = result.review_cnt;
+					$("#mreviewCnt").html("<h1>"+cnt+"</h1>") 
+				var $result = $(result.reviewList);
+				var tag = "<ul>";
+				
+				$result.each(function(idx, vo){
+					//alert(vo.nickname);
+					tag += "<li><div id='reviewOne'>" + vo.nickname;
+					tag += "("+ vo.write_date+")";
+					for(var i=0;i<vo.score_star;i++){
+						tag+= "★";
+					}
+					tag += " ("+vo.score_star+")";
+					
+					if(vo.member_no=='${logNo}'){
+						tag += "<input type='button' value='수정'/>"; 
+						tag += "<input type='button' value='삭제' title='"+vo.no+"'/>";	
+					}
+					if(vo.spo_check==1){
+						tag+="<h2>스포일러</h2>"
+						tag+="<div class='spo'>"+ vo.content + "</div></div>"
+					}else{
+						tag += "<br/>" + vo.content + "</div>";
+					}
+					if(vo.member_no!='${logNo}'){
+						tag += "<input type='button' value='신고' onclick='warning(" + vo.no +")'/>";
+					}
+					
+				if(vo.member_no=='${logNo}'){
+					tag +="<div class='stars_edit'>"
+					tag += "<form method='post'  action='/mreview/mreviewWriteOk'>"
+					tag += "<input type='hidden' name='no' value='"+vo.no+"'/>";
+					tag += "<input type='hidden' name='score_star' value='"+vo.score_star+"' id='score_star_edit'>";
+					
+					tag += "<div class='stars'>	"
+						if(vo.spo_check==1){
+							tag += "<input type='checkbox' name='spo_check' id='spo_check' value='1' checked/>";
+							tag += "<label for='spo_check'>스포체크</label>"
+						}else{
+							tag += "<input type='checkbox' name='spo_check' id='spo_check' value='1'/>";
+							tag += "<label for='spo_check'>스포체크</label>"
+						}
+					//console.log(vo.score_star);
+					var str1, str2, str3, str4, str5;
+					if(vo.score_star==1){
+						str1="checked";
+					}else if(vo.score_star==2){
+						str2="checked";
+					}
+					else if(vo.score_star==3){
+						str3="checked";
+					}
+					else if(vo.score_star==4){
+						str4="checked";
+					}
+					else if(vo.score_star==5){
+						str5="checked";
+					}
+					tag += `
+						<input class="star star-5" id="star-5-2" type="radio" `+str5+` name="score_star" value="1" title="1점"/>
+				        <label class="star star-5" for="star-5-2"></label>
+				        <input class="star star-4" id="star-4-2" type="radio" `+str4+` name="score_star" value="2" title="2점"/>
+				        <label class="star star-4" for="star-4-2"></label>
+				        <input class="star star-3" id="star-3-2" type="radio" `+str3+` name="score_star" value="3" title="3점"/>
+				        <label class="star star-3" for="star-3-2"></label>
+				        <input class="star star-2" id="star-2-2" type="radio" `+str2+` name="score_star" value="4" title="4점"/>
+				        <label class="star star-2" for="star-2-2"></label>
+				        <input class="star star-1" id="star-1-2" type="radio" `+str1+` name="score_star" value="5" title="5점"/>
+				        <label class="star star-1" for ="star-1-2"></label>
+				       </div>`
+				    tag += "<div class='Ereview_box'>"
+				    tag += "<textarea class='review' name='content'>"+vo.content+"</textarea>";				    
+				    tag += "<label class='review' for='review'></label>"
+				    	
+					tag += "<input type='submit' value='수정'/>";	
+				    tag += "</div>"		
+				    tag += "</form>"
+				    tag += "</div>"
+				    
+				}
+				tag += "<hr/></li>";
+				score_star = vo.score_star;	
+				});
+				tag+="</ul>";
+				
+				$("#mreviewList").html(tag);
+			}, error:function(e){
+				console.log(e.responseText);
+			}
+		});
+	}
+	
+//영화리뷰등록
+$(function(){
+	$("#mreviewFrm").submit(function(){
+		event.preventDefault();
+		if($("#content").val()==''){
+			alert("리뷰를 입력 후 등록하세요.");
+			return false;
+		}else{
+			var params = $("#mreviewFrm").serialize();
+			
+			$.ajax({
+				url:'/mreview/mreviewWriteOk',
+				data:params,
+				type:'POST',
+				success:function(r){
+					if(parseInt(r)==-1){
+						alert('이미 리뷰를 작성하였습니다.');
+						$('#content').val("");
+					}
+					$("#stars").val("");
+					mreviewListAll();
+				},error:function(e){
+					console.log(e.responseText);
+				}
+			});
+		}
+	});
+});
+//영화리뷰수정
+$(document).on('click','#mreviewList input[value=수정]', function(){
+	$('#mDiv').css("display","none");	
+	$('#reviewOne').css("display","none");
+	$('.stars_edit').css("display","block");
+	//$('.review_box').css("display","block");
+			//$(this).parent().next().css("display","block");
+			//$("#mreview").css("display","none");
+});
+$(document).on('submit','#mreviewList form',function(){
+	event.preventDefault();
+	var params = $(this).serialize();
+	var url = '/mreview/mreviewEditOk';
+	$.ajax({
+		url:url,
+		data:params,
+		type:'POST',
+		success:function(result){
+			console.log(result);
+			mreviewListAll();
+		},error:function(e){
+			console.log('수정에러발생');
+		}
+	});
+});
+$(document).ready(function(){
+	$("input[name='score_star']:radio").click(function () {
+		var editStar = $(this).val();
+		/* $("input[name='score_star']:radio").each(function(i, obj){
+			console.log(editStar+": "+$(obj).val());
+			if(editStar>=$(obj).val()){
+				console.log(">>>"+$(obj).val())
+				$(obj).prop("checked", false)
+				//$('~:radio',obj).css('background-color','yellow')
+			}else{
+				$('~:radio',obj).css('background-color','#444')
+			}
+		}); */
+		
+	});
+});		
+//영화리뷰삭제
+$(document).on('click','#mreviewList input[value=삭제]', function(){
+	if(confirm('리뷰를 삭제하시겠습니까?')){
+		var params = "no=" + $(this).attr("title");
+		$.ajax({
+			url:'/mreview/mreviewDel',
+			data:params,
+			success:function(result){
+				console.log(result);
+				mreviewListAll();
+			}, error:function(e){
+				console.log("리뷰삭제에러발생");
+			}
+		});
+	}
+});
 
-<style>
- @font-face {
-   font-family: 'RixYeoljeongdo_Regular';
-   src:
-      url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2102-01@1.0/RixYeoljeongdo_Regular.woff')
-      format('woff');
-   font-weight: normal;
-   font-style: normal;
+//영화리뷰신고기능
+function warning(no){
+	if(confirm('해당 댓글을 신고하시겠습니까?')){
+		//alert(no);
+		var params = no;
+		$.ajax({
+			type:'get',
+			url:'/mwarning/'+no,			
+			success:function(result){
+				if(parseInt(result)>0){
+					alert('신고가 완료되었습니다.');
+					mreviewListAll();
+				}else{
+					alert('이미 신고 처리되었습니다.')
+				}				
+			},error:function(e){				
+				console.log("신고에러발생 "+JSON.stringify(e));
+			}
+		});
+	}
 }
-
-
-* {
-   box-sizing: border-box;
-}
-
-
-body {
-   background: black;
-   -webkit-user-select: none;
-   -moz-user-select: none;
-   -ms-user-select: none;
-   user-select: none;
-   position: relative;
-}
-
-.movieView_container {
-   margin: 0 auto 300px auto;
-   margin-top: 160px;
-   max-width: 1500px;
-   height: 100%;
-}
-
-.movieDetail_container {
-   position: relative;
-   margin: 0px auto;
-   width: 1300px;
-   height: 700px;
-   margin: 0px auto;
-}
-
-.movie_card {
-   position: relative;
-   margin: 0 auto;
-   display: block;
-   width: 100%;
-   height: 600px;
-   margin-top: 100px;
-   overflow: hidden;
-   border-radius: 12px;
-   /* transition: all 0.4s ease-in-out; */
-}
-
-.movie_card .info_section {
-   position: relative;
-   width: 100%;
-   height: 100%;
-   background-blend-mode: multiply;
-   border-radius: 10px;
-   z-index: 10;
-}
-
-.movie_card .info_section .movie_header {
-   position: relative;
-   display: inline-block;
-   padding: 15px;
-   height: 45%;
-}
-
-.movie_card .info_section .movie_header h1 {
-   font-family: 'RixYeoljeongdo_Regular';
-   margin-top: 50px;
-   color: white;
-   font-size: 30px;
-}
-
-.movie_card .info_section .movie_header h5 {
-   margin-bottom: 15px;
-   color: white;
-   font-weight: 200;
-}
-
-.movie_card .info_section .movie_header h4 {
-   margin: 2px;
-   color: #cee4fd;
-   font-size: 18px;
-}
-
-.movie_card .info_section .movie_header .minutes {
-   display: inline-block;
-   margin: 10px 0 5px 0;
-   padding: 9px;
-   color: #fff;
-   border-radius: 5px;
-   border: 1px solid rgba(255, 255, 255, 0.33);
-   font-size: 18px;
-}
-
-.movie_card .info_section .movie_header .type {
-   display: block;
-   margin: 2px;
-   color: #cee4fd;
-   font-size: 18px;
-}
-
-.movie_card .info_section .movie_header .poster {
-   position: relative;
-   float: left;
-   margin-right: 20px;
-   height: 300px;
-   box-shadow: 0 0 20px -10px rgba(0, 0, 0, 0.5);
-}
-
-.movie_card .info_section .movie_desc {
-   display: flex;
-   align-items: center;
-   margin-top: 15px;
-   padding: 15px;
-   height: 45%;
-}
-
-.movie_card .info_section .movie_desc .text {
-   color: #cfd6e1;
-   line-height: 21px;
-}
-
-/*
-.movie_card .info_section .movie_social {
-   height: 10%;
-   padding-left: 15px;
-   padding-bottom: 20px;
-   bottom: 0;
-   position: absolute;
-}
-
-.movie_card .info_section .movie_social ul {
-   padding: 0;
-   list-style: none;
-}
-
-.movie_card .info_section .movie_social ul li {
-   display: inline-block;
-   margin: 0 10px;
-   color: rgba(255, 255, 255, 0.4);
-   transition: color 0.3s;
-   transition-delay: 0.15s;
-}
-
-.movie_card .info_section .movie_social ul li:hover {
-   color: rgba(255, 255, 255, 0.8);
-   transition: color 0.3s;
-}
-
-.movie_card .info_section .movie_social ul li i {
-   font-size: 19px;
-   cursor: pointer;
-}
-*/
-.movie_card .info_section .movie_youdube {
-   display: inline-block;
-   width: 150px;
-   height: 100px;
-   padding: 0 15px;
-   position: relative;
-}
-
-.movie_card .info_section .movie_youdube a {
-   color: white;
-   text-decoration: none;
-}
-
-.fa-youtube {
-   position: absolute;
-   right: 47%;
-   bottom: 50%;
-   margin-left: 12px;
-   color: #ffffff7b;
-   font-size: 80px;
-}
-
-.fa-youtube:hover {
-   background-image: linear-gradient(-20deg, #d558c8 0%, #24d292 100%);
-   -webkit-background-clip: text;
-   -webkit-text-fill-color: transparent;
-}
-
-.movie_card .blur_back {
-   position: absolute;
-   top: 1px;
-   right: 0;
-   height: calc(100% - 2px);
-   z-index: 1;
-   background-size: cover;
-   border-radius: 11px;
-}
-
-@media screen and (min-width: 768px) {
-   .movie_header {
-      width: 55%;
-   }
-   .movie_desc {
-      width: 50%;
-   }
-   .info_section {
-      background: linear-gradient(to right, #0d0d0c 50%, transparent 100%);
-   }
-   .blur_back {
-      width: 80%;
-      background-position: -100% 10% !important;
-   }
-}
-
-@media screen and (max-width: 768px) {
-   .movie_card {
-      width: 98%;
-      height: auto;
-      margin: 70px auto;
-   }
-   .blur_back {
-      width: 100%;
-      background-position: 50% 50% !important;
-   }
-   .movie_header {
-      width: 100%;
-      margin-top: 85px;
-   }
-   .movie_desc {
-      width: 100%;
-   }
-   .info_section {
-      background: linear-gradient(to top, #141413 50%, transparent 100%);
-      display: inline-grid;
-   }
-}
-
-.shadow {
-   box-shadow: 0px 30px 190px -45px rgba(19, 160, 134, 0.6);
-}
-/*
-.shadow:hover {
-   box-shadow: 0px 0px 120px -55px rgba(19, 160, 134, 0.6);
-}
-*/
-.modal {
-   display: none;
-   justify-content: center;
-   align-items: center;
-   position: absolute;
-   z-index: 9999;
-   left: 55px;
-   top: 100px;
-   width: 1100px;
-   height: 600px;
-   overflow: hidden;
-   background-color: black;
-   background-color: rgba(50, 50, 50, 0.6);
-   animation-name: fadeIn;
-   animation-duration: 0.4s;
-   outline: 0;
-}
-
-.modal_content {
-   text-align: center;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.movieCreadits_container {
-   background: #f1f3f5;
-   padding: 0;
-   max-width: 1300px;
-   height: 360px;
-   margin: 25px auto;
-   position: relative;
-   /* background-color: darkgoldenrod; */
-}
-
-.slider {
-   display: flex;
-   height: 100%;
-   width: 100%;
-   overflow-x: auto;
-   overflow-y: hidden;
-   position: relative;
-   scroll-behavior: auto;
-   -webkit-overflow-scrolling: touch;
-   -ms-scroll-snap-type: x proximity;
-   scroll-snap-type: x proximity;
-   -ms-scroll-chaining: none;
-   overscroll-behavior: contain;
-   -webkit-overflow-scrolling: touch;
-   -ms-overflow-style: -ms-autohiding-scrollbar;
-   scrollbar-width: thin;
-   scrollbar-color: #adb5bd transparent;
-   background-color: black;
-}
-
-.slider::-webkit-scrollbar {
-   height: 13px;
-   width: 6px;
-}
-
-.slider::-webkit-scrollbar-track {
-   background-color: transparent;
-   border-radius: 10px;
-}
-
-.slider::-webkit-scrollbar-thumb {
-   background-image: linear-gradient(-20deg, #d558c8 0%, #24d292 100%);
-   border-radius: 10px;
-   cursor: pointer;
-   -webkit-transition: all 200ms ease-in-out;
-   transition: all 200ms ease-in-out;
-}
-
-.slider::-webkit-scrollbar-thumb:hover {
-   background-image: linear-gradient(to right, #43e97b 0%, #38f9d7 100%);
-}
-
-.slider::-webkit-scrollbar-thumb:active {
-   background-image: linear-gradient(to right, #43e97b 0%, #38f9d7 100%);
-}
-
-.slider::-webkit-scrollbar-thumb:vertical {
-   min-height: 30px;
-}
-
-.slider::-webkit-scrollbar-thumb:horizontal {
-   min-width: 30px;
-}
-
-.itemDiv .item {
-   display: flex;
-   width: 164px;
-   height: 230px;
-   position: relative;
-   padding: 0;
-   margin: 32px 22px 17px 0px;
-   -moz-border-radius: 13px 13px 13px 13px;
-   -webkit-border-radius: 13px 13px 13px 13px;
-}
-
-.textTag {
-   color: white;
-   font-size: 18px;
-   font-weight: 500;
-   text-align: center;
-}
-
-.h4Text {
-   font-family: 'RixYeoljeongdo_Regular';
-   background-color: black;
-   color: white;
-   font-size: 32px;
-   color: white;
-}
-
-@-webkit-keyframes show {
-  0% {
-    transform: translateY(-10px);
-    opacity: 0;
-  }
-  50% {
-    transform: translateY(10px);
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-@keyframes show {
-  0% {
-    transform: translateY(-10px);
-    opacity: 0;
-  }
-  50% {
-    transform: translateY(10px);
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-</style>
+</script>
 
 <body>
    <div class="movieView_container">
@@ -412,6 +246,41 @@ body {
          <h4 class="h4Text">주요 출연진</h4>
          <div class="slider"></div>
       </div>
+      
+      <h4 class="h4Text review_h4Text">평점 작성</h4>
+      <div class="review_container">
+	    <div class="stars" id="mDiv">
+	    <c:if test="${logNo != null}">
+	      <form method="post" id="mreviewFrm" action="/mreview/mreviewWriteOk">
+	      	<input type="hidden" name="movie_title" id="movie_title" value="${vo.movie_title}"/>
+	      	<input type="hidden" name="poster_path" id="poster_path" value="${vo.poster_path}"/>
+	      	<input type="hidden" name="vote_count" id="vote_count" value="${vo.vote_count}"/>
+	      	<input type="hidden" name="movie_id" id="movie_id" value="${vo.movie_id}"/>
+	      	 <input type="checkbox" name="checkbox" id="checkbox" />
+      		 <label for="checkbox">스포체크</label>
+	        <input class="star star-5" id="star-5-2" type="radio" name="score_star" value="5" title="1점"/>
+	        <label class="star star-5" for="star-5-2"></label>
+	        <input class="star star-4" id="star-4-2" type="radio" name="score_star" value="4" title="2점"/>
+	        <label class="star star-4" for="star-4-2"></label>
+	        <input class="star star-3" id="star-3-2" type="radio" name="score_star" value="3" title="3점"/>
+	        <label class="star star-3" for="star-3-2"></label>
+	        <input class="star star-2" id="star-2-2" type="radio" name="score_star" value="2" title="4점"/>
+	        <label class="star star-2" for="star-2-2"></label>
+	        <input class="star star-1" id="star-1-2" type="radio" name="score_star" value="1" title="5점"/>
+	        <label class="star star-1" for ="star-1-2"></label>
+	        <div class="review_box">
+	          <textarea id="content" class="review" col="30" name="content" placeholder="평점을 남겨주세요."></textarea>
+	          <label class="review" for="review"></label>
+	        </div>
+	        <input type="submit" value="등록" class="review_submit" />
+	      </form>
+	      </c:if>
+	    </div>
+	    <div id="mstarAvg"></div>
+	    <div id="mreviewList"></div>
+	   
+  	</div>
+      
    </div>
 </body>
 
@@ -440,6 +309,10 @@ body {
             .then(res => res.json())
             .then(function(res){
              //console.log(res)
+            $('#movie_title').val(res.title)
+            $('#poster_path').val(res.poster_path)
+            $('#vote_count').val(res.vote_count)
+            $('#movie_id').val(movieId)
             $(".movieDetail_container").append(`
                 <div id="${movieId}" class="movie_card shadow">
                 <div class="info_section">
@@ -450,6 +323,7 @@ body {
                     <span class="minutes">${'${res.runtime}'}분</span>
                     <p class="type">장르 : ${'${res.genres[0].name}'}</p>
                     <h4>개봉 : ${'${res.release_date}'}</h4>
+                    <p class="header_review_start"><i class="fa-solid fa-star">${mstar_avg}</i></p>
                   </div>
                   <div class="movie_desc">
                     <p class="text">
@@ -585,6 +459,13 @@ body {
       window.addEventListener("load", movieCredits)
       
    /*    window.onload=openView2 */
+    
+	    	/* $('input[name="star"]').click(function(){
+	    		alert('a')
+	    		if($(this).is(':checked')){
+	    		$('#vote_count).val($(this).val());
+	    		}
+	    	}) */
    
 </script>
 </html>

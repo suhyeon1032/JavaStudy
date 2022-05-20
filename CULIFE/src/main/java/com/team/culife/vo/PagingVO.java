@@ -12,19 +12,19 @@ public class PagingVO {
 	private int recordPerPage = 10;
 	private int onePageCount = 5;
 	private int totalRecord;
-	private int totalPage; 
+	private int totalPage;
 	private int offsetIndex = 0;
 	
-
 	private int member_no;
 	private String searchWord;
+	private String category;
 	
 	public void setCurrentPage(int currentPage) {
 		this.currentPage = currentPage;
 		
 		offsetIndex = (currentPage-1)*recordPerPage;
 		
-		startPage = ((currentPage-1)/recordPerPage*recordPerPage)+1;
+		startPage = ((currentPage-1)/onePageCount*onePageCount)+1;
 	}
 	public void setTotalRecord(int totalRecord) {
 		this.totalRecord = totalRecord;	
@@ -38,5 +38,6 @@ public class PagingVO {
 	 public void setEndPage(int endPage) {
 	        this.endPage = (int)Math.ceil(this.currentPage*0.1)*10;
 	} 
+	
 }
 

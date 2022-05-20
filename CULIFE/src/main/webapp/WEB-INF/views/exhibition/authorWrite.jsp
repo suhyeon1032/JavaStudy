@@ -1,14 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <c:set var="url" value="<%=request.getContextPath()%>"/>
-<link rel="stylesheet" href="/css/exhibition/authorWrite.css" type="text/css" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-<link rel="stylesheet" type="text/css" href="${url}/css/mypage/mypage.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="${url}/css/mypage/mypage.css">
+
+<link rel="stylesheet" href="/css/exhibition/authorWrite.css" type="text/css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script>
 let authorch = false;
 
 $(function(){
+	console.log(${avo.getAuthor_status()});
+	$("#thumbnail_btn").on("click",function(){
+		$("#authorThumbnail").trigger("click");
+	})
 	$("#authorWriteName").keyup(function(){
 		var author = $("#authorWriteName").val();
 		authorch = false;
@@ -37,7 +42,7 @@ $(function(){
 		}
 	});
 	
-	$('input[name="authorThumbnail"]').change(function(){
+	$("#authorThumbnail").change(function(){
 	    setImageFromFile(this, '#preview');
 	});
 
@@ -59,6 +64,7 @@ function authorSubmit() {
 		alert("작가명을 확인해 주세요");
 		return false;
 	}
+	
 	var pattern_num = /^[0-9]*$/;
 	var authorNickname = "${mvo.nickname}";
 	var params = "nickname=" + "${mvo.nickname}";
@@ -89,36 +95,26 @@ function authorSubmit() {
 	else if (author_msg == '') {
 		alert("자기소개를 입력해 주세요")
 	}
-	else if (author_status != '' ) {
-		alert("작가 신청 심사 중입니다.")
-	}
 	else {
-	
+		var data = new FormData($("#authorWrite")[0]);
 		$.ajax({
 			url: '/authorWriteOk',
 			type: 'POST', 
-			dataType: 'json',
-			data : {
-				nickName: '${mvo.nickname}',
-				member_no: '${mvo.no}',
-				author: $("#authorWriteName").val(),
-				sns_link: $("#authorWriteSNS").val(),
-				author_thumbnail: $("#authorThumbnail").val(),
-				debut_year: $("#authorDebutYear").val(),
-				author_msg: $("#authorMsg").val()
-			},
-			
+			processData: false,
+			contentType: false,
+			data : data,
 			success: function(result) {
-				consloe.log("작가 신청 완료");
-				consloe.log(result);
+				console.log("작가 신청 완료")
+				console.log(result)
 				if (result) {
 					alert(result)
+					window.location.href='/mypage/authorWrite';
 				} else {
+					console.log(result)
 					alert("작가 신청 실패")
 				}
 			},
 			error: function(request, status, error) {
-				/* alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); */
 				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 			}
 		});
@@ -130,56 +126,45 @@ function authorSubmit() {
 		<div class="col-9" id="mypage_col">
 			<div class="containerWrap">
 				<div class="exhibitionContainer">
-					<form name="authorWrite" id="authorWrite"
-						enctype="multipart/form-data">
+					<form name="authorWrite" id="authorWrite" enctype="multipart/form-data">
 						<div class="authorWriteThumbnail">
 							<img src="/img/member/default_thumbnail.png" id="preview"
 								style="width: 170px; height: 170px;" /> 
-							<input type="file" name="authorThumbnail" class="files" id="authorThumbnail"
-								style="width: 270px; height: 46px;" value="사진 선택">
+							<img class="thumbnail_btn" id="thumbnail_btn" src="${url}/img/member/thumbnail_btn.png" style="cursor: pointer;"/>
+							<input type="file" multiple="multiple" name="file" class="files" id="authorThumbnail"
+								style="display:none;">
 						</div>
-						<div class="authorWriteContent">
-							<div class="authorWriteID">
-								<label>닉네임</label>
-								<input type="text" value="${mvo.nickname}" class="form-control" readonly>
-								
-
-							</div>
-							<div class="authorWriteName">
-								<div>작가명</div>
-								<div>
-									<input type="text" class="form-control" id="authorWriteName" placeholder='작가명 입력'>
-								</div>
-								<span id="chk"></span>
-							</div>
-							<div class="authorWriteSNS">
-								<div>SNS 주소</div>
-								<div>
-									<input type="text" class="form-control" id="authorWriteSNS">
-								</div>
-							</div>
-
-							<div class="authorDebutYear">
-								<div>데뷔년도</div>
-								<div>
-									<input type="text" class="form-control" id="authorDebutYear" placeholder='데뷔년도 입력 ex) 2018'>
-								</div>
-							</div>
-							<div class="authorMsg">
-								<div>자기소개</div>
-								<div>
-									<input type="text" class="form-control" id="authorMsg">
-								</div>
-							</div>
+						
+						<div class="form-floating mb-3" style="margin:0 auto; width:65%; font-size:2rem;" >
+						  	<input type="text" value="${mvo.nickname}" class="form-control" style=" font-size:2.4rem; height:70px;" readonly>
+						  	<label >닉네임</label>
 						</div>
-						<div>
-							<input type="button" id="memberForm_member_edit_btn" class="btn btn-outline-secondary" value="작가 신청" onclick="authorSubmit()" />
+						<div class="form-floating mb-3" style="margin:0 auto; width:65%; font-size:1.8rem;" >
+						  	<input type="text" class="form-control" name="author" id="authorWriteName" placeholder='작가명 입력' style=" font-size:2rem; height:70px;">
+						  	<label >작가 이름</label>
+						  	<span id="chk"></span>
+						</div>
+						<div class="form-floating mb-3" style="margin:0 auto; width:65%; font-size:1.8rem;" >
+							  <input type="text" class="form-control" name="sns_link" id="authorWriteSNS" style=" font-size:2rem; height:70px;">
+							  <label >SNS 주소</label>
+						</div>
+
+						<div class="form-floating mb-3" style="margin:0 auto; width:65%; font-size:1.8rem;" >
+							  <input type="text" class="form-control" name="debut_year" id="authorDebutYear" placeholder='데뷔년도 입력 ex) 2018' style=" font-size:2rem; height:70px;">
+							  <label >데뷔 연도</label>
+						</div>
+						<div class="form-floating mb-3" style="margin:0 auto; width:65%; font-size:1.8rem;" >
+							  <textarea class="form-control" name="author_msg" id="authorMsg" style=" font-size:2rem; height:100px; resize: none; padding-top: 25px;"></textarea>
+							  <label for="floatingTextarea">자기소개</label>
+						</div>
+						<div class="mb-3" style="margin:0 auto; width:65%; text-align:center; font-size:1.8rem;">
+							<input type="button" id="memberForm_member_edit_btn" class="btn btn-outline-secondary" value="작가 신청" onclick="authorSubmit()" style="font-size:2.1rem;" type="button"/>
 						</div>
 					</form>
 				</div>
 			</div>
-			<!-- mypage_container end -->
 		</div>
+			<!-- mypage_container end -->
 		<div class="col-3" id="mypage_sidebar">
 			<div class="container" id="mypage_sidebar_container">
 				<h1 class="h1">${mvo.nickname}님

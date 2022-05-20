@@ -3,6 +3,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <link rel="stylesheet" href="/css/adminPage.css" type="text/css" />
+<style>
+	.admin_gallery li:nth-child(1) {
+		background: url(/img/admin/6.jpg) no-repeat center center;
+	}
+</style>
 <script>
 $(function () {	
 	$("#allCheck").click(function () {
@@ -41,6 +46,15 @@ $(function () {
 <div class="wrap">
 <%@ include file="adminTop.jspf" %>
 <div class="admin_container">
+	<div class="admin_gallery_wrap">
+		<ul class="admin_gallery">
+			<li>
+				<div class="admin_gallery_content">
+					<h2>감상평관리</h2>
+				</div>
+			</li>
+		</ul>
+	</div>
 	<ul class='mini_top'>
 		<li>감상평관리</li>
 		<li>
@@ -48,9 +62,9 @@ $(function () {
 			<div class='adminList_searchFrm'>
 				<form method="get" action="/admin/adminExReplyList" id='searchFrm'>
 					<select name="searchKey" id="searchkey">
-						<option value='b.no'>전시명</option>
-						<option value='subject'>댓글내용</option>
-						<option value='m.nickname'>작성자</option>
+						<option value='subject'>전시명</option>
+						<option value='content'>댓글내용</option>
+						<option value='nickname'>작성자</option>
 					</select>
 					<input type="text" name="searchWord" id='searchWord' placeholder="검색"/>
 					<input type="submit" value="검색" id="searchBtn"/>
@@ -69,8 +83,8 @@ $(function () {
 		
 		<c:forEach var="vo" items="${adminExReplyList}">
 			<li>${vo.no }</li>
-			<li><a href='#'>${vo.subject }</a></li>
-			<li>${vo.content }</li>
+			<li>${vo.subject }</li>
+			<li><a href='#'>${vo.content }</a></li>
 			<li>${vo.nickname }</li>
 			<li>${vo.write_date }</li>
 			<li><input type="checkbox" name="noList" value="${vo.no}" class="chk"/></li>

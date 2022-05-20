@@ -3,6 +3,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <link rel="stylesheet" href="/css/adminPage.css" type="text/css" />
+<style>
+	.admin_gallery li:nth-child(1) {
+		background: url(/img/admin/7.jpg) no-repeat center center;
+	}
+</style>
 <script>
 $(function () {	
 	$("#allCheck").click(function () {
@@ -37,11 +42,11 @@ $(function () {
 			return false;
 		}
 
-		if($("#searchKey").val() == "cnt"){
-			if($("#searchWord").val() == "답변완료"){
+		if($("#searchKey").val().equals("cnt")){
+			if($("#searchWord").val().equals("답변완료")){
 				$("#searchWord").val(1);
 				alert($("#searchWord").val());
-			}else if($("#searchWord").val() == "미답변" ){
+			}else if($("#searchWord").val().equals("미답변")){
 				$("#searchWord").val(2);
 			}else{
 				alert("정확히 검색해주세요.");
@@ -54,15 +59,24 @@ $(function () {
 <div class="wrap">
 <%@ include file="adminTop.jspf" %>
 <div class="admin_container">
+	<div class="admin_gallery_wrap">
+		<ul class="admin_gallery">
+			<li>
+				<div class="admin_gallery_content">
+					<h2>문의사항</h2>
+				</div>
+			</li>
+		</ul>
+	</div>
 	<ul class='mini_top'>
 		<li>문의사항관리</li>
 		<li>
 			<!-- 검색 -->
 			<div class='adminList_searchFrm'>
-				<form method="get" action="/admin/memberList" id='searchFrm'>
+				<form method="get" action="/admin/adminHelpList" id='searchFrm'>
 					<select name="searchKey" id="searchkey">
 						<option value='b.no'>게시글번호</option>
-						<option value='subject'>제목</option>
+						<option value='b.subject'>제목</option>
 						<option value='m.nickname'>닉네임</option>
 						<option value='cnt'>상태</option>
 					</select>
@@ -74,12 +88,12 @@ $(function () {
 	</ul>
 	<form method="get" action="/admin/adminHelpDel" id='listFrm'>
 	<ul class="adminHelpList">
-		<li>번호</li>
-		<li>제목</li>
-		<li>닉네임</li>
-		<li>날짜</li>
-		<li>상태</li>
-		<li>전체선택<input type="checkbox" id="allCheck"/></li>
+		<li class='list_title'>번호</li>
+		<li class='list_title'>제목</li>
+		<li class='list_title'>닉네임</li>
+		<li class='list_title'>날짜</li>
+		<li class='list_title'>상태</li>
+		<li class='list_title'>전체선택<input type="checkbox" id="allCheck"/></li>
 		
 		<c:forEach var="vo" items="${adminHelpList}">
 			<li>${vo.no }</li>
@@ -106,7 +120,7 @@ $(function () {
 		<li>◀</li>
 	</c:if>
 	<c:if test="${pVO.pageNum > 1 }">
-		<li><a href="/admin/authorList?pageNum=${pVO.pageNum-1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">◀</a></li>
+		<li><a href="/admin/adminHelpList?pageNum=${pVO.pageNum-1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">◀</a></li>
 	</c:if>
 	<c:forEach var="p" begin="${pVO.startPage}" end="${pVO.startPage+pVO.onePageCount-1}">
 		<c:if test="${p<=pVO.totalPage}">
@@ -116,7 +130,7 @@ $(function () {
 			<c:if test="${p!=pVO.pageNum}">
 				<li>
 			</c:if>
-			<a href="/admin/authorList?pageNum=${p}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">${p}</a></li>
+			<a href="/admin/adminHelpList?pageNum=${p}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">${p}</a></li>
 		</c:if>
 	</c:forEach>
 	<!--  다음페이지 -->
@@ -124,11 +138,11 @@ $(function () {
 		<li>▶</li>
 	</c:if>
 	<c:if test="${pVO.pageNum < pVO.totalPage }">
-		<li><a href="/admin/authorList?pageNum=${pVO.pageNum+1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">▶</a></li>
+		<li><a href="/admin/adminHelpList?pageNum=${pVO.pageNum+1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">▶</a></li>
 	</c:if>
 		<li>	
 			<input type="button" value="삭제" id="multiDel"/>
-			<input type="button" value="목록" id="resetList" onclick="location.href='/admin/adminBoardList'"/>		
+			<input type="button" value="목록" id="resetList" onclick="location.href='/admin/adminHelpList'"/>		
 		</li>
 	</ul>
 </div><!-- class='memberList_container' -->

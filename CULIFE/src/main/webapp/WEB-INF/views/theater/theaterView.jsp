@@ -69,12 +69,12 @@ $(document).ready(function () {
 							<li>`+subTitle+`</li>
 						</ul>
 						<ul>
-							<li>`+start+`</li>
-							<li>`+end+`</li>
+							<li>공연기간 : `+start+``+~end+`</li>
+			
 						</ul>
 						<ul>
+						<li>문의사항 : `+phone+`</li>
 						<li>`+url+`</li>
-						<li>`+phone+`</li>
 						</ul>
 						<ul>
 						<li>`+price+`</li>
@@ -84,7 +84,7 @@ $(document).ready(function () {
 							<li>`+contents2+`</li>
 						</ul>
 						<ul>
-							<li>`+place+`</li>
+							<li>장소 : `+place+`</li>
 						</ul>
 						<ul>
 							<li id='map'></li>
@@ -113,6 +113,7 @@ $(document).ready(function () {
 });
 </script>
 <script>
+var score_star;
 //리뷰리스트
 	function reviewListAll(){
 		var url = "/review/reviewList";
@@ -123,27 +124,42 @@ $(document).ready(function () {
 			data:params,
 			success:function(result){
 				//alert(JSON.stringify(result))
-				var $result = $(result);
+				var score = result.star_avg;
+					$('#starAvg').html("<h1>"+score+"</h1>") //별점 평균 불러오기
+				var cnt = result.review_cnt;
+					$("#reviewCnt").html("<h1>"+cnt+"</h1>") //리뷰 개수 불러오기
+				//alert(score)
+				var $result = $(result.reviewList);
 				var tag = "<ul>";
 				
 				$result.each(function(idx, vo){
 					tag += "<li><div>"+vo.nickname;
 					tag += " ("+vo.write_date+")";
 					for(var i=0;i<vo.score_star;i++){
-					tag+="★"
+					tag+= "★";
 					}
 					tag += " ("+vo.score_star+")";
 					
-					if(vo.member_no=='${logNo}'){
-						tag += "<input type='button' value='수정'/>";
-						tag += "<input type='button' value='삭제' title='"+vo.no+"'/>";	
+					if(vo.member_no=='${logNo}'){	//리뷰 수정,삭제 css여기서 class
+						tag += "<input type='button' value='수정' onclick='edit("+vo.score_star+",this)'/>";
+						tag += "<input type='button' value='삭제' title='"+vo.no+"'/>";							
 					}
-					tag += "<br/>" + vo.content + "</div>";
+					//console.log("vo.spo_check: "+vo.spo_check)
+					if(vo.spo_check==1){
+						tag+="<h2>스포일러</h2>"
+						tag+="<div class='spo'>"+ vo.content + "</div></div>"
+					}else{
+						tag += "<br/>" + vo.content + "</div>";
+					}
+					if(vo.member_no!='${logNo}'){
+						tag += "<input type='button' value='신고' onclick='warning(" + vo.no +")'/>";
+					}
+					
 
-				if(vo.member_no='${logNo}'){
+				if(vo.member_no=='${logNo}'){
 					tag += "<div style='display:none'><form method='post'>";
 					tag += "<input type='hidden' name='no' value='"+vo.no+"'/>";
-					tag+="<input type='text' name='score_star' value='"+vo.score_star+"' id='score_star'>"
+					tag+="<input type='text' name='score_star' value='"+vo.score_star+"' id='score_star_edit'>"
 					tag += `<div class='rating'>
 			                <!-- 해당 별점을 클릭하면 해당 별과 그 왼쪽의 모든 별의 체크박스에 checked 적용 -->
 			                <input type='checkbox' name='score_star2' id='rating1' value="1" class="rate_radio" title="1점">
@@ -152,17 +168,27 @@ $(document).ready(function () {
 			                <label for="rating2"></label>
 			                <input type="checkbox" name="score_star2" id="rating3" value="3" class="rate_radio" title="3점">
 			                <label for="rating3"></label>
-			                <input type="checkbox" name="score_star2" id="rating4" value="4" class="rate_radio" title="4점">
+			                <input type="checkbox" name="score_star2t" id="rating4" value="4" class="rate_radio" title="4점">
 			                <label for="rating4"></label>
 			                <input type="checkbox" name="score_star2" id="rating5" value="5" class="rate_radio" title="5점">
 			                <label for="rating5"></label>
 			            </div>`
 					tag += "<textarea name='content' style='width:400px'>"+vo.content+"</textarea>";
+					if(vo.spo_check==1){
+						tag += "<input type='radio' name='spo_check' id='spo_check' value='1' checked/>";
+					
+					
+					}else{
+						tag += "<input type='radio' name='spo_check' id='spo_check' value='1'/>";
+					
+					}
 					tag += "<input type='submit' value='수정'/>";									
 					tag += "</form></div>";
 				}
-				tag += "<hr/></li>";		
-			});
+				tag += "<hr/></li>";
+				score_star = vo.score_star;		
+				//alert(score_star)
+			}); 
 			tag+="</ul>";
 			
 			$("#reviewList").html(tag);
@@ -187,6 +213,10 @@ $(function(){
 				data:params,
 				type:'POST',
 				success:function(r){
+					if(parseInt(r)==-1){
+						alert('이미 리뷰를 작성하였습니다.');	
+						$('#content').val("");
+					}
 					$("#review").val("");
 					reviewListAll();
 				},
@@ -198,17 +228,56 @@ $(function(){
 	});
 })
 
+//리뷰 수정
+function edit(star, obj){
+	//alert(star+obj)
+	$(obj).parent().css("display","none");
+	$(obj).parent().next().css("display","block");
+	$("#review").css("display","none");
+	
+	//edit에서 별 체크
+	$(".rating>input").each(function(i, obj){
+		//console.log(i, obj);
+		if($(obj).val()<=star) $(obj).prop("checked",true);
+	});
+	
+}
 //리뷰수정
-$(document).on('click','#reviewList input[value=수정]', function(){
+/* $(document).on('click','#reviewList input[value=수정]', function(){
 	$(this).parent().css("display","none");
 	$(this).parent().next().css("display","block");
 	$("#review").css("display","none");
-});
+	
+	//edit에서 별 체크
+	$(".rating>input").each(function(i, obj){
+		//console.log(i, obj);
+		if($(obj).val()<=score_star) $(obj).prop("checked",true);
+	});
+	
+}); */
+$(function(){
+	$(".rating>input").click(function(){
+		if($(this).is(':checked')){
+		$('#score_star_edit').val(($(this).val()))
+		//score_star=$(this).val()
+		//edit에서 별 체크
+		//$(this).prevAll().prop("checked",true);
+        //rating.setRate(parseInt($(this).val()));
+        let star=$(this).val()
+		$(".rating>input").each(function(i, obj){
+			//console.log(i, obj);
+			if($(obj).val()<=star) $(obj).prop("checked",true);
+		});
+		
+		
+		}
+	})
+})
 $(document).on('submit','#reviewList form', function(){
 	event.preventDefault();
 	$("#score_star").val("4");
 	var params = $(this).serialize();
- 	console.log(params);
+ 	//console.log(params);
 	var url = "/review/reviewEditOk";
 	$.ajax({
 		url:url,
@@ -231,55 +300,99 @@ $(document).on('click','#reviewList input[value=삭제]', function(){
 			url:'/review/reviewDel',
 			data:params,
 			success:function(result){
-				console.log(result);
+				//console.log(result);
 				reviewListAll();
-			}, error:function(){
+			}, error:function(e){
 				console.log("리뷰삭제에러발생");
 			}
 		});
 	}
 });
+
+//신고기능
+function warning(no){
+	if(confirm('해당 댓글을 신고하시겠습니까?')){
+		//alert(no);
+		var params = no;
+		$.ajax({
+			type:'get',
+			url:'/warning/'+no,			
+			success:function(result){
+				if(parseInt(result)>0){
+					alert('신고가 완료되었습니다.');
+					reviewListAll();
+				}else{
+					alert('이미 신고 처리되었습니다.')
+				}
+				
+			},error:function(e){
+				
+				console.log("신고에러발생 "+JSON.stringify(e));
+			}
+		});
+	}
+}
 </script>
 <script>
 //별클릭 radio
-function Rating(){};
-Rating.prototype.rate = 0;
-Rating.prototype.setRate = function(newrate){
-    this.rate = newrate;
-    let items = document.querySelectorAll('.rate_radio');
-    items.forEach(function(item, idx){
-        if(idx < newrate){
-            item.checked = true;
-           //alert('a'+newrate+item.checked);
-        }else{
-            item.checked = false;
-        }
-    });
+function Rating(){
+	//console.log(1111);
+	Rating.prototype.rate = 0;
+	Rating.prototype.setRate = function(newrate){
+	    this.rate = newrate;
+	    let items = document.querySelectorAll('.rate_radio');
+	    items.forEach(function(item, idx){
+	        if(idx < newrate){
+	            item.checked = true;
+	           //alert('a'+newrate+item.checked);
+	        }else{
+	            item.checked = false;
+	        }
+	    });
+	}
 }
 let rating = new Rating();
 
 document.addEventListener('DOMContentLoaded', function(){
     document.querySelector('.rating').addEventListener('click',function(e){
-    	
-        let elem = e.target;
+    	let elem = e.target;
+        if(elem.classList.contains('rate_radio')){
+            rating.setRate(parseInt(elem.value));
+            document.getElementById('score_star').value
+    	    = elem.value;
+   		 }
+    	/* let elem = e.target;
         if(elem.classList.contains('rate_radio')){
         	//alert('ab'+elem.value)
             rating.setRate(parseInt(elem.value));
             document.getElementById('score_star').value
+    	    = elem.value; */
+    	/* alert($(this))
+    	nm=$(e.currentTarget).data('name')
+    	alert(nm)
+        let elem = e.target;
+        if(elem.classList.contains('rate_radio')){
+        	alert('ab'+elem.value)
+            //rating.setRate(parseInt(elem.value));
+        	if(nm=='score_edit'){
+        		document.getElementById('score_star_edit').value
+        	    = elem.value;
+        	}else{
+            document.getElementById('score_star').value
     	    = elem.value;
-        }
+        	}
+        } */
     })
 });
 
 
 </script>
+
 <div id="detail_container">
 	<div id="topDetail"></div>
 	<div id="detail">
 		<div id="midDetail"></div>
-		<div id="map" style="width: 500px; height: 400px;"></div>
-		
-		
+		<div id="map" style="width: 500px; height: 400px;"></div>		
 		<div id="review">
 			<form method="post" id="reviewFrm" action="/review/reviewWriteOk">	
 			<input type="hidden" name="score_star" id="score_star">		
@@ -300,12 +413,16 @@ document.addEventListener('DOMContentLoaded', function(){
 		            <input type="hidden" name="poster" value="${vo.poster}">  
 		            <input type="hidden" name="seq" value="${vo.seq}">  
 		            <textarea name="content" id="input_review" placeholder="리뷰를 남겨주세요." ></textarea>
-					<!-- <input type="checkbox" class="spo_check" value="스포"/> -->
-					<input type="submit" value="등록"/>
+					<input type="checkbox" name="spo_check" id="spo_check" value="1"/>		
+					<label for="spo_check">스포체크</label>			
+					<input type="submit" id="submit" value="등록"/>
 			</form>
 		</div>
-		
-		<div id="reviewList"></div>
-	</div>
+			<h3>
+				리뷰 개수 : <span id="reviewCnt"></span>
+			</h3>
+			<div id="starAvg"></div>
+			<div id="reviewList"></div>
+		</div>
 	
 </div>
