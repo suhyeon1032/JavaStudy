@@ -1,4 +1,5 @@
 @charset "UTF-8";
+@import url(https://fonts.googleapis.com/css?family=Righteous);
 body{
 	-webkit-user-select:none; 
 	-moz-user-select:none; 
@@ -106,6 +107,61 @@ h2 {
   70% {transform: translateX(-75px) scale(1);}
 }
 
+
+
+/* 로그인 후 */
+.text-effect {
+    font-family: cursive;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    position:relative; z-index:2;
+    margin: 0;
+    text-align: center;
+}
+.text-effect > span{
+    position: relative;
+    top: 20px; margin:0 10px;
+    display: inline-block;
+    animation: bounce 0.5s ease infinite alternate;
+    font-size: 130px;
+    color: #fff;
+    text-shadow:  0 1px 0 #ccc,
+                  0 2px 0 #ccc,
+                  0 3px 0 #ccc,
+                  0 4px 0 #ccc,
+                  0 5px 0 #ccc,
+                  0 6px 0 transparent,
+                  0 7px 0 transparent,
+                  0 8px 0 transparent,
+                  0 9px 0 transparent,
+                  0 10px 10px rgba(0, 0, 0, 0.7 );
+}
+
+.text-effect > span:nth-child(2) {animation-delay: 0.1s;}
+.text-effect > span:nth-child(3) {animation-delay: 0.2s;}
+.text-effect > span:nth-child(4) {animation-delay: 0.3s;}
+.text-effect > span:nth-child(5) {animation-delay: 0.4s;}
+.text-effect > span:nth-child(6) {animation-delay: 0.5s;}
+.text-effect > span:nth-child(7) {animation-delay: 0.6s;}
+.text-effect > span:nth-child(8) {animation-delay: 0.7s;}
+
+@keyframes bounce {
+    100% {
+        top: -20px;
+        text-shadow:  0 1px 0 #ccc, 
+                      0 2px 0 #ccc,
+                      0 3px 0 #ccc,
+                      0 4px 0 #ccc,
+                      0 5px 0 #ccc,
+                      0 6px 0 #ccc,
+                      0 7px 0 #ccc,
+                      0 8px 0 #ccc,
+                      0 9px 0 #ccc,
+                      0 50px 25px rgba(0, 0, 0, 0.2);
+    }
+}
 /* main - section 1 - end */
 /* ***************************************************** */
 
@@ -167,7 +223,11 @@ h2 {
 	font-size:2.4rem; font-weight:500;
 	line-height:calc(100vh/2.7);
 	background-color:blule;
-	display:block
+	display:block;
+}
+#home_entertain ul li:nth-child(2) a {
+	line-height:5vh; 
+	padding:calc((100vh/2.7 - 10vh)/2) 0;
 }
 #home_entertain ul li span {
 	width:calc(100vw/3.5); height:calc(100vh/2.7);
@@ -311,21 +371,21 @@ h2 {
 	position:absolute; right:0; top:34vh; 
 	line-height:30px
 }
-#home_author {width:40%}
+#home_help {width:40%}
 
-#home_author p {
-	width:250px; height:250px;
+#home_help p {
+	width:300px; height:300px;
 	display:block;
 	border-radius:50%;
 	margin:0 auto 50px auto;
 	background:url(../img/main_visual_1.png);
-	background-size:250px 250px;
+	background-size:300px 300px;
 }
-#home_author img {
+#home_help img {
 	width:200px; height:60px;
-	margin-top:calc(190px/2)
+	margin-top:calc(240px/2)
 }
-#home_author button {
+#home_help button {
 	border:none;
 	background-color:rgba(250,113,114,0.5);
 	color:#fff;
@@ -336,6 +396,6 @@ h2 {
 	font-size:1.8rem;
 	transition:all 0.5s
 }
-#home_author button:hover{background-color:rgba(250,113,114,1);}
+#home_help button:hover{background-color:rgba(250,113,114,1);}
 /* main - section 4 - end */
 /* ***************************************************** */

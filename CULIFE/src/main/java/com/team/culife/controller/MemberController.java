@@ -1,6 +1,10 @@
 package com.team.culife.controller;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 
@@ -9,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,15 +26,22 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.team.culife.service.AlertService;
 import com.team.culife.service.AuthorService;
 import com.team.culife.service.BoardService;
+import com.team.culife.service.ExhibitionReviewService;
+import com.team.culife.service.ExhibitionService;
+import com.team.culife.service.FileService;
 import com.team.culife.service.LoginService;
 import com.team.culife.service.MemberService;
 import com.team.culife.service.MovieService;
 import com.team.culife.service.ReviewService;
+import com.team.culife.vo.AlertVO;
 import com.team.culife.vo.AuthorFanVO;
 import com.team.culife.vo.AuthorVO;
 import com.team.culife.vo.BoardVO;
+import com.team.culife.vo.ExhibitionReviewVO;
+import com.team.culife.vo.ExhibitionVO;
 import com.team.culife.vo.MemberVO;
 import com.team.culife.vo.MovieVO;
 import com.team.culife.vo.PageResponseBody;
@@ -56,18 +68,37 @@ public class MemberController {
 	@Inject
 	BoardService boardService;
 	
+	@Inject
+	AlertService alertService;
+
+	@Inject
+	ExhibitionReviewService exhibitionReviewService;
+	
+	@Inject
+	FileService fileService;
+	
+	@Inject
+	ExhibitionService exhibitionService;
+	
+	@Value("${prefix-path}")
+	private String prefixPath;
+	
+	@Value("${logout-path}")
+	private String logoutUri;
+	
 	//마이페이지 - 내정보 뷰
 	@GetMapping("/mypage/member")
 	public ModelAndView mypage(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		Integer memberNo = (Integer)session.getAttribute("logNo");
-		
 		try {
 			
 			if(memberNo != null ) {
 				MemberVO mvo = memberService.memberSelectByNo(memberNo);
-				session.setAttribute("grade",mvo.getGrade());	
+				session.setAttribute("grade",mvo.getGrade());
+				mav.addObject("alertList",alertService.alertSelectByMemberNo(memberNo));
 				mav.addObject("mvo", mvo);
+				mav.addObject("logoutUri",logoutUri);
 				mav.setViewName("mypage/mypage");
 			}
 			else {
@@ -93,6 +124,7 @@ public class MemberController {
 				mav.setViewName("redirect:/");
 			}
 			else {
+				mav.addObject("logoutUri",logoutUri);
 				mav.setViewName("mypage/my_fan");
 			}
 			
@@ -118,6 +150,7 @@ public class MemberController {
 				AuthorVO avo = authorService.authorNoSelect(mvo.getNo());
 				mav.addObject("mvo", mvo);
 				mav.addObject("avo", avo);
+				mav.addObject("logoutUri",logoutUri);
 				mav.setViewName("mypage/my_author");
 			}
 			
@@ -140,6 +173,7 @@ public class MemberController {
 				mav.setViewName("redirect:/");
 			}
 			else {
+				mav.addObject("logoutUri",logoutUri);
 				mav.addObject("mvo", memberService.memberSelectByNo(memberNo));
 				mav.setViewName("mypage/my_movie");
 			}
@@ -162,6 +196,7 @@ public class MemberController {
 				mav.setViewName("redirect:/");
 			}
 			else {
+				mav.addObject("logoutUri",logoutUri);
 				mav.addObject("mvo", memberService.memberSelectByNo(memberNo));
 				mav.setViewName("mypage/my_theater");
 			}
@@ -180,9 +215,51 @@ public class MemberController {
 			@RequestParam(value="pageNo", required=false, defaultValue="1") int currentPage,
 			@RequestParam(value="pageCount", required=false, defaultValue="10") int pageCount,
 			@RequestParam(value="searchWord", required=false) String searchWord) {
+			ModelAndView mav = new ModelAndView();
+			Integer memberNo = (Integer)session.getAttribute("logNo");
+			
+			try {
+				if(memberNo == null) {
+					mav.setViewName("redirect:/");
+				}
+				else {
+					PagingVO pvo = new PagingVO();
+					// 전체 리스트 업데이트
+					pvo.setRecordPerPage(pageCount);
+					pvo.setCurrentPage(currentPage);
+					pvo.setMember_no(memberNo);
+					pvo.setCategory(category);
+					if(searchWord != null)pvo.setSearchWord(searchWord);
+					pvo.setTotalRecord(boardService.boardTotalRecord(pvo));
+					if(pvo.getTotalPage() >0  && pvo.getTotalPage() < currentPage) {
+						pvo.setCurrentPage(pvo.getTotalPage());
+						pvo.setTotalRecord(boardService.boardTotalRecord(pvo));
+					}
+					
+					List<BoardVO> list = boardService.boardSelectByMemberNo(pvo);
+					mav.addObject("boardList", list);
+					mav.addObject("pvo", pvo);
+					mav.addObject("logoutUri",logoutUri);
+					mav.setViewName("mypage/my_board");
+					
+				}
+				
+			}catch(Exception e) {
+				e.printStackTrace();
+				mav.setViewName("redirect:/");
+			}
+			
+		return mav;
+	}
+		
+	//마이페이지 감상평
+	@GetMapping("/mypage/review")
+	public ModelAndView mypageReview(HttpSession session, 
+			@RequestParam(value="pageNo", required=false, defaultValue="1") int currentPage,
+			@RequestParam(value="pageCount", required=false, defaultValue="10") int pageCount,
+			@RequestParam(value="searchWord", required=false) String searchWord) {
 		ModelAndView mav = new ModelAndView();
 		Integer memberNo = (Integer)session.getAttribute("logNo");
-		
 		try {
 			if(memberNo == null) {
 				mav.setViewName("redirect:/");
@@ -193,36 +270,51 @@ public class MemberController {
 				pvo.setRecordPerPage(pageCount);
 				pvo.setCurrentPage(currentPage);
 				pvo.setMember_no(memberNo);
-				pvo.setCategory(category);
 				if(searchWord != null)pvo.setSearchWord(searchWord);
-				pvo.setTotalRecord(boardService.boardTotalRecord(pvo));
-				if(pvo.getTotalPage() < currentPage) {
+				pvo.setTotalRecord(exhibitionReviewService.exhibitionReviewTotalRecord(pvo));
+				if(pvo.getTotalPage() >0  &&  pvo.getTotalPage() < currentPage) {
 					pvo.setCurrentPage(pvo.getTotalPage());
-					pvo.setTotalRecord(boardService.boardTotalRecord(pvo));
+					pvo.setTotalRecord(exhibitionReviewService.exhibitionReviewTotalRecord(pvo));
 				}
 				
-				List<BoardVO> list = boardService.boardSelectByMemberNo(pvo);
-				mav.addObject("boardList", list);
+				List<ExhibitionReviewVO> list = exhibitionReviewService.exhibitionReviewSelectByMemberNo(pvo);
+				mav.addObject("reviewList", list);
 				mav.addObject("pvo", pvo);
-				mav.setViewName("mypage/my_board");
-				
+				mav.addObject("logoutUri",logoutUri);
+				mav.setViewName("mypage/my_review");
 			}
 			
 		}catch(Exception e) {
 			e.printStackTrace();
-			mav.setViewName("redirect:/");
 		}
-		
 		return mav;
 	}
-	//마이페이지 감상평
-	@GetMapping("/mypage/review")
-	public ModelAndView mypageReview() {
+	//마이페이지 - 나의 전시회
+	@GetMapping("/mypage/exhibition")
+	public ModelAndView myExhibition(HttpSession session, @RequestParam(value="currentPage",required = false, defaultValue = "1")int currentPage,
+			@RequestParam(value="searchWord",required = false)String searchWord) {
 		ModelAndView mav = new ModelAndView();
+		Integer memberNo = (Integer)session.getAttribute("logNo");
 		try {
-			mav.setViewName("mypage/my_review");
-		}catch(Exception e) {
+			if(memberNo != null) {
+				AuthorVO avo = authorService.authorNoSelect(memberNo);
+				PagingVO pvo = new PagingVO();
+				pvo.setRecordPerPage(100);
+				pvo.setCurrentPage(currentPage);
+				pvo.setMember_no(avo.getNo());
+				if(searchWord != null) pvo.setSearchWord(searchWord);
+				pvo.setTotalRecord(exhibitionService.exhibitionTotalRecordAuthor(pvo));
+				List<ExhibitionVO> exhibitionList = exhibitionService.exhibitionSelectByAuthorNo(pvo);
+				mav.addObject("pvo", pvo);
+				mav.addObject("exhibitionList", exhibitionList);
+				mav.setViewName("mypage/my_exhibition");
+			}
+			else {
+				mav.setViewName("redirect:/");
+			}
+		}catch(Exception e){
 			e.printStackTrace();
+			mav.setViewName("redirect:/");
 		}
 		return mav;
 	}
@@ -243,45 +335,52 @@ public class MemberController {
 	}
 	
 	//회원 썸네일 업로드
-	@PostMapping("/mypage/member/thumbnail")
-	public ResponseEntity<HashMap<String,String>> memberThumbnailEdit(MemberVO mvo, HttpServletRequest request ,HttpSession session){
+	@PostMapping("/upload/mypage/member/thumbnail")
+	public ResponseEntity<HashMap<String,String>> memberThumbnailEdit(MemberVO mvo, @RequestParam("file") MultipartFile newFile ,HttpSession session){
 		ResponseEntity<HashMap<String,String>> entity = null;
 		HashMap<String,String> result = new HashMap<String,String>();
 		Integer memberNo = (Integer)session.getAttribute("logNo");
-		String path = session.getServletContext().getRealPath("/upload/"+memberNo+"/thumbnail");
-		System.out.println("path --> " +path);
-		
+		//String path = "/home/ubuntu/culife/upload/"+ memberNo+"/thumbnail/";
+		//String path = "/upload/"+ memberNo+"/thumbnail/";
+		String path = prefixPath + memberNo+"/thumbnail/";
 		try {
+			result.put("status", "200");
 			if(memberNo != null) {
-				System.out.println("th "+ mvo.getThumbnail());
-				
-				MultipartHttpServletRequest mr = (MultipartHttpServletRequest)request;
-				MultipartFile newFile = (MultipartFile) mr.getFile("file");
-				
 				if(newFile != null) { //새로업로드된 파일이 있으면
 					String newUploadFilename = newFile.getOriginalFilename();	
 						if(newUploadFilename!=null && !newUploadFilename.equals("")) {
-							File f = new File(path, newUploadFilename);
+							File f = new File(path);
 							//폴더가 존재하지 않을 경우 폴더 생성
 							if(!f.exists()) {
 								try {
-									System.out.println(f.mkdirs());
-								}catch(Exception e) {e.printStackTrace();}
+									//새로 경로를 만듬 성공하면 true
+									f.mkdirs();
+									//Runtime.getRuntime().exec("chmod 777 -R " + path);
+									
+								}catch(Exception e) {
+									result.put("msg","파일경로 생성오류 " + path);
+									e.printStackTrace();
+								}
 							}
-
 							// 업로드
 							try {
 								//기존에 있던 썸네일 파일 삭제
 								
 								mvo = memberService.memberSelectByNo(memberNo);
 								if(mvo.getThumbnail() != null) {
-									File deleteFile = new File(path,mvo.getThumbnail());
-									deleteFile.delete();
+									//파일 삭제
+									fileService.deleteImageFile(mvo.getThumbnail(), path);
 								}
+								//DB 업데이트
 								mvo.setThumbnail(newUploadFilename);
-								System.out.println("업로드 결과 ---> "+ memberService.memberUpdate(mvo));
-								newFile.transferTo(f);
-							} catch(Exception ee) {ee.printStackTrace();}
+								memberService.memberUpdate(mvo);
+								//파일 업로드
+								result.put("msg", "프로필 수정 완료.");
+								System.out.println("파일 업록드 결과 "+fileService.uploadImage(newFile, path));
+							} catch(Exception ee) {
+								result.put("msg" , "파일 업로드 오류 " + path);
+								ee.printStackTrace();
+							}
 								
 						}
 				} // if newFile != null
@@ -307,7 +406,7 @@ public class MemberController {
 		HashMap<String,String> result = new HashMap<String,String>();
 		Integer memberNo = (Integer)session.getAttribute("logNo");
 		String Token = (String)session.getAttribute("Token");
-		String rootPath = session.getServletContext().getRealPath("/upload/"+memberNo);
+		String rootPath = prefixPath+memberNo;
 		try {
 			result.put("status","200");
 			if(memberNo != null) {
@@ -343,7 +442,6 @@ public class MemberController {
 		HashMap<String,String> result = new HashMap<String,String>();
 				
 		try {
-			System.out.println("sss");
 			memberService.memberInsert(mvo);
 			entity = new ResponseEntity<HashMap<String,String>>(result, HttpStatus.OK);
 		}catch(Exception e) {
@@ -363,7 +461,6 @@ public class MemberController {
 		Integer memberNo = (Integer)session.getAttribute("logNo");
 		try {
 			result.put("status", "200");
-			System.out.println("MemberNo --->" + memberNo);
 			//로그인 확인
 			if(memberNo == null) {
 				result.put("status","201");
@@ -382,8 +479,6 @@ public class MemberController {
 					}
 					else {
 						//팔로잉
-						System.out.println("author ---> " + author);
-						System.out.println("member no " + memberNo);
 						AuthorFanVO afvo = new AuthorFanVO();
 						afvo.setAuthor_no(avo.getNo());
 						afvo.setMember_no(memberNo);
@@ -417,7 +512,6 @@ public class MemberController {
 		
 		try {
 			result.put("status", "200");
-			System.out.println("MemberNo --->" + memberNo);
 			//로그인 확인
 			if(memberNo == null) {
 				result.put("msg", "로그인 후 이용해 주세요.");
@@ -454,7 +548,6 @@ public class MemberController {
 		Integer memberNo = (Integer)session.getAttribute("logNo");
 		PageResponseBody<AuthorVO> entity = null;
 		HashMap<String,String> result = new HashMap<String,String>();
-		System.out.println("search --> " + searchWord);
 		try {
 			if (memberNo == null) {
 				result.put("msg", "로그인 후 이용해 주세요");
@@ -484,26 +577,20 @@ public class MemberController {
 	}
 	
 	//작가 정보 수정
-	@PostMapping("/mypage/author/info")
-	public ResponseEntity<HashMap<String,String>> authorThumbnailEdit(AuthorVO avo, HttpServletRequest request ,HttpSession session){
+	@PostMapping("/upload/mypage/author/info")
+	public ResponseEntity<HashMap<String,String>> authorThumbnailEdit(AuthorVO avo,  @RequestParam("file") MultipartFile newFile ,HttpSession session){
 		ResponseEntity<HashMap<String,String>> entity = null;
 		HashMap<String,String> result = new HashMap<String,String>();
 		Integer memberNo = (Integer)session.getAttribute("logNo");
-		String path = session.getServletContext().getRealPath("/upload/"+memberNo+"/author");
-		System.out.println("path --> " +path);
+		String path =prefixPath+memberNo+"/author/";
 		
 		try {
 			result.put("status", "200");
 			if(memberNo != null) {
-				System.out.println("th "+ avo.getAuthor_thumbnail());
-				
-				MultipartHttpServletRequest mr = (MultipartHttpServletRequest)request;
-				MultipartFile newFile = (MultipartFile) mr.getFile("file");
-				
 				if(newFile != null) { //새로업로드된 파일이 있으면
 					String newUploadFilename = newFile.getOriginalFilename();	
 						if(newUploadFilename!=null && !newUploadFilename.equals("")) {
-							File f = new File(path, newUploadFilename);
+							File f = new File(path);
 							//폴더가 존재하지 않을 경우 폴더 생성
 							if(!f.exists()) {
 								try {
@@ -516,12 +603,14 @@ public class MemberController {
 								//기존에 있던 썸네일 파일 삭제
 								String oriFile = authorService.authorSelectByName(avo.getAuthor()).getAuthor_thumbnail();
 								if(oriFile != null) {
-									File deleteFile = new File(path,oriFile);
-									deleteFile.delete();
+									fileService.deleteImageFile(oriFile, path);
+									//File deleteFile = new File(path,oriFile);
+									//deleteFile.delete();
 								}
 								avo.setAuthor_thumbnail(newUploadFilename);
 								
-								newFile.transferTo(f);
+								fileService.uploadImage(newFile, path);
+								//newFile.transferTo(f);
 							} catch(Exception ee) {ee.printStackTrace();}
 								
 						}
@@ -552,7 +641,7 @@ public class MemberController {
 		Integer memberNo = (Integer)session.getAttribute("logNo");
 		PageResponseBody<MovieVO> entity = null;
 		HashMap<String,String> result = new HashMap<String,String>();
-		System.out.println("search --> " + searchWord);
+		
 		try {
 			if (memberNo == null) {
 				result.put("msg", "로그인 후 이용해 주세요");
@@ -560,11 +649,8 @@ public class MemberController {
 			} else {
 				PagingVO pvo = new PagingVO();
 				// 전체 리스트 업데이트
-				System.out.println("member_ no --->" + memberNo);
-				System.out.println("pageCount --->" + pageCount);
 				pvo.setRecordPerPage(pageCount);
 				pvo.setCurrentPage(pageNo);
-				System.out.println("pvo offset -->" + pvo.getOffsetIndex());
 				pvo.setMember_no(memberNo);
 				if(searchWord != null)pvo.setSearchWord(searchWord);
 				pvo.setTotalRecord(movieService.movieReviewTotalRecord(pvo));
@@ -591,7 +677,7 @@ public class MemberController {
 		Integer memberNo = (Integer)session.getAttribute("logNo");
 		PageResponseBody<ReviewVO> entity = null;
 		HashMap<String,String> result = new HashMap<String,String>();
-		System.out.println("search --> " + searchWord);
+		
 		try {
 			if (memberNo == null) {
 				result.put("msg", "로그인 후 이용해 주세요");
@@ -616,5 +702,85 @@ public class MemberController {
 			
 			}
 			return entity;
+		}
+	
+	//알림 가져오기 
+		@GetMapping("/mypage/alert")
+		public PageResponseBody<AlertVO> getMyAlert(HttpSession session){
+			PageResponseBody<AlertVO> entity = new PageResponseBody<AlertVO>();
+			HashMap<String,String> result = new HashMap<String,String>();
+			Integer memberNo = (Integer)session.getAttribute("logNo");
+			
+			try {
+				result.put("status","200");
+				if(memberNo != null) {
+					result.put("msg","알림 불러오기 성공.");
+					result.put("redirect","/");
+					entity.setItems(alertService.alertSelectByMemberNo(memberNo));
+					entity.setMsg(result);
+				}
+				else {
+					result.put("msg","로그인 후 이용해 주세요.");
+					entity.setMsg(result);
+				}
+				
+			}catch(Exception e) {
+				result.put("status","400");
+				result.put("msg","알림 서비스 Error... 관리자에게 문의하세요.");
+				entity.setMsg(result);
+				e.printStackTrace();
+			}
+			
+			return entity;
+			
+		}
+		
+		//업로드 테스트
+		@PostMapping("/upload/img")
+		public String uploadImage(@RequestParam("file") MultipartFile imageFile) {
+			try {
+				String path = "/upload/";
+				fileService.uploadImage(imageFile, path);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			return "ok";
+		}
+		
+		//나의 팔로워 숫자 
+		@GetMapping("api/authorfan/follow")
+		public ResponseEntity<HashMap<String,String>> getFollower(int author_no){
+			ResponseEntity<HashMap<String,String>> entity = null;
+			HashMap<String,String> result = new HashMap<String,String>();
+			try {
+				int count = memberService.authorFanSelectByAuthorNo(author_no);
+				result.put("status","200");
+				result.put("count",Integer.toString(count));
+				entity = new ResponseEntity<HashMap<String,String>>(result, HttpStatus.OK);
+			}catch(Exception e) {
+				e.printStackTrace();
+				result.put("status","200");
+				result.put("count","0");
+				entity = new ResponseEntity<HashMap<String,String>>(result, HttpStatus.BAD_REQUEST);
+			}
+			
+			return entity;
+		}
+		
+		@DeleteMapping("/api/alert")
+		public String deleteAlert(HttpSession session, int no) {
+			Integer memberNo = (Integer)session.getAttribute("logNo");
+			String msg = null;
+			try {
+				if(memberNo != null) {
+					alertService.alertDeleteByNo(no);
+				}else {
+					msg ="fail";
+				}
+				
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			return msg;
 		}
 }
