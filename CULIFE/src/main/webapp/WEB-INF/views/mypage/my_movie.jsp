@@ -4,6 +4,11 @@
 <link rel="stylesheet" type="text/css" href="${url}/css/mypage/mypage_movie.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+<script src="/js/mypage/alert.js"></script>
+<style>
+	footer {position:fixed; left:0; bottom:0; background-color:black;}
+	ul {margin-bottom: 0;}
+</style>
 <script>
 let pageNo = 1;
 let totalPage = 1;
@@ -19,10 +24,11 @@ let is_loading = false;
 		})
 		
 		//스크롤 위치 파악
-		$("#review_contatiner").scroll(function(){
+		$(window).on("scroll",function(){
 			var scrollT = $(this).scrollTop(); //스크롤바의 상단위치
 	        var scrollH = $(this).height(); //스크롤바를 갖는 div의 높이
-	        var contentH = $(".table").height(); //문서 전체 내용을 갖는 div의 높이
+	        var contentH = $("#review_contatiner").height(); //문서 전체 내용을 갖는 div의 높이
+	        //console.log(scrollT + " " + scrollH + " " + contentH);
 	        if(scrollT + scrollH +1 >= contentH) { // 스크롤바가 아래 쪽에 위치할 때
 	        	pagination();
 	        }
@@ -64,7 +70,6 @@ let is_loading = false;
 					searchWord : searchWord,
 				},
 				success : function(data){
-					console.log(data);
 					if(!is_paging)container.empty();
 					if(data.items == null) return;
 					data.items.forEach(function(element, index){
@@ -115,7 +120,7 @@ let is_loading = false;
 				  		<input type="text" class="form-control" id="search_word" placeholder="검색" style=" font-size:2.3rem;">
 				  		<select id="select_container">
 							<option value="movie" selected>영화</option>
-						 	<option value="theater">연극/뮤지컬</option>
+						 	<option value="theater">공연</option>
 						</select>
 					</div>
 				</div>
@@ -127,7 +132,24 @@ let is_loading = false;
 		</div> <!-- col-9 -->
 		<div class="col-3" id="mypage_sidebar">
 			<div class="container" id="mypage_sidebar_container">
-				<h1 class="h1">${mvo.nickname}님 반갑습니다.<img id="mypage_notification" src="${url}/img/member/mypage_notification.png"></h1>
+				<div class="container">
+					<div class="row">
+						<div class="col-1">
+						</div>
+						<div class="col-6">
+							<h1 class="h1" style="margin:0 auto; margin-top:5px; text-align:right; vertical-align:bottom;">${logNickname}님</h1>
+						</div>
+						<div class="col-3">
+							<div class="btn-group">
+								  <button class="btn dropdown-toggle" type="button" id="dropdownMenuClickableInside" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+								    <img id="mypage_notification" src="${url}/img/member/mypage_notification.png"><b id="mypage_notification_count" style="font-size:2rem;"></b>	
+								  </button>
+								  <ul id="mypage_notification_ul" class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuClickableInside">
+								  </ul>
+							</div>				
+						</div>
+					</div>
+				</div>
 				<hr/>
 				<ul>
 					<li><a class="selected_menu" style="color:#9DC3E6"  href="${url}/mypage/review/movie">리뷰</a></li>
@@ -138,6 +160,7 @@ let is_loading = false;
 						<li><a href="${url}/mypage/authorWrite">작가등록 신청</a></li>
 					</c:if>
 					<c:if test="${grade == 1}">
+						<li><a href="${url}/mypage/exhibition">나의 전시회</a></li>
 						<li><a href="${url}/mypage/author">작가 정보</a></li>
 					</c:if>
 					
@@ -146,7 +169,7 @@ let is_loading = false;
 				<hr/>
 				<ul>
 					<li><a href="${url}/mypage/member">내정보</a></li>
-					<li><a href="https://kauth.kakao.com/oauth/logout?client_id=f20eb18d7d37d79e45a5dff8cb9e3b9e&logout_redirect_uri=http://localhost:8080/logout/kakao">로그아웃</a></li>
+					<li><a href="https://kauth.kakao.com/oauth/logout?client_id=f20eb18d7d37d79e45a5dff8cb9e3b9e&logout_redirect_uri=${logoutUri}/logout/kakao">로그아웃</a></li>
 					
 				</ul>
 			</div>

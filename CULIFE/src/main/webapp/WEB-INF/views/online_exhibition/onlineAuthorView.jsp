@@ -12,7 +12,14 @@
 		-ms-user-select:none; 
 		user-select:none
 	}
+	html {-ms-overflow-style: none;}
+	html::-webkit-scrollbar{display:none}
 </style>
+<script>
+	$(function(){
+		get_author_fan(${param.no});
+	})
+</script>
 <div id="authorView_container">
 	<div id="authorView_wrap">
 		<h1 class="hidden"></h1>
@@ -23,6 +30,8 @@
 				<ul>
 					<li>작가명 : ${vo.author}</li>
 					<li>데뷔년도 : ${vo.debut_year}</li>
+					<li>SNS : <a href="${vo.sns_link}">${vo.sns_link}</a></li>
+					<li id="author_fan_count">팔로워 : </li>
 					<li>작가소개</li>
 					<li>${vo.author_msg}</li>
 					<li>
@@ -31,16 +40,16 @@
 								<a href="${url}/mypage/author">마이페이지로 이동</a>
 							</c:when>
 							<c:when test="${followInfo == null}">
-								<button name="follow" data-author="${vo.author}">팔로우</button>
+								<button name="follow" data-author="${vo.author}" data-author_no="${vo.no}" class="a_follow_btn"><span>FOLLOW</span></button>
 							</c:when>
 							<c:otherwise>
-								<button name="unfollow" data-author="${vo.author}">팔로잉</button>
+								<button name="unfollow" data-author="${vo.author}" data-author_no="${vo.no}" class="a_following_btn"><span>FOLLOWING</span></button>
 							</c:otherwise>
 						</c:choose>
 							
 					</li>
 					<li>
-						<a href="${url}/online_exhibition/onlineAuthorList">목록으로 돌아가기</a>
+						<a href="${url}/online_exhibition/onlineAuthorList">&#60;목록으로 돌아가기&#62;</a>
 					</li>
 				</ul>
 			</li>
@@ -117,4 +126,8 @@
     		</ul>
     		<i class="fa-solid fa-xmark"></i>
     	</div>
+    </div>
+    <div id="imgZoom">
+    	<i class="fa-solid fa-xmark"></i>
+    	<img class="pop" src="">
     </div>

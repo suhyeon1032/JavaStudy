@@ -21,6 +21,7 @@ $(document).ready(function(){
 			var author = $(this).attr("data-author");
 			var url ="/author/follow";
 			var button = $(this);
+			var author_no =$(this).attr("data-author_no");
 			
 			$.ajax({
 				url : url,
@@ -33,9 +34,10 @@ $(document).ready(function(){
 					console.log(data);
 					if(data.status=="200"){
 						button.attr("name","follow");
-						button.attr("class", "btn btn-primary");
-						button.text("팔로우");
+						button.attr("class", "a_follow_btn");
+						button.html("<span>FOLLOW</span>");
 					}
+					get_author_fan(author_no);
 					
 				},
 				error : function(error){
@@ -48,6 +50,8 @@ $(document).ready(function(){
 			var author = $(this).attr("data-author");
 			var url ="/author/follow";
 			var button = $(this);
+			var author_no =$(this).attr("data-author_no");
+			
 			$.ajax({
 				url : url,
 				type : "POST",
@@ -59,8 +63,9 @@ $(document).ready(function(){
 					console.log(data);
 					if(data.status=="200"){
 						button.attr("name","unfollow");
-						button.attr("class", "btn btn-secondary");
-						button.text("팔로잉");
+						button.attr("class", "a_following_btn");
+						button.html("<span>FOLLWING</span>");
+						get_author_fan(author_no);
 					}
 					else{
 						alert(data.msg);
@@ -68,7 +73,49 @@ $(document).ready(function(){
 					
 				},
 				error : function(error){
-					alert(error);
+					console.log(error);
 				}
 			})
 		});
+		
+/* 작품보기 이미지 줌인 */
+$(document).ready(function(){
+	$(".workDetail_img").on('click', (function(){
+		var a = $(this).children().attr("src");
+		$(".pop").replaceWith("<img class='pop' src='" + a + "'/>");
+		$("#imgZoom").css({"display":"block"});
+		setTimeout(function(){
+			$(".pop").css({
+			"transform" : "translate(-50%,-50%) scale(1)",
+			})
+		})		
+	}))	
+	$("#imgZoom > .fa-xmark").click(function(){
+		$("#workDetail_bg").css({"display" : "block"});
+		$('footer').css({"display" : "none"});
+		$("#imgZoom").css({"display":"none"});
+	});	
+})
+
+function get_author_fan(author_no){
+	var url = "/api/authorfan/follow";
+		$.ajax({
+			url : url,
+			type: "GET",
+			dataType :"JSON",
+			data : {
+				author_no : author_no,
+			},
+			success : function(data){
+				$("#author_fan_count").text("팔로워 : " + data.count);
+			},
+			error : function(error){
+				alert(error);
+			}
+			
+		})
+}
+
+
+
+		

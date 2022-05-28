@@ -12,10 +12,12 @@
 <script src="/js/home.js"></script>
 <style>
 	footer {position:absolute; left:0; bottom:0}
+	html {-ms-overflow-style: none;}
+	html::-webkit-scrollbar{display:none}
 </style>
+
 <script>
 	/*스크롤 무빙*/
-
 	var html = $('html');
 	var page = 1;
 	html.animate({scrollTop:0}, 10);
@@ -44,26 +46,39 @@
 	header:hover {background-color:rgba(255,255,255,0.8);}
 	nav > ul > li > ul {background-color:rgba(255,255,255,0.8);}
 </style>
-	
 	<main id="home_main_container">
 		<h1 class="hidden">본문보기</h1>
 		<section id="home_visual">
-			<h2 class="hidden">share your cultural life</h2>
-			<div id="three-container"></div>
-    		<button class="fun-btn" onclick="location.href='/login'">JOIN US</button>
+			<c:if test="${grade == null}">
+				<h2 class="hidden">share your cultural life</h2>
+				<div id="three-container"></div>
+				<button class="fun-btn" onclick="location.href='/login'">JOIN US</button>
+	        </c:if>
+	        <c:if test="${grade != null}">
+	        	<div class="text-effect">
+			        <span>W</span>
+					<span>E</span>
+					<span>L</span>
+					<span>C</span>
+					<span>O</span>
+					<span>M</span>
+					<span>E</span>
+					<span>!</span>
+			    </div>
+	        </c:if>
     	</section>
 		<section id="home_entertain">
-			<h2>영화, 연극, 뮤지컬을 한 곳에서</h2>
+			<h2>영화, 연극, 콘서트, 뮤지컬을 한 곳에서</h2>
 			<ul>
 				<li onmouseover="movieplay('/img/Reality - From La Boum_cut.mp3')" onmouseleave="movieplay('')">
-					<a href="">영화</a>
+					<a href="/movie/movieList">영화</a>
 					<em>마우스 오버 시 오디오 재생</em>
 					<span class="skew_box1"></span>
 					<span class="skew_box2"></span>
 					<audio id='movie_audio' controls><source src="" type="audio/mp3" /></audio>
 				</li>				
 				<li onmouseover="musicalplay('/img/웃는남자_일단와_cut.mp3')" onmouseleave="musicalplay('')">
-					<a href="">연극 / 뮤지컬</a>
+					<a href="/theater/theaterList">공연<br/>(연극 / 콘서트 / 뮤지컬)</a>
 					<em>마우스 오버 시 오디오 재생</em>
 					<span class="skew_box1"></span>
 					<span class="skew_box2"></span>
@@ -73,8 +88,7 @@
 		</section>
 		<section id="home_exhibition">
 			<h2>온라인에서 만나는 전시회 작품</h2>
-			<button class="fun-btn" id="home_author_regi">전시하기</button>
-			<button class="fun-btn" id="home_online_ex">작품보기</button>
+			<button class="fun-btn" id="home_author_regi" onclick="location.href='/online_exhibition/onlineList'">전시회 가기</button>
 			<ul>
 				<li id="home_sec3_img1"></li>
 				<li id="home_sec3_img2"></li>
@@ -89,44 +103,27 @@
 				<div id="home_commu">
 					<h2>자유게시판</h2>
 					<ul>
+						<c:forEach var="vo" items="${list}">
 						<li>
 							<ul>
-								<li>제목</li>
-								<li>작성자</li>
-								<li>날짜</li>
+								<li>${vo.subject}</li>
+								<li>${vo.nickname }</li>
+								<li>${vo.write_date }</li>
 							</ul>
-							<a href=""></a>
+							<a href="/board/freeBoardView?no=${vo.no}"></a>
 						</li>
-						<li>
-							<ul>
-								<li>제목</li>
-								<li>작성자</li>
-								<li>날짜</li>
-							</ul>
-							<a href=""></a>
-						</li>
-						<li>
-							<ul>
-								<li>제목</li>
-								<li>작성자</li>
-								<li>날짜</li>
-							</ul>
-							<a href=""></a>
-						</li>
-						<li>
-							<ul>
-								<li>제목</li>
-								<li>작성자</li>
-								<li>날짜</li>
-							</ul>
-							<a href=""></a>
-						</li>
+						</c:forEach>
 					</ul>
-					<a href="">+ 더보기</a>
+					<a href="/board/freeBoardList">+ 더보기</a>
 				</div>
-				<div id="home_author">
+				<div id="home_help">
 					<p><img src="/img/logo_w.png" alt="로고"></p>
-					<button>문의하기</button>
+					<c:if test="${grade == null}">
+						<button onclick="alert('로그인이 필요한 서비스 입니다.');">문의하기</button>
+					</c:if>
+					<c:if test="${grade != null }">
+						<button onclick="location.href='/board/help/helpBoardWrite'">문의하기</button>
+					</c:if>
 				</div>
 			</div>
 		</section>

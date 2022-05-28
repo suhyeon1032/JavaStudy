@@ -41,6 +41,34 @@ $(function () {
 			return false;
 		}
 	});	
+	$(document).on('mouseover','.test li', function (e) {
+		$(e.target).parent().children('li').css("background-color","rgb(0,0,0,0.1)");
+	});
+	$(document).on('mouseleave','.test li', function (e) {
+		$(e.target).parent().children('li').css("background-color","white");
+	});
+ 	$(document).on('click','.test li', function (e) {
+		if($(e.target).parent().children('li').hasClass('extends_li')){
+			$(e.target).parent().children('li').css("height","50px");
+			$(e.target).parent().children('li').css("white-space","nowrap");
+			$(e.target).parent().children('li').css("line-height","50px");
+			$(e.target).parent().children('li').css("text-overflow","ellipsis");
+			$(e.target).parent().children('li').css("overflow","hidden");
+			$(e.target).parent().children('li').removeClass('extends_li');
+		}else{
+			$(e.target).parent().children('li').css("white-space","normal");
+			$(e.target).parent().children('li:nth-child(3)').css("height","100%");
+			$(e.target).parent().children('li').css("height",$(e.target).parent().children('li:nth-child(3)').css("height"));
+			$(e.target).parent().children('li').css("line-height",$(e.target).parent().children('li:nth-child(3)').css("height"));
+			$(e.target).parent().children('li:nth-child(3)').css("line-height","50px");
+			$(e.target).parent().children('li').css("text-overflow","none");
+			$(e.target).parent().children('li').css("overflow","auto");
+			$(e.target).parent().children('li').addClass('extends_li');
+		}
+	});
+	
+	$(".select_pageNum a").attr("style","color:white");
+
 });
 </script>
 <div class="wrap">
@@ -80,31 +108,39 @@ $(function () {
 		<li class='list_title'>작성자</li>
 		<li class='list_title'>작성일</li>
 		<li class='list_title'>전체선택<input type="checkbox" id="allCheck"/></li>
-		
+		<c:if test="${empty adminExReplyList}">
+			<div class="noanswer_img">
+			</div>
+		</c:if>				
 		<c:forEach var="vo" items="${adminExReplyList}">
+		<ul class="test">
 			<li>${vo.no }</li>
 			<li>${vo.subject }</li>
-			<li><a href='#'>${vo.content }</a></li>
+			<li>${vo.content}</li>
 			<li>${vo.nickname }</li>
 			<li>${vo.write_date }</li>
 			<li><input type="checkbox" name="noList" value="${vo.no}" class="chk"/></li>
+		</ul>
 		</c:forEach>
 	</ul>
 	</form>
-	
+
+	<input type="button" value="삭제" id="multiDel"/>
+	<input type="button" value="목록" id="resetList" onclick="location.href='/admin/adminExReplyList'"/>		
+
 	<!-- 페이징 -->
 	<ul class="paging">
 	<!--  이전페이지 -->
 	<c:if test="${pVO.pageNum == 1 }">
-		<li>◀</li>
+		<li class="arrow_prev"></li>
 	</c:if>
 	<c:if test="${pVO.pageNum > 1 }">
-		<li><a href="/admin/adminExReplyList?pageNum=${pVO.pageNum-1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">◀</a></li>
+		<li class="arrow_prev"><a href="/admin/adminExReplyList?pageNum=${pVO.pageNum-1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">&nbsp;&nbsp;&nbsp;</a></li>
 	</c:if>
 	<c:forEach var="p" begin="${pVO.startPage}" end="${pVO.startPage+pVO.onePageCount-1}">
 		<c:if test="${p<=pVO.totalPage}">
 			<c:if test="${p==pVO.pageNum}">
-				<li style="font-weight: bold;">
+				<li class="select_pageNum" style="font-weight: bold; background-color: #42454c;">
 			</c:if>
 			<c:if test="${p!=pVO.pageNum}">
 				<li>
@@ -114,15 +150,11 @@ $(function () {
 	</c:forEach>
 	<!--  다음페이지 -->
 	<c:if test="${pVO.pageNum == pVO.totalPage }">
-		<li>▶</li>
+		<li class="arrow_next"></li>
 	</c:if>
 	<c:if test="${pVO.pageNum < pVO.totalPage }">
-		<li><a href="/admin/adminExReplyList?pageNum=${pVO.pageNum+1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">▶</a></li>
+		<li class="arrow_next"><a href="/admin/adminExReplyList?pageNum=${pVO.pageNum+1}<c:if test='${pVO.searchWord!=null}'>&searchKey=${pVO.searchKey}&searchWord=${pVO.searchWord}</c:if>">&nbsp;&nbsp;&nbsp;</a></li>
 	</c:if>
-		<li>
-			<input type="button" value="삭제" id="multiDel"/>
-			<input type="button" value="목록" id="resetList" onclick="location.href='/admin/adminExReplyList'"/>		
-		</li>
 	</ul>
 </div> <!-- div:admin_container -->
 </div>

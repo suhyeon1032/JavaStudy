@@ -3,16 +3,18 @@
 <link rel="stylesheet" type="text/css" href="${url}/css/mypage/mypage.css">
 <link rel="stylesheet" type="text/css" href="${url}/css/mypage/mypage_board.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src="/js/mypage/alert.js"></script>
+<style>
+	footer {position:fixed; left:0; bottom:0; background-color:black;}
+	ul {margin-bottom: 0;}
+</style>
 <script>
 	$(function(){
-		
-		console.log("${pvo.totalPage}")
 		//글자색 바꾸기
 		$(".selected_menu").css("color","#9DC3E6");
 		
 		//게시판 타입 선택
 		$("#select_container").on("change",function(){
-			console.log("select-->",$(this).val());
 			window.location.href="${url}/mypage/board?category="+$(this).val();
 		});
 		
@@ -182,7 +184,24 @@
 		</div>
 		<div class="col-3" id="mypage_sidebar">
 			<div class="container" id="mypage_sidebar_container">
-				<h1 class="h1">${logNickname}님 반갑습니다.<img id="mypage_notification" src="${url}/img/member/mypage_notification.png"></h1>
+				<div class="container">
+					<div class="row">
+						<div class="col-1">
+						</div>
+						<div class="col-6">
+							<h1 class="h1" style="margin:0 auto; margin-top:5px; text-align:right; vertical-align:bottom;">${logNickname}님</h1>
+						</div>
+						<div class="col-3">
+							<div class="btn-group">
+								  <button class="btn dropdown-toggle" type="button" id="dropdownMenuClickableInside" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+								    <img id="mypage_notification" src="${url}/img/member/mypage_notification.png"><b id="mypage_notification_count" style="font-size:2rem;"></b>	
+								  </button>
+								  <ul id="mypage_notification_ul" class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuClickableInside">
+								  </ul>
+							</div>				
+						</div>
+					</div>
+				</div>
 				<hr/>
 				<ul>
 					<li><a href="${url}/mypage/review/movie">리뷰</a></li>
@@ -193,13 +212,14 @@
 						<li><a href="${url}/mypage/authorWrite">작가등록 신청</a></li>
 					</c:if>
 					<c:if test="${grade == 1}">
-						<li><a href="${url}/mypage/author">작가 정보</a></li>
+						<li><a href="${url}/mypage/exhibition">나의 전시회</a></li>
+						<li><a href="${url}/mypage/author">작가 정보</a></li>		
 					</c:if>
 				</ul>
 				<hr/>
 				<ul>
 					<li><a href="${url}/mypage/member">내정보</a></li>
-					<li><a href="https://kauth.kakao.com/oauth/logout?client_id=f20eb18d7d37d79e45a5dff8cb9e3b9e&logout_redirect_uri=http://localhost:8080/logout/kakao">로그아웃</a></li>
+					<li><a href="https://kauth.kakao.com/oauth/logout?client_id=f20eb18d7d37d79e45a5dff8cb9e3b9e&logout_redirect_uri=${logoutUri}/logout/kakao">로그아웃</a></li>
 					
 				</ul>
 			</div>

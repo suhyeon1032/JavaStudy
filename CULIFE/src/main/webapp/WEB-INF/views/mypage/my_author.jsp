@@ -3,6 +3,19 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="${url}/css/mypage/mypage.css">
+<script src="/js/mypage/alert.js"></script>
+<style>
+	footer {position:fixed; left:0; bottom:0; background-color:black;}
+	ul {margin-bottom: 0;}
+	#max_text_length {
+		background-color:white;
+		height:40px; width:117%;
+		line-height:30px;
+		margin-top:5px;
+		opacity: 1 !important;
+		color:#888
+	}
+</style>
 <script>
 	$(function(){
 		//글자수 계산
@@ -30,7 +43,7 @@
 		
 		//작가 정보 수정
 		$("#authorForm_author_edit_btn").on("click",function(){
-			var url = "${url}/mypage/author/info";
+			var url = "${url}/upload/mypage/author/info";
 			var data = new FormData($("#memberForm")[0]);
 			console.log(data.thumbnail);
 			$.ajax({
@@ -40,7 +53,6 @@
 				type : "POST",
 				data : data,
 				success:function(data){
-					console.log(data);
 					alert(data.msg);
 				},error : function(error){
 					alert(error);
@@ -55,9 +67,10 @@
 			<div id="mypage_container" >
 				<form id="memberForm">
 				<div id="mypage_member_thumbnail_group" class="row">
-					<div class="col">
+					<div class="col" id="my_page_col">
 						<!-- 작가 대표 사진 -->
 						<div id="mypage_member_thumbnail_container">
+							<input type="hidden" name="no" value="${avo.no}"/>
 							<img id="thumbnail_member" src="${url}/upload/${logNo}/author/${avo.author_thumbnail}"/>
 							<img class="thumbnail_btn" id="thumbnail_member_btn" src="${url}/img/member/thumbnail_btn.png"/>
 						</div>
@@ -85,7 +98,7 @@
 							<label id="max_text_length" for="floatingTextarea">작가소개 ${fn:length(avo.author_msg)}/100</label>
 						</div>
 						
-						<div class=" mb-3" style="margin:0 auto; width:50%; text-align:center; font-size:2.1rem;">
+						<div class=" mb-3" style="margin:30px auto; width:50%; text-align:center; font-size:2.1rem;">
 						  <button id="authorForm_author_edit_btn" class="btn btn-outline-secondary"  style="font-size:2.1rem;" type="button">수정</button>
 				
 						</div>
@@ -100,7 +113,25 @@
 		</div>
 		<div class="col-3" id="mypage_sidebar">
 			<div class="container" id="mypage_sidebar_container">
-				<h1 class="h1">${mvo.nickname}님 반갑습니다.<img id="mypage_notification" src="${url}/img/member/mypage_notification.png"></h1>
+				<div class="container">
+					<div class="row">
+						<div class="col-1">
+						</div>
+						<div class="col-6">
+							<h1 class="h1" style="margin:0 auto; margin-top:5px; text-align:right; vertical-align:bottom;">${logNickname}님</h1>
+						</div>
+						<div class="col-3">
+							<div class="btn-group">
+								  <button class="btn dropdown-toggle" type="button" id="dropdownMenuClickableInside" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+								    <img id="mypage_notification" src="${url}/img/member/mypage_notification.png"><b id="mypage_notification_count" style="font-size:2rem;"></b>	
+								  </button>
+								  <ul id="mypage_notification_ul" class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuClickableInside">
+								  </ul>
+							</div>				
+						</div>
+					</div>
+				</div>
+				
 				<hr/>
 				<ul>
 					<li><a href="${url}/mypage/review/movie">리뷰</a></li>
@@ -111,6 +142,7 @@
 						<li><a href="${url}/mypage/authorWrite">작가등록 신청</a></li>
 					</c:if>
 					<c:if test="${grade == 1}">
+						<li><a href="${url}/mypage/exhibition">나의 전시회</a></li>
 						<li><a  class="selected_menu" href="${url}/mypage/author" style="color:#9DC3E6">작가 정보</a></li>
 					</c:if>
 					
@@ -119,8 +151,7 @@
 				<hr/>
 				<ul>
 					<li><a href="${url}/mypage/member">내정보</a></li>
-						<li><a href="https://kauth.kakao.com/oauth/logout?client_id=f20eb18d7d37d79e45a5dff8cb9e3b9e&logout_redirect_uri=http://localhost:8080/logout/kakao">로그아웃</a></li>
-					
+						<li><a href="https://kauth.kakao.com/oauth/logout?client_id=f20eb18d7d37d79e45a5dff8cb9e3b9e&logout_redirect_uri=${logoutUri}/logout/kakao">로그아웃</a></li>
 				</ul>
 			</div>
 			

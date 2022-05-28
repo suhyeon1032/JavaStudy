@@ -1,6 +1,12 @@
 <c:set var="url" value="<%=request.getContextPath()%>"/>
 <style>
-
+@font-face {
+    font-family: 'SuncheonR';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202-2@1.0/SuncheonR.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+a {font-family: 'SuncheonR' !important;}
 body{
 	width:100wv;
 	height:100vh;
@@ -26,15 +32,10 @@ main{
 	width:100%;
 	height: 100%;
 }
-#login_btn_container{
-	margin-top:40px;
-}
-#login_btn_img{
-	text-align:center;
-}
-.row{
-	height:100%;
-}
+#login_btn_container{margin-top:40px;}
+#login_btn_img{text-align:center;}
+.row{height:100%;}
+footer {display:none}
 </style>
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
