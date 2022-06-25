@@ -16,7 +16,7 @@ public class BOJ_1931 {
 			time[i][0] = sc.nextInt();
 			time[i][1] = sc.nextInt();
 		}
-		
+		sc.close();
 		Arrays.sort(time, new Comparator<int[]>() {
 
 			@Override
@@ -27,6 +27,9 @@ public class BOJ_1931 {
 				return Integer.compare(o1[1], o2[1]);
 			}
 		});
+		for(int i=0; i<N; i++) {
+			System.out.println(time[i][0] + " " + time[i][1]);
+		}
 		int cnt = 0;
 		int end = -1;
 		for(int i = 0; i<N; i++) {
